@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EV Charging Platform - Support</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        .card {
+            background-color: white;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .btn-primary {
+            background-color: #3b82f6;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background-color: #f3f4f6;
+            color: #374151;
+        }
+        
+        .hover-lift {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .badge-success {
+            background-color: #10b981;
+            color: white;
+        }
+        
+        .badge-warning {
+            background-color: #f59e0b;
+            color: white;
+        }
+        
+        .badge-destructive {
+            background-color: #ef4444;
+            color: white;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <!-- Logo -->
+            <div class="flex items-center justify-between h-16 px-6 border-b border-gray-200">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <i data-lucide="zap" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold text-gray-900">EV Platform</h1>
+                        <p class="text-xs text-gray-500">Admin Dashboard</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+                <a href="dashboard.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+                        <span>Dashboard</span>
+                    </div>
+                </a>
+                <a href="stations.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="zap" class="w-5 h-5"></i>
+                        <span>Stations</span>
+                    </div>
+                    <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">1,247</span>
+                </a>
+                <a href="users.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="users" class="w-5 h-5"></i>
+                        <span>Users</span>
+                    </div>
+                    <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">15.4K</span>
+                </a>
+                <a href="charging.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="activity" class="w-5 h-5"></i>
+                        <span>Charging Sessions</span>
+                    </div>
+                </a>
+                <a href="payments.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="credit-card" class="w-5 h-5"></i>
+                        <span>Payments</span>
+                    </div>
+                </a>
+                <a href="analytics.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+                        <span>Analytics</span>
+                    </div>
+                </a>
+                <a href="reports.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="file-text" class="w-5 h-5"></i>
+                        <span>Reports</span>
+                    </div>
+                </a>
+                <a href="notifications.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="bell" class="w-5 h-5"></i>
+                        <span>Notifications</span>
+                    </div>
+                    <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">3</span>
+                </a>
+                <a href="support.html" class="nav-item active flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors bg-blue-600 text-white">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="help-circle" class="w-5 h-5"></i>
+                        <span>Support</span>
+                    </div>
+                </a>
+                <a href="settings.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="settings" class="w-5 h-5"></i>
+                        <span>Settings</span>
+                    </div>
+                </a>
+            </nav>
+
+            <!-- User Profile -->
+            <div class="p-4 border-t border-gray-200">
+                <div class="flex items-center space-x-3 p-3 rounded-lg bg-gray-50">
+                    <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                        <span class="text-sm font-medium text-white">A</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-medium text-gray-900">Admin User</p>
+                        <p class="text-xs text-gray-500">admin@evcharging.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Bar -->
+            <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6">
+                <div class="flex items-center space-x-4">
+                    <h2 class="text-xl font-semibold text-gray-900">Customer Support</h2>
+                </div>
+
+                <div class="flex items-center space-x-2">
+                    <button class="btn-secondary px-3 py-1 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
+                        <i data-lucide="search" class="w-4 h-4 mr-2 inline"></i>
+                        Search Tickets
+                    </button>
+                    <button class="btn-primary px-3 py-1 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
+                        <i data-lucide="plus" class="w-4 h-4 mr-2 inline"></i>
+                        New Ticket
+                    </button>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <main class="flex-1 overflow-y-auto bg-gray-50">
+                <div class="p-6">
+                    <!-- Support Stats -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                        <div class="card rounded-lg p-6 hover-lift">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-sm font-medium text-gray-600">Open Tickets</h3>
+                                <i data-lucide="ticket" class="w-4 h-4 text-gray-400"></i>
+                            </div>
+                            <div class="text-2xl font-bold text-gray-900 mb-1">23</div>
+                            <p class="text-xs text-gray-500">Require attention</p>
+                        </div>
+
+                        <div class="card rounded-lg p-6 hover-lift">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-sm font-medium text-gray-600">Resolved Today</h3>
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i>
+                            </div>
+                            <div class="text-2xl font-bold text-gray-900 mb-1">12</div>
+                            <p class="text-xs text-gray-500">+3 from yesterday</p>
+                        </div>
+
+                        <div class="card rounded-lg p-6 hover-lift">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-sm font-medium text-gray-600">Avg Response Time</h3>
+                                <i data-lucide="clock" class="w-4 h-4 text-gray-400"></i>
+                            </div>
+                            <div class="text-2xl font-bold text-gray-900 mb-1">2.4h</div>
+                            <p class="text-xs text-gray-500">Response time</p>
+                        </div>
+
+                        <div class="card rounded-lg p-6 hover-lift">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-sm font-medium text-gray-600">Satisfaction</h3>
+                                <i data-lucide="star" class="w-4 h-4 text-gray-400"></i>
+                            </div>
+                            <div class="text-2xl font-bold text-gray-900 mb-1">4.8/5</div>
+                            <p class="text-xs text-gray-500">Customer rating</p>
+                        </div>
+                    </div>
+
+                    <!-- Support Categories -->
+                    <div class="card rounded-lg p-6 mb-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Support Categories</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-medium text-gray-900">Technical Issues</h4>
+                                    <i data-lucide="wrench" class="w-5 h-5 text-blue-600"></i>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-3">Station connectivity and charging problems</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-500">8 open tickets</span>
+                                    <button class="btn-secondary px-2 py-1 rounded text-xs font-medium hover:bg-gray-200 transition-colors">
+                                        View All
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-medium text-gray-900">Account Issues</h4>
+                                    <i data-lucide="user" class="w-5 h-5 text-green-600"></i>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-3">User account and payment problems</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-500">12 open tickets</span>
+                                    <button class="btn-secondary px-2 py-1 rounded text-xs font-medium hover:bg-gray-200 transition-colors">
+                                        View All
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="bg-orange-50 border border-orange-200 rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-medium text-gray-900">General Inquiries</h4>
+                                    <i data-lucide="help-circle" class="w-5 h-5 text-orange-600"></i>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-3">General questions and information requests</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-500">3 open tickets</span>
+                                    <button class="btn-secondary px-2 py-1 rounded text-xs font-medium hover:bg-gray-200 transition-colors">
+                                        View All
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Tickets -->
+                    <div class="card rounded-lg p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Support Tickets</h3>
+                        <div class="space-y-4">
+                            <!-- Ticket 1 -->
+                            <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                                <div class="flex items-start justify-between mb-2">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-2 h-2 bg-red-500 rounded-full"></div>
+                                        <h4 class="font-medium text-gray-900">Ticket #12345</h4>
+                                        <span class="badge-destructive text-xs px-2 py-1 rounded">High Priority</span>
+                                    </div>
+                                    <span class="text-sm text-gray-500">2 hours ago</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-3">User unable to start charging session at Station ST-005. Error message: "Connector not responding"</p>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <span class="text-sm text-gray-600">User: John Smith</span>
+                                        <span class="text-sm text-gray-600">Station: ST-005</span>
+                                        <span class="text-sm text-gray-600">Category: Technical</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <button class="btn-primary px-3 py-1 rounded text-sm font-medium hover:bg-blue-700 transition-colors">
+                                            View Details
+                                        </button>
+                                        <button class="btn-secondary px-3 py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
+                                            Assign
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Ticket 2 -->
+                            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                                <div class="flex items-start justify-between mb-2">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                                        <h4 class="font-medium text-gray-900">Ticket #12346</h4>
+                                        <span class="badge-warning text-xs px-2 py-1 rounded">Medium Priority</span>
+                                    </div>
+                                    <span class="text-sm text-gray-500">4 hours ago</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-3">Payment failed for user Sarah Johnson. Error: "Card declined"</p>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <span class="text-sm text-gray-600">User: Sarah Johnson</span>
+                                        <span class="text-sm text-gray-600">Amount: $24.50</span>
+                                        <span class="text-sm text-gray-600">Category: Account</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <button class="btn-primary px-3 py-1 rounded text-sm font-medium hover:bg-blue-700 transition-colors">
+                                            View Details
+                                        </button>
+                                        <button class="btn-secondary px-3 py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
+                                            Assign
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Ticket 3 -->
+                            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                                <div class="flex items-start justify-between mb-2">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                                        <h4 class="font-medium text-gray-900">Ticket #12347</h4>
+                                        <span class="badge-success text-xs px-2 py-1 rounded">Low Priority</span>
+                                    </div>
+                                    <span class="text-sm text-gray-500">1 day ago</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-3">User requesting information about premium subscription benefits</p>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <span class="text-sm text-gray-600">User: Mike Wilson</span>
+                                        <span class="text-sm text-gray-600">Type: Information</span>
+                                        <span class="text-sm text-gray-600">Category: General</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <button class="btn-primary px-3 py-1 rounded text-sm font-medium hover:bg-blue-700 transition-colors">
+                                            View Details
+                                        </button>
+                                        <button class="btn-secondary px-3 py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
+                                            Assign
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Ticket 4 -->
+                            <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                                <div class="flex items-start justify-between mb-2">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                                        <h4 class="font-medium text-gray-900">Ticket #12348</h4>
+                                        <span class="badge-success text-xs px-2 py-1 rounded">Resolved</span>
+                                    </div>
+                                    <span class="text-sm text-gray-500">2 days ago</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-3">User account verification issue resolved. Account activated successfully.</p>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <span class="text-sm text-gray-600">User: Emma Davis</span>
+                                        <span class="text-sm text-gray-600">Resolved by: Admin</span>
+                                        <span class="text-sm text-gray-600">Category: Account</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <button class="btn-primary px-3 py-1 rounded text-sm font-medium hover:bg-blue-700 transition-colors">
+                                            View Details
+                                        </button>
+                                        <button class="btn-secondary px-3 py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>

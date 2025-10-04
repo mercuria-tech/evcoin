@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EV Charging Platform - Reports</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        .card {
+            background-color: white;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .btn-primary {
+            background-color: #3b82f6;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background-color: #f3f4f6;
+            color: #374151;
+        }
+        
+        .hover-lift {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <!-- Logo -->
+            <div class="flex items-center justify-between h-16 px-6 border-b border-gray-200">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <i data-lucide="zap" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold text-gray-900">EV Platform</h1>
+                        <p class="text-xs text-gray-500">Admin Dashboard</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+                <a href="dashboard.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+                        <span>Dashboard</span>
+                    </div>
+                </a>
+                <a href="stations.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="zap" class="w-5 h-5"></i>
+                        <span>Stations</span>
+                    </div>
+                    <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">1,247</span>
+                </a>
+                <a href="users.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="users" class="w-5 h-5"></i>
+                        <span>Users</span>
+                    </div>
+                    <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">15.4K</span>
+                </a>
+                <a href="charging.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="activity" class="w-5 h-5"></i>
+                        <span>Charging Sessions</span>
+                    </div>
+                </a>
+                <a href="payments.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="credit-card" class="w-5 h-5"></i>
+                        <span>Payments</span>
+                    </div>
+                </a>
+                <a href="analytics.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+                        <span>Analytics</span>
+                    </div>
+                </a>
+                <a href="reports.html" class="nav-item active flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors bg-blue-600 text-white">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="file-text" class="w-5 h-5"></i>
+                        <span>Reports</span>
+                    </div>
+                </a>
+                <a href="notifications.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="bell" class="w-5 h-5"></i>
+                        <span>Notifications</span>
+                    </div>
+                    <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">3</span>
+                </a>
+                <a href="support.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="help-circle" class="w-5 h-5"></i>
+                        <span>Support</span>
+                    </div>
+                </a>
+                <a href="settings.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="settings" class="w-5 h-5"></i>
+                        <span>Settings</span>
+                    </div>
+                </a>
+            </nav>
+
+            <!-- User Profile -->
+            <div class="p-4 border-t border-gray-200">
+                <div class="flex items-center space-x-3 p-3 rounded-lg bg-gray-50">
+                    <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                        <span class="text-sm font-medium text-white">A</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-medium text-gray-900">Admin User</p>
+                        <p class="text-xs text-gray-500">admin@evcharging.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Bar -->
+            <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6">
+                <div class="flex items-center space-x-4">
+                    <h2 class="text-xl font-semibold text-gray-900">Reports & Analytics</h2>
+                </div>
+
+                <div class="flex items-center space-x-2">
+                    <button class="btn-secondary px-3 py-1 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
+                        <i data-lucide="calendar" class="w-4 h-4 mr-2 inline"></i>
+                        Schedule Report
+                    </button>
+                    <button class="btn-primary px-3 py-1 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
+                        <i data-lucide="plus" class="w-4 h-4 mr-2 inline"></i>
+                        Generate Report
+                    </button>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <main class="flex-1 overflow-y-auto bg-gray-50">
+                <div class="p-6">
+                    <!-- Report Templates -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+                        <!-- Revenue Report -->
+                        <div class="card rounded-lg p-6 hover-lift">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                    <i data-lucide="dollar-sign" class="w-6 h-6 text-blue-600"></i>
+                                </div>
+                                <button class="btn-secondary px-2 py-1 rounded text-xs font-medium hover:bg-gray-200 transition-colors">
+                                    Generate
+                                </button>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Revenue Report</h3>
+                            <p class="text-sm text-gray-600 mb-4">Monthly revenue analysis and trends</p>
+                            <div class="flex items-center justify-between text-sm text-gray-500">
+                                <span>Last generated: Jan 15, 2024</span>
+                                <span class="flex items-center">
+                                    <i data-lucide="download" class="w-4 h-4 mr-1"></i>
+                                    PDF
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Station Performance Report -->
+                        <div class="card rounded-lg p-6 hover-lift">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                                    <i data-lucide="zap" class="w-6 h-6 text-green-600"></i>
+                                </div>
+                                <button class="btn-secondary px-2 py-1 rounded text-xs font-medium hover:bg-gray-200 transition-colors">
+                                    Generate
+                                </button>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Station Performance</h3>
+                            <p class="text-sm text-gray-600 mb-4">Station utilization and efficiency metrics</p>
+                            <div class="flex items-center justify-between text-sm text-gray-500">
+                                <span>Last generated: Jan 14, 2024</span>
+                                <span class="flex items-center">
+                                    <i data-lucide="download" class="w-4 h-4 mr-1"></i>
+                                    Excel
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- User Activity Report -->
+                        <div class="card rounded-lg p-6 hover-lift">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                                    <i data-lucide="users" class="w-6 h-6 text-purple-600"></i>
+                                </div>
+                                <button class="btn-secondary px-2 py-1 rounded text-xs font-medium hover:bg-gray-200 transition-colors">
+                                    Generate
+                                </button>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">User Activity</h3>
+                            <p class="text-sm text-gray-600 mb-4">User behavior and engagement analysis</p>
+                            <div class="flex items-center justify-between text-sm text-gray-500">
+                                <span>Last generated: Jan 13, 2024</span>
+                                <span class="flex items-center">
+                                    <i data-lucide="download" class="w-4 h-4 mr-1"></i>
+                                    CSV
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Charging Session Report -->
+                        <div class="card rounded-lg p-6 hover-lift">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                                    <i data-lucide="activity" class="w-6 h-6 text-orange-600"></i>
+                                </div>
+                                <button class="btn-secondary px-2 py-1 rounded text-xs font-medium hover:bg-gray-200 transition-colors">
+                                    Generate
+                                </button>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Charging Sessions</h3>
+                            <p class="text-sm text-gray-600 mb-4">Session duration and energy consumption</p>
+                            <div class="flex items-center justify-between text-sm text-gray-500">
+                                <span>Last generated: Jan 12, 2024</span>
+                                <span class="flex items-center">
+                                    <i data-lucide="download" class="w-4 h-4 mr-1"></i>
+                                    PDF
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Payment Transaction Report -->
+                        <div class="card rounded-lg p-6 hover-lift">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                                    <i data-lucide="credit-card" class="w-6 h-6 text-red-600"></i>
+                                </div>
+                                <button class="btn-secondary px-2 py-1 rounded text-xs font-medium hover:bg-gray-200 transition-colors">
+                                    Generate
+                                </button>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Payment Transactions</h3>
+                            <p class="text-sm text-gray-600 mb-4">Payment methods and transaction analysis</p>
+                            <div class="flex items-center justify-between text-sm text-gray-500">
+                                <span>Last generated: Jan 11, 2024</span>
+                                <span class="flex items-center">
+                                    <i data-lucide="download" class="w-4 h-4 mr-1"></i>
+                                    Excel
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Custom Report -->
+                        <div class="card rounded-lg p-6 hover-lift border-2 border-dashed border-gray-300">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                                    <i data-lucide="plus" class="w-6 h-6 text-gray-600"></i>
+                                </div>
+                                <button class="btn-primary px-2 py-1 rounded text-xs font-medium hover:bg-blue-700 transition-colors">
+                                    Create
+                                </button>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Custom Report</h3>
+                            <p class="text-sm text-gray-600 mb-4">Create a custom report with your parameters</p>
+                            <div class="flex items-center justify-between text-sm text-gray-500">
+                                <span>No previous reports</span>
+                                <span class="flex items-center">
+                                    <i data-lucide="settings" class="w-4 h-4 mr-1"></i>
+                                    Custom
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Report History -->
+                    <div class="card rounded-lg p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Report History</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead>
+                                    <tr class="border-b border-gray-200">
+                                        <th class="text-left py-3 px-4 font-medium text-gray-600">Report Name</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-600">Type</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-600">Generated</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-600">Size</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-600">Status</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-600">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b border-gray-100">
+                                        <td class="py-3 px-4 font-medium">Revenue Report - January 2024</td>
+                                        <td class="py-3 px-4">PDF</td>
+                                        <td class="py-3 px-4">2024-01-15 14:30</td>
+                                        <td class="py-3 px-4">2.4 MB</td>
+                                        <td class="py-3 px-4">
+                                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Completed</span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <button class="btn-secondary px-2 py-1 rounded text-xs font-medium hover:bg-gray-200 transition-colors mr-2">
+                                                Download
+                                            </button>
+                                            <button class="btn-secondary px-2 py-1 rounded text-xs font-medium hover:bg-gray-200 transition-colors">
+                                                Share
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100">
+                                        <td class="py-3 px-4 font-medium">Station Performance - Q4 2023</td>
+                                        <td class="py-3 px-4">Excel</td>
+                                        <td class="py-3 px-4">2024-01-14 10:15</td>
+                                        <td class="py-3 px-4">1.8 MB</td>
+                                        <td class="py-3 px-4">
+                                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Completed</span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <button class="btn-secondary px-2 py-1 rounded text-xs font-medium hover:bg-gray-200 transition-colors mr-2">
+                                                Download
+                                            </button>
+                                            <button class="btn-secondary px-2 py-1 rounded text-xs font-medium hover:bg-gray-200 transition-colors">
+                                                Share
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100">
+                                        <td class="py-3 px-4 font-medium">User Activity - December 2023</td>
+                                        <td class="py-3 px-4">CSV</td>
+                                        <td class="py-3 px-4">2024-01-13 16:45</td>
+                                        <td class="py-3 px-4">3.2 MB</td>
+                                        <td class="py-3 px-4">
+                                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Completed</span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <button class="btn-secondary px-2 py-1 rounded text-xs font-medium hover:bg-gray-200 transition-colors mr-2">
+                                                Download
+                                            </button>
+                                            <button class="btn-secondary px-2 py-1 rounded text-xs font-medium hover:bg-gray-200 transition-colors">
+                                                Share
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100">
+                                        <td class="py-3 px-4 font-medium">Charging Sessions - Weekly</td>
+                                        <td class="py-3 px-4">PDF</td>
+                                        <td class="py-3 px-4">2024-01-12 09:30</td>
+                                        <td class="py-3 px-4">1.5 MB</td>
+                                        <td class="py-3 px-4">
+                                            <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">Processing</span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <button class="btn-secondary px-2 py-1 rounded text-xs font-medium hover:bg-gray-200 transition-colors mr-2">
+                                                View Progress
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>

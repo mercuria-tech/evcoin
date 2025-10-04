@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EV Charging Platform - Stations</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        .card {
+            background-color: white;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .btn-primary {
+            background-color: #3b82f6;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background-color: #f3f4f6;
+            color: #374151;
+        }
+        
+        .hover-lift {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .badge-success {
+            background-color: #10b981;
+            color: white;
+        }
+        
+        .badge-warning {
+            background-color: #f59e0b;
+            color: white;
+        }
+        
+        .badge-destructive {
+            background-color: #ef4444;
+            color: white;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <!-- Logo -->
+            <div class="flex items-center justify-between h-16 px-6 border-b border-gray-200">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <i data-lucide="zap" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold text-gray-900">EV Platform</h1>
+                        <p class="text-xs text-gray-500">Admin Dashboard</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+                <a href="dashboard.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+                        <span>Dashboard</span>
+                    </div>
+                </a>
+                <a href="stations.html" class="nav-item active flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors bg-blue-600 text-white">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="zap" class="w-5 h-5"></i>
+                        <span>Stations</span>
+                    </div>
+                    <span class="bg-white text-blue-600 text-xs px-2 py-1 rounded-full">1,247</span>
+                </a>
+                <a href="users.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="users" class="w-5 h-5"></i>
+                        <span>Users</span>
+                    </div>
+                    <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">15.4K</span>
+                </a>
+                <a href="charging.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="activity" class="w-5 h-5"></i>
+                        <span>Charging Sessions</span>
+                    </div>
+                </a>
+                <a href="payments.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="credit-card" class="w-5 h-5"></i>
+                        <span>Payments</span>
+                    </div>
+                </a>
+                <a href="analytics.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+                        <span>Analytics</span>
+                    </div>
+                </a>
+                <a href="reports.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="file-text" class="w-5 h-5"></i>
+                        <span>Reports</span>
+                    </div>
+                </a>
+                <a href="notifications.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="bell" class="w-5 h-5"></i>
+                        <span>Notifications</span>
+                    </div>
+                    <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">3</span>
+                </a>
+                <a href="support.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="help-circle" class="w-5 h-5"></i>
+                        <span>Support</span>
+                    </div>
+                </a>
+                <a href="settings.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="settings" class="w-5 h-5"></i>
+                        <span>Settings</span>
+                    </div>
+                </a>
+            </nav>
+
+            <!-- User Profile -->
+            <div class="p-4 border-t border-gray-200">
+                <div class="flex items-center space-x-3 p-3 rounded-lg bg-gray-50">
+                    <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                        <span class="text-sm font-medium text-white">A</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-medium text-gray-900">Admin User</p>
+                        <p class="text-xs text-gray-500">admin@evcharging.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Bar -->
+            <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6">
+                <div class="flex items-center space-x-4">
+                    <h2 class="text-xl font-semibold text-gray-900">Station Management</h2>
+                </div>
+
+                <div class="flex items-center space-x-2">
+                    <button class="btn-secondary px-3 py-1 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
+                        <i data-lucide="download" class="w-4 h-4 mr-2 inline"></i>
+                        Export
+                    </button>
+                    <button class="btn-primary px-3 py-1 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
+                        <i data-lucide="plus" class="w-4 h-4 mr-2 inline"></i>
+                        Add Station
+                    </button>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <main class="flex-1 overflow-y-auto bg-gray-50">
+                <div class="p-6">
+                    <!-- Stats Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                        <div class="card rounded-lg p-6 hover-lift">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-sm font-medium text-gray-600">Total Stations</h3>
+                                <i data-lucide="zap" class="w-4 h-4 text-gray-400"></i>
+                            </div>
+                            <div class="text-2xl font-bold text-gray-900 mb-1">1,247</div>
+                            <p class="text-xs text-gray-500">+12 new this month</p>
+                        </div>
+
+                        <div class="card rounded-lg p-6 hover-lift">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-sm font-medium text-gray-600">Online Stations</h3>
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i>
+                            </div>
+                            <div class="text-2xl font-bold text-gray-900 mb-1">1,201</div>
+                            <p class="text-xs text-gray-500">96.3% uptime</p>
+                        </div>
+
+                        <div class="card rounded-lg p-6 hover-lift">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-sm font-medium text-gray-600">Available Connectors</h3>
+                                <i data-lucide="battery" class="w-4 h-4 text-gray-400"></i>
+                            </div>
+                            <div class="text-2xl font-bold text-gray-900 mb-1">2,847</div>
+                            <p class="text-xs text-gray-500">89 currently occupied</p>
+                        </div>
+
+                        <div class="card rounded-lg p-6 hover-lift">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-sm font-medium text-gray-600">Monthly Revenue</h3>
+                                <i data-lucide="dollar-sign" class="w-4 h-4 text-gray-400"></i>
+                            </div>
+                            <div class="text-2xl font-bold text-gray-900 mb-1">$387,421</div>
+                            <p class="text-xs text-gray-500">+15.2% from last month</p>
+                        </div>
+                    </div>
+
+                    <!-- Filters -->
+                    <div class="card rounded-lg p-6 mb-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Station Search & Filters</h3>
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <div class="flex-1">
+                                <div class="relative">
+                                    <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4"></i>
+                                    <input
+                                        type="text"
+                                        placeholder="Search stations by name or location..."
+                                        class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <select class="px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="all">All Status</option>
+                                    <option value="online">Online</option>
+                                    <option value="maintenance">Maintenance</option>
+                                    <option value="offline">Offline</option>
+                                </select>
+                                <button class="btn-secondary px-3 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors">
+                                    <i data-lucide="filter" class="w-4 h-4 mr-2 inline"></i>
+                                    More Filters
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stations List -->
+                    <div class="space-y-4">
+                        <!-- Station 1 -->
+                        <div class="card rounded-lg hover-lift">
+                            <div class="p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                            <i data-lucide="zap" class="w-6 h-6 text-blue-600"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-lg font-semibold text-gray-900">Downtown Plaza Station</h3>
+                                            <p class="text-sm text-gray-600 flex items-center">
+                                                <i data-lucide="map-pin" class="w-4 h-4 mr-1"></i>
+                                                123 Main St, Downtown
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="badge-success px-2 py-1 rounded-full text-xs font-medium">Online</span>
+                                        <button class="text-gray-400 hover:text-gray-600">
+                                            <i data-lucide="more-horizontal" class="w-5 h-5"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                                    <!-- Connectors -->
+                                    <div>
+                                        <h4 class="font-medium mb-2 text-gray-900">Connectors</h4>
+                                        <div class="space-y-2">
+                                            <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
+                                                <div>
+                                                    <span class="font-medium text-sm">Type2</span>
+                                                    <span class="text-xs text-gray-500 ml-2">22kW</span>
+                                                </div>
+                                                <span class="badge-success text-xs px-2 py-1 rounded">Available</span>
+                                            </div>
+                                            <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
+                                                <div>
+                                                    <span class="font-medium text-sm">CCS</span>
+                                                    <span class="text-xs text-gray-500 ml-2">50kW</span>
+                                                </div>
+                                                <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded">Occupied</span>
+                                            </div>
+                                            <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
+                                                <div>
+                                                    <span class="font-medium text-sm">CHAdeMO</span>
+                                                    <span class="text-xs text-gray-500 ml-2">50kW</span>
+                                                </div>
+                                                <span class="badge-warning text-xs px-2 py-1 rounded">Maintenance</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Performance -->
+                                    <div>
+                                        <h4 class="font-medium mb-2 text-gray-900">Performance</h4>
+                                        <div class="space-y-2">
+                                            <div class="flex justify-between">
+                                                <span class="text-sm text-gray-600">Revenue</span>
+                                                <span class="font-medium text-sm">$1,250.50</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="text-sm text-gray-600">Sessions</span>
+                                                <span class="font-medium text-sm">45</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="text-sm text-gray-600">Last Activity</span>
+                                                <span class="font-medium text-sm">2 min ago</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Location -->
+                                    <div>
+                                        <h4 class="font-medium mb-2 text-gray-900">Location</h4>
+                                        <div class="space-y-2">
+                                            <div class="flex justify-between">
+                                                <span class="text-sm text-gray-600">Latitude</span>
+                                                <span class="font-medium text-sm">37.7749</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="text-sm text-gray-600">Longitude</span>
+                                                <span class="font-medium text-sm">-122.4194</span>
+                                            </div>
+                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
+                                                <i data-lucide="map-pin" class="w-4 h-4 mr-2 inline"></i>
+                                                View on Map
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Actions -->
+                                    <div>
+                                        <h4 class="font-medium mb-2 text-gray-900">Actions</h4>
+                                        <div class="space-y-2">
+                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
+                                                <i data-lucide="eye" class="w-4 h-4 mr-2 inline"></i>
+                                                View Details
+                                            </button>
+                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
+                                                <i data-lucide="edit" class="w-4 h-4 mr-2 inline"></i>
+                                                Edit Station
+                                            </button>
+                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
+                                                <i data-lucide="settings" class="w-4 h-4 mr-2 inline"></i>
+                                                Configure
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Station 2 -->
+                        <div class="card rounded-lg hover-lift">
+                            <div class="p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                            <i data-lucide="zap" class="w-6 h-6 text-blue-600"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-lg font-semibold text-gray-900">Airport Terminal Station</h3>
+                                            <p class="text-sm text-gray-600 flex items-center">
+                                                <i data-lucide="map-pin" class="w-4 h-4 mr-1"></i>
+                                                456 Airport Blvd, Terminal 2
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="badge-success px-2 py-1 rounded-full text-xs font-medium">Online</span>
+                                        <button class="text-gray-400 hover:text-gray-600">
+                                            <i data-lucide="more-horizontal" class="w-5 h-5"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                                    <!-- Connectors -->
+                                    <div>
+                                        <h4 class="font-medium mb-2 text-gray-900">Connectors</h4>
+                                        <div class="space-y-2">
+                                            <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
+                                                <div>
+                                                    <span class="font-medium text-sm">Type2</span>
+                                                    <span class="text-xs text-gray-500 ml-2">22kW</span>
+                                                </div>
+                                                <span class="badge-success text-xs px-2 py-1 rounded">Available</span>
+                                            </div>
+                                            <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
+                                                <div>
+                                                    <span class="font-medium text-sm">CCS</span>
+                                                    <span class="text-xs text-gray-500 ml-2">50kW</span>
+                                                </div>
+                                                <span class="badge-success text-xs px-2 py-1 rounded">Available</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Performance -->
+                                    <div>
+                                        <h4 class="font-medium mb-2 text-gray-900">Performance</h4>
+                                        <div class="space-y-2">
+                                            <div class="flex justify-between">
+                                                <span class="text-sm text-gray-600">Revenue</span>
+                                                <span class="font-medium text-sm">$2,100.75</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="text-sm text-gray-600">Sessions</span>
+                                                <span class="font-medium text-sm">78</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="text-sm text-gray-600">Last Activity</span>
+                                                <span class="font-medium text-sm">5 min ago</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Location -->
+                                    <div>
+                                        <h4 class="font-medium mb-2 text-gray-900">Location</h4>
+                                        <div class="space-y-2">
+                                            <div class="flex justify-between">
+                                                <span class="text-sm text-gray-600">Latitude</span>
+                                                <span class="font-medium text-sm">37.6213</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="text-sm text-gray-600">Longitude</span>
+                                                <span class="font-medium text-sm">-122.3790</span>
+                                            </div>
+                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
+                                                <i data-lucide="map-pin" class="w-4 h-4 mr-2 inline"></i>
+                                                View on Map
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Actions -->
+                                    <div>
+                                        <h4 class="font-medium mb-2 text-gray-900">Actions</h4>
+                                        <div class="space-y-2">
+                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
+                                                <i data-lucide="eye" class="w-4 h-4 mr-2 inline"></i>
+                                                View Details
+                                            </button>
+                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
+                                                <i data-lucide="edit" class="w-4 h-4 mr-2 inline"></i>
+                                                Edit Station
+                                            </button>
+                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
+                                                <i data-lucide="settings" class="w-4 h-4 mr-2 inline"></i>
+                                                Configure
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Station 3 -->
+                        <div class="card rounded-lg hover-lift">
+                            <div class="p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                                            <i data-lucide="zap" class="w-6 h-6 text-yellow-600"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-lg font-semibold text-gray-900">Shopping Mall Station</h3>
+                                            <p class="text-sm text-gray-600 flex items-center">
+                                                <i data-lucide="map-pin" class="w-4 h-4 mr-1"></i>
+                                                789 Commerce St, Mall Entrance
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="badge-warning px-2 py-1 rounded-full text-xs font-medium">Maintenance</span>
+                                        <button class="text-gray-400 hover:text-gray-600">
+                                            <i data-lucide="more-horizontal" class="w-5 h-5"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                                    <!-- Connectors -->
+                                    <div>
+                                        <h4 class="font-medium mb-2 text-gray-900">Connectors</h4>
+                                        <div class="space-y-2">
+                                            <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
+                                                <div>
+                                                    <span class="font-medium text-sm">Type2</span>
+                                                    <span class="text-xs text-gray-500 ml-2">22kW</span>
+                                                </div>
+                                                <span class="badge-warning text-xs px-2 py-1 rounded">Maintenance</span>
+                                            </div>
+                                            <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
+                                                <div>
+                                                    <span class="font-medium text-sm">CCS</span>
+                                                    <span class="text-xs text-gray-500 ml-2">50kW</span>
+                                                </div>
+                                                <span class="badge-warning text-xs px-2 py-1 rounded">Maintenance</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Performance -->
+                                    <div>
+                                        <h4 class="font-medium mb-2 text-gray-900">Performance</h4>
+                                        <div class="space-y-2">
+                                            <div class="flex justify-between">
+                                                <span class="text-sm text-gray-600">Revenue</span>
+                                                <span class="font-medium text-sm">$890.25</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="text-sm text-gray-600">Sessions</span>
+                                                <span class="font-medium text-sm">32</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="text-sm text-gray-600">Last Activity</span>
+                                                <span class="font-medium text-sm">1 hour ago</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Location -->
+                                    <div>
+                                        <h4 class="font-medium mb-2 text-gray-900">Location</h4>
+                                        <div class="space-y-2">
+                                            <div class="flex justify-between">
+                                                <span class="text-sm text-gray-600">Latitude</span>
+                                                <span class="font-medium text-sm">37.7849</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="text-sm text-gray-600">Longitude</span>
+                                                <span class="font-medium text-sm">-122.4094</span>
+                                            </div>
+                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
+                                                <i data-lucide="map-pin" class="w-4 h-4 mr-2 inline"></i>
+                                                View on Map
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Actions -->
+                                    <div>
+                                        <h4 class="font-medium mb-2 text-gray-900">Actions</h4>
+                                        <div class="space-y-2">
+                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
+                                                <i data-lucide="eye" class="w-4 h-4 mr-2 inline"></i>
+                                                View Details
+                                            </button>
+                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
+                                                <i data-lucide="edit" class="w-4 h-4 mr-2 inline"></i>
+                                                Edit Station
+                                            </button>
+                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
+                                                <i data-lucide="settings" class="w-4 h-4 mr-2 inline"></i>
+                                                Configure
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>

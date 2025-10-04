@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EV Charging Platform - Advanced Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/recharts@2.8.0/umd/Recharts.js"></script>
+    <style>
+        :root {
+            --background: 0 0% 100%;
+            --foreground: 222.2 84% 4.9%;
+            --card: 0 0% 100%;
+            --card-foreground: 222.2 84% 4.9%;
+            --popover: 0 0% 100%;
+            --popover-foreground: 222.2 84% 4.9%;
+            --primary: 221.2 83.2% 53.3%;
+            --primary-foreground: 210 40% 98%;
+            --secondary: 210 40% 96%;
+            --secondary-foreground: 222.2 84% 4.9%;
+            --muted: 210 40% 96%;
+            --muted-foreground: 215.4 16.3% 46.9%;
+            --accent: 210 40% 96%;
+            --accent-foreground: 222.2 84% 4.9%;
+            --destructive: 0 84.2% 60.2%;
+            --destructive-foreground: 210 40% 98%;
+            --border: 214.3 31.8% 91.4%;
+            --input: 214.3 31.8% 91.4%;
+            --ring: 221.2 83.2% 53.3%;
+            --radius: 0.5rem;
+        }
+        
+        .dark {
+            --background: 222.2 84% 4.9%;
+            --foreground: 210 40% 98%;
+            --card: 222.2 84% 4.9%;
+            --card-foreground: 210 40% 98%;
+            --popover: 222.2 84% 4.9%;
+            --popover-foreground: 210 40% 98%;
+            --primary: 217.2 91.2% 59.8%;
+            --primary-foreground: 222.2 84% 4.9%;
+            --secondary: 217.2 32.6% 17.5%;
+            --secondary-foreground: 210 40% 98%;
+            --muted: 217.2 32.6% 17.5%;
+            --muted-foreground: 215 20.2% 65.1%;
+            --accent: 217.2 32.6% 17.5%;
+            --accent-foreground: 210 40% 98%;
+            --destructive: 0 62.8% 30.6%;
+            --destructive-foreground: 210 40% 98%;
+            --border: 217.2 32.6% 17.5%;
+            --input: 217.2 32.6% 17.5%;
+            --ring: 224.3 76.3% 94.1%;
+        }
+        
+        * {
+            border-color: hsl(var(--border));
+        }
+        
+        body {
+            background-color: hsl(var(--background));
+            color: hsl(var(--foreground));
+        }
+        
+        .card {
+            background-color: hsl(var(--card));
+            color: hsl(var(--card-foreground));
+            border: 1px solid hsl(var(--border));
+        }
+        
+        .btn-primary {
+            background-color: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+        }
+        
+        .btn-secondary {
+            background-color: hsl(var(--secondary));
+            color: hsl(var(--secondary-foreground));
+        }
+        
+        .text-muted {
+            color: hsl(var(--muted-foreground));
+        }
+        
+        .bg-muted {
+            background-color: hsl(var(--muted));
+        }
+        
+        .sidebar {
+            background-color: hsl(var(--card));
+            border-right: 1px solid hsl(var(--border));
+        }
+        
+        .nav-item:hover {
+            background-color: hsl(var(--accent));
+            color: hsl(var(--accent-foreground));
+        }
+        
+        .nav-item.active {
+            background-color: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+        }
+        
+        .badge-success {
+            background-color: #10b981;
+            color: white;
+        }
+        
+        .badge-warning {
+            background-color: #f59e0b;
+            color: white;
+        }
+        
+        .badge-destructive {
+            background-color: #ef4444;
+            color: white;
+        }
+        
+        .badge-secondary {
+            background-color: hsl(var(--secondary));
+            color: hsl(var(--secondary-foreground));
+        }
+        
+        .chart-container {
+            height: 300px;
+        }
+        
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .hover-lift {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="sidebar w-64 flex flex-col">
+            <!-- Logo -->
+            <div class="flex items-center justify-between h-16 px-6 border-b border-gray-200">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <i data-lucide="zap" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold text-gray-900">EV Platform</h1>
+                        <p class="text-xs text-gray-500">Admin Dashboard</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+                <a href="#dashboard" class="nav-item active flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+                        <span>Dashboard</span>
+                    </div>
+                </a>
+                <a href="#stations" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="zap" class="w-5 h-5"></i>
+                        <span>Stations</span>
+                    </div>
+                    <span class="badge-secondary text-xs px-2 py-1 rounded-full">1,247</span>
+                </a>
+                <a href="#users" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="users" class="w-5 h-5"></i>
+                        <span>Users</span>
+                    </div>
+                    <span class="badge-secondary text-xs px-2 py-1 rounded-full">15.4K</span>
+                </a>
+                <a href="#charging" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="activity" class="w-5 h-5"></i>
+                        <span>Charging Sessions</span>
+                    </div>
+                </a>
+                <a href="#payments" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="credit-card" class="w-5 h-5"></i>
+                        <span>Payments</span>
+                    </div>
+                </a>
+                <a href="#analytics" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+                        <span>Analytics</span>
+                    </div>
+                </a>
+                <a href="#reports" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="file-text" class="w-5 h-5"></i>
+                        <span>Reports</span>
+                    </div>
+                </a>
+                <a href="#notifications" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="bell" class="w-5 h-5"></i>
+                        <span>Notifications</span>
+                    </div>
+                    <span class="badge-destructive text-xs px-2 py-1 rounded-full">3</span>
+                </a>
+                <a href="#support" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="help-circle" class="w-5 h-5"></i>
+                        <span>Support</span>
+                    </div>
+                </a>
+                <a href="#settings" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="settings" class="w-5 h-5"></i>
+                        <span>Settings</span>
+                    </div>
+                </a>
+            </nav>
+
+            <!-- User Profile -->
+            <div class="p-4 border-t border-gray-200">
+                <div class="flex items-center space-x-3 p-3 rounded-lg bg-gray-50">
+                    <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                        <span class="text-sm font-medium text-white">A</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-medium text-gray-900">Admin User</p>
+                        <p class="text-xs text-gray-500">admin@evcharging.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Bar -->
+            <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6">
+                <div class="flex items-center space-x-4">
+                    <h2 class="text-xl font-semibold text-gray-900">Dashboard Overview</h2>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <!-- Status Indicators -->
+                    <div class="hidden md:flex items-center space-x-4">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                            <span class="text-sm text-gray-600">API Online</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <span class="text-sm text-gray-600">1,247 Stations</span>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="flex items-center space-x-2">
+                        <button class="btn-secondary px-3 py-1 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
+                            <i data-lucide="trending-up" class="w-4 h-4 mr-2 inline"></i>
+                            Analytics
+                        </button>
+                        <button class="btn-secondary px-3 py-1 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
+                            <i data-lucide="alert-triangle" class="w-4 h-4 mr-2 inline"></i>
+                            Alerts
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <main class="flex-1 overflow-y-auto bg-gray-50">
+                <div class="p-6">
+                    <!-- Key Metrics -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                        <div class="card rounded-lg p-6 hover-lift">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-sm font-medium text-gray-600">Total Revenue</h3>
+                                <i data-lucide="dollar-sign" class="w-4 h-4 text-gray-400"></i>
+                            </div>
+                            <div class="text-2xl font-bold text-gray-900 mb-1">$387,421</div>
+                            <p class="text-xs text-gray-500">
+                                <span class="text-green-600 flex items-center">
+                                    <i data-lucide="trending-up" class="w-3 h-3 mr-1"></i>
+                                    +12.5%
+                                </span>
+                                from last month
+                            </p>
+                        </div>
+
+                        <div class="card rounded-lg p-6 hover-lift">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-sm font-medium text-gray-600">Active Sessions</h3>
+                                <i data-lucide="activity" class="w-4 h-4 text-gray-400"></i>
+                            </div>
+                            <div class="text-2xl font-bold text-gray-900 mb-1">89</div>
+                            <p class="text-xs text-gray-500">
+                                <span class="text-green-600 flex items-center">
+                                    <i data-lucide="trending-up" class="w-3 h-3 mr-1"></i>
+                                    +8.2%
+                                </span>
+                                from yesterday
+                            </p>
+                        </div>
+
+                        <div class="card rounded-lg p-6 hover-lift">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-sm font-medium text-gray-600">Total Stations</h3>
+                                <i data-lucide="zap" class="w-4 h-4 text-gray-400"></i>
+                            </div>
+                            <div class="text-2xl font-bold text-gray-900 mb-1">1,247</div>
+                            <p class="text-xs text-gray-500">
+                                <span class="text-green-600 flex items-center">
+                                    <i data-lucide="check-circle" class="w-3 h-3 mr-1"></i>
+                                    96.3% online
+                                </span>
+                            </p>
+                        </div>
+
+                        <div class="card rounded-lg p-6 hover-lift">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-sm font-medium text-gray-600">Total Users</h3>
+                                <i data-lucide="users" class="w-4 h-4 text-gray-400"></i>
+                            </div>
+                            <div class="text-2xl font-bold text-gray-900 mb-1">15,432</div>
+                            <p class="text-xs text-gray-500">
+                                <span class="text-green-600 flex items-center">
+                                    <i data-lucide="trending-up" class="w-3 h-3 mr-1"></i>
+                                    +127 new
+                                </span>
+                                this week
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                        <!-- Revenue Chart -->
+                        <div class="card rounded-lg p-6 hover-lift">
+                            <div class="mb-4">
+                                <h3 class="text-lg font-semibold text-gray-900">Revenue Trend</h3>
+                                <p class="text-sm text-gray-600">Monthly revenue and session count</p>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="revenueChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Station Status -->
+                        <div class="card rounded-lg p-6 hover-lift">
+                            <div class="mb-4">
+                                <h3 class="text-lg font-semibold text-gray-900">Station Status</h3>
+                                <p class="text-sm text-gray-600">Current station distribution</p>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="stationChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Features -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                        <!-- Real-time Activity -->
+                        <div class="card rounded-lg p-6 hover-lift">
+                            <div class="mb-4">
+                                <h3 class="text-lg font-semibold text-gray-900">Real-time Activity</h3>
+                                <p class="text-sm text-gray-600">Live platform events</p>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex items-center space-x-3 p-3 rounded-lg bg-green-50 border border-green-200">
+                                    <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-sm font-medium text-gray-900">New charging session started</p>
+                                        <p class="text-xs text-gray-600">Downtown Plaza Station</p>
+                                    </div>
+                                    <span class="text-xs text-gray-500">2 min ago</span>
+                                </div>
+                                <div class="flex items-center space-x-3 p-3 rounded-lg bg-blue-50 border border-blue-200">
+                                    <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-sm font-medium text-gray-900">Station maintenance completed</p>
+                                        <p class="text-xs text-gray-600">Airport Terminal</p>
+                                    </div>
+                                    <span class="text-xs text-gray-500">5 min ago</span>
+                                </div>
+                                <div class="flex items-center space-x-3 p-3 rounded-lg bg-green-50 border border-green-200">
+                                    <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-sm font-medium text-gray-900">Payment processed</p>
+                                        <p class="text-xs text-gray-600">Shopping Mall Station</p>
+                                    </div>
+                                    <span class="text-xs text-gray-500">12 min ago</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="card rounded-lg p-6 hover-lift">
+                            <div class="mb-4">
+                                <h3 class="text-lg font-semibold text-gray-900">Quick Actions</h3>
+                                <p class="text-sm text-gray-600">Common administrative tasks</p>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <button class="btn-secondary p-4 rounded-lg text-center hover:bg-gray-200 transition-colors">
+                                    <i data-lucide="zap" class="w-6 h-6 mx-auto mb-2"></i>
+                                    <span class="text-sm font-medium">Add Station</span>
+                                </button>
+                                <button class="btn-secondary p-4 rounded-lg text-center hover:bg-gray-200 transition-colors">
+                                    <i data-lucide="users" class="w-6 h-6 mx-auto mb-2"></i>
+                                    <span class="text-sm font-medium">Manage Users</span>
+                                </button>
+                                <button class="btn-secondary p-4 rounded-lg text-center hover:bg-gray-200 transition-colors">
+                                    <i data-lucide="bar-chart-3" class="w-6 h-6 mx-auto mb-2"></i>
+                                    <span class="text-sm font-medium">View Reports</span>
+                                </button>
+                                <button class="btn-secondary p-4 rounded-lg text-center hover:bg-gray-200 transition-colors">
+                                    <i data-lucide="settings" class="w-6 h-6 mx-auto mb-2"></i>
+                                    <span class="text-sm font-medium">Platform Settings</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- System Health -->
+                        <div class="card rounded-lg p-6 hover-lift">
+                            <div class="mb-4">
+                                <h3 class="text-lg font-semibold text-gray-900">System Health</h3>
+                                <p class="text-sm text-gray-600">Platform status monitoring</p>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-600">API Gateway</span>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                                        <span class="text-sm font-medium text-green-600">Healthy</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-600">Database</span>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                                        <span class="text-sm font-medium text-green-600">Connected</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-600">Payment Gateway</span>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                                        <span class="text-sm font-medium text-green-600">Operational</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-600">Notification Service</span>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                                        <span class="text-sm font-medium text-green-600">Active</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- API Status -->
+                    <div class="card rounded-lg p-6 hover-lift">
+                        <div class="mb-4">
+                            <h3 class="text-lg font-semibold text-gray-900">API Status & Endpoints</h3>
+                            <p class="text-sm text-gray-600">Your EV Charging Platform API is live and operational</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div class="bg-gray-50 rounded-lg p-4 border-l-4 border-blue-500">
+                                <strong class="text-gray-900">Production API:</strong>
+                                <p class="text-sm text-gray-600 mt-1">https://ev-charging-platform-production.mks-alghafil.workers.dev</p>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-4 border-l-4 border-green-500">
+                                <strong class="text-gray-900">Health Check:</strong>
+                                <p class="text-sm text-gray-600 mt-1">GET /api/v1/health</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-2">
+                            <a href="https://ev-charging-platform-production.mks-alghafil.workers.dev/api/v1/health" 
+                               target="_blank" 
+                               class="btn-primary px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
+                                Test API Health
+                            </a>
+                            <a href="https://ev-charging-platform-production.mks-alghafil.workers.dev/api/v1/stations" 
+                               target="_blank" 
+                               class="btn-secondary px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
+                                View Stations
+                            </a>
+                            <button class="btn-secondary px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
+                                <i data-lucide="download" class="w-4 h-4 mr-2 inline"></i>
+                                Export Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Simulate real-time updates
+        setInterval(() => {
+            const activeSessions = Math.floor(Math.random() * 20) + 80;
+            const occupiedConnectors = Math.floor(Math.random() * 20) + 80;
+            
+            document.querySelector('.text-2xl.font-bold').textContent = activeSessions;
+        }, 5000);
+        
+        // Simple chart implementation
+        function createSimpleChart(canvasId, data, type = 'line') {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width = canvas.offsetWidth;
+            const height = canvas.height = canvas.offsetHeight;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            if (type === 'line') {
+                // Draw simple line chart
+                ctx.strokeStyle = '#3b82f6';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                
+                data.forEach((point, index) => {
+                    const x = (index / (data.length - 1)) * (width - 40) + 20;
+                    const y = height - 20 - (point.value / Math.max(...data.map(d => d.value))) * (height - 40);
+                    
+                    if (index === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                });
+                
+                ctx.stroke();
+            } else if (type === 'doughnut') {
+                // Draw simple doughnut chart
+                const centerX = width / 2;
+                const centerY = height / 2;
+                const radius = Math.min(width, height) / 2 - 20;
+                
+                let currentAngle = 0;
+                data.forEach((segment, index) => {
+                    const sliceAngle = (segment.value / data.reduce((sum, d) => sum + d.value, 0)) * 2 * Math.PI;
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(centerX, centerY);
+                    ctx.arc(centerX, centerY, radius, currentAngle, currentAngle + sliceAngle);
+                    ctx.closePath();
+                    ctx.fillStyle = segment.color;
+                    ctx.fill();
+                    
+                    currentAngle += sliceAngle;
+                });
+            }
+        }
+        
+        // Initialize charts when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Revenue chart data
+            const revenueData = [
+                { month: 'Jan', value: 45000 },
+                { month: 'Feb', value: 52000 },
+                { month: 'Mar', value: 48000 },
+                { month: 'Apr', value: 61000 },
+                { month: 'May', value: 55000 },
+                { month: 'Jun', value: 67000 }
+            ];
+            
+            // Station status data
+            const stationData = [
+                { name: 'Online', value: 1201, color: '#10b981' },
+                { name: 'Maintenance', value: 46, color: '#f59e0b' },
+                { name: 'Offline', value: 12, color: '#ef4444' }
+            ];
+            
+            createSimpleChart('revenueChart', revenueData, 'line');
+            createSimpleChart('stationChart', stationData, 'doughnut');
+        });
+        
+        // Navigation functionality
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all items
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                
+                // Add active class to clicked item
+                this.classList.add('active');
+                
+                // Update header title
+                const title = this.querySelector('span').textContent;
+                document.querySelector('h2').textContent = title + ' Overview';
+            });
+        });
+    </script>
+</body>
+</html>
