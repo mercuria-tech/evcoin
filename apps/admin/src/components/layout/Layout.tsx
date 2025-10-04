@@ -1,183 +1,188 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import {
-  LayoutDashboard,
-  Zap,
-  Users,
-  CreditCard,
-  BarChart3,
-  FileText,
-  Bell,
-  Settings,
-  HelpCircle,
-  Menu,
-  X,
-  ChevronDown,
-  Activity,
-  TrendingUp,
-  AlertTriangle,
-  CheckCircle,
-} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Home, Zap, Users, CreditCard, BarChart, FileText, Bell, LifeBuoy, Settings, BatteryCharging, Car } from 'lucide-react';
+import { cn } from '../../lib/utils';
+import LanguageSwitcher from '../components/LanguageSwitcher';
 
 interface LayoutProps {
   children: React.ReactNode;
+  locale: string;
+  onLanguageChange: (language: string) => void;
 }
 
-const navigation = [
-  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'Stations', href: '/stations', icon: Zap, badge: '1,247' },
-  { name: 'Users', href: '/users', icon: Users, badge: '15.4K' },
-  { name: 'Charging Sessions', href: '/charging', icon: Activity },
-  { name: 'Payments', href: '/payments', icon: CreditCard },
-  { name: 'Analytics', href: '/analytics', icon: BarChart3 },
-  { name: 'Reports', href: '/reports', icon: FileText },
-  { name: 'Notifications', href: '/notifications', icon: Bell, badge: '3' },
-  { name: 'Support', href: '/support', icon: HelpCircle },
-  { name: 'Settings', href: '/settings', icon: Settings },
-];
+const Layout: React.FC<LayoutProps> = ({ children, locale, onLanguageChange }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const isRTL = ['ar', 'fa'].includes(locale);
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const location = useLocation();
+  const navItems = [
+    { name: 'Dashboard', icon: Home, path: '/', key: 'dashboard' },
+    { name: 'Stations', icon: Zap, path: '/stations', key: 'stations' },
+    { name: 'Users', icon: Users, path: '/users', key: 'users' },
+    { name: 'Charging Sessions', icon: BatteryCharging, path: '/charging', key: 'chargingSessions' },
+    { name: 'Payments', icon: CreditCard, path: '/payments', key: 'payments' },
+    { name: 'Vehicles', icon: Car, path: '/vehicles', key: 'vehicles' },
+    { name: 'Analytics', icon: BarChart, path: '/analytics', key: 'analytics' },
+    { name: 'Reports', icon: FileText, path: '/reports', key: 'reports' },
+    { name: 'Notifications', icon: Bell, path: '/notifications', key: 'notifications' },
+    { name: 'Support', icon: LifeBuoy, path: '/support', key: 'support' },
+    { name: 'Settings', icon: Settings, path: '/settings', key: 'settings' },
+  ];
+
+  // Translation function (in a real app, this would come from i18n)
+  const t = (key: string) => {
+    const translations: Record<string, Record<string, string>> = {
+      en: {
+        dashboard: 'Dashboard',
+        stations: 'Stations',
+        users: 'Users',
+        chargingSessions: 'Charging Sessions',
+        payments: 'Payments',
+        vehicles: 'Vehicles',
+        analytics: 'Analytics',
+        reports: 'Reports',
+        notifications: 'Notifications',
+        support: 'Support',
+        settings: 'Settings',
+        evAdmin: 'EV Admin',
+        adminDashboard: 'Admin Dashboard'
+      },
+      ar: {
+        dashboard: 'لوحة التحكم',
+        stations: 'المحطات',
+        users: 'المستخدمون',
+        chargingSessions: 'جلسات الشحن',
+        payments: 'المدفوعات',
+        vehicles: 'المركبات',
+        analytics: 'التحليلات',
+        reports: 'التقارير',
+        notifications: 'الإشعارات',
+        support: 'الدعم',
+        settings: 'الإعدادات',
+        evAdmin: 'إدارة المركبات الكهربائية',
+        adminDashboard: 'لوحة تحكم الإدارة'
+      },
+      fa: {
+        dashboard: 'داشبورد',
+        stations: 'ایستگاه‌ها',
+        users: 'کاربران',
+        chargingSessions: 'جلسات شارژ',
+        payments: 'پرداخت‌ها',
+        vehicles: 'وسایل نقلیه',
+        analytics: 'تحلیل‌ها',
+        reports: 'گزارش‌ها',
+        notifications: 'اطلاعیه‌ها',
+        support: 'پشتیبانی',
+        settings: 'تنظیمات',
+        evAdmin: 'مدیریت خودروهای برقی',
+        adminDashboard: 'داشبورد مدیریت'
+      }
+    };
+    return translations[locale]?.[key] || key;
+  };
 
   return (
-    <div className="flex h-screen bg-background">
-      {/* Mobile sidebar overlay */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 z-40 bg-black bg-opacity-50 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
+    <div className={cn(
+      "flex min-h-screen bg-gray-100 dark:bg-gray-900",
+      isRTL && "rtl"
+    )}>
       {/* Sidebar */}
-      <div
+      <aside
         className={cn(
-          'fixed inset-y-0 left-0 z-50 w-64 bg-card border-r border-border transform transition-transform duration-200 ease-in-out lg:translate-x-0 lg:static lg:inset-0',
-          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+          "fixed inset-y-0 z-50 flex flex-col bg-white dark:bg-gray-800 shadow-lg transition-all duration-300",
+          isRTL ? "right-0" : "left-0",
+          isSidebarOpen ? "w-64" : "w-20"
         )}
       >
-        <div className="flex flex-col h-full">
-          {/* Logo */}
-          <div className="flex items-center justify-between h-16 px-6 border-b border-border">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <Zap className="w-5 h-5 text-primary-foreground" />
-              </div>
-              <div>
-                <h1 className="text-lg font-bold text-foreground">EV Platform</h1>
-                <p className="text-xs text-muted-foreground">Admin Dashboard</p>
-              </div>
-            </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="lg:hidden"
-              onClick={() => setSidebarOpen(false)}
+        <div className="flex items-center justify-between h-16 border-b dark:border-gray-700 px-6">
+          <h1 className={cn(
+            "text-2xl font-bold text-gray-900 dark:text-white",
+            !isSidebarOpen && "hidden"
+          )}>
+            {t('evAdmin')}
+          </h1>
+          <button
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            className={cn(
+              "p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700",
+              isSidebarOpen && (isRTL ? "absolute left-4" : "absolute right-4")
+            )}
+          >
+            {/* Icon for toggling sidebar */}
+            {isSidebarOpen ? (
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isRTL ? "M9 5l7 7-7 7" : "M15 19l-7-7 7-7"} />
+              </svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isRTL ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7"} />
+              </svg>
+            )}
+          </button>
+        </div>
+        
+        <nav className="flex-1 p-4 space-y-2">
+          {navItems.map((item) => (
+            <Link
+              key={item.name}
+              to={item.path}
+              className={cn(
+                "flex items-center p-3 rounded-lg text-sm font-medium transition-colors text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700",
+                isRTL ? "flex-row-reverse" : "flex-row"
+              )}
             >
-              <X className="w-5 h-5" />
-            </Button>
-          </div>
+              <item.icon className={cn("h-5 w-5", isSidebarOpen ? (isRTL ? "ml-3" : "mr-3") : "mx-auto")} />
+              <span className={cn(!isSidebarOpen && "hidden")}>{t(item.key)}</span>
+            </Link>
+          ))}
+        </nav>
 
-          {/* Navigation */}
-          <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
-            {navigation.map((item) => {
-              const isActive = location.pathname === item.href;
-              return (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className={cn(
-                    'flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors',
-                    isActive
-                      ? 'bg-primary text-primary-foreground'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-accent'
-                  )}
-                >
-                  <div className="flex items-center space-x-3">
-                    <item.icon className="w-5 h-5" />
-                    <span>{item.name}</span>
-                  </div>
-                  {item.badge && (
-                    <Badge variant="secondary" className="text-xs">
-                      {item.badge}
-                    </Badge>
-                  )}
-                </Link>
-              );
-            })}
-          </nav>
-
-          {/* Footer */}
-          <div className="p-4 border-t border-border">
-            <div className="flex items-center space-x-3 p-3 rounded-lg bg-muted">
-              <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                <span className="text-sm font-medium text-primary-foreground">A</span>
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-foreground">Admin User</p>
-                <p className="text-xs text-muted-foreground">admin@evcharging.com</p>
-              </div>
+        {/* User Profile */}
+        <div className="p-4 border-t border-gray-200">
+          <div className={cn(
+            "flex items-center p-3 rounded-lg bg-gray-50",
+            isRTL ? "flex-row-reverse" : "flex-row"
+          )}>
+            <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+              <span className="text-sm font-medium text-white">A</span>
+            </div>
+            <div className={cn("flex-1 min-w-0", isRTL ? "ml-3" : "ml-3")}>
+              <p className="text-sm font-medium text-gray-900">Admin User</p>
+              <p className="text-xs text-gray-500">admin@evcharging.com</p>
             </div>
           </div>
         </div>
-      </div>
+      </aside>
 
-      {/* Main content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Top bar */}
-        <header className="h-16 bg-card border-b border-border flex items-center justify-between px-6">
-          <div className="flex items-center space-x-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="lg:hidden"
-              onClick={() => setSidebarOpen(true)}
-            >
-              <Menu className="w-5 h-5" />
-            </Button>
-            <div className="hidden lg:block">
-              <h2 className="text-xl font-semibold text-foreground">
-                {navigation.find(item => item.href === location.pathname)?.name || 'Dashboard'}
-              </h2>
-            </div>
+      {/* Main Content */}
+      <div className={cn(
+        "flex-1 flex flex-col transition-all duration-300",
+        isSidebarOpen ? (isRTL ? "mr-64" : "ml-64") : (isRTL ? "mr-20" : "ml-20")
+      )}>
+        {/* Header */}
+        <header className="h-16 flex items-center justify-between px-6 bg-white dark:bg-gray-800 shadow-md">
+          <div className={cn("flex items-center space-x-4", isRTL && "flex-row-reverse space-x-reverse")}>
+            <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
+              {t('adminDashboard')}
+            </h2>
           </div>
 
-          <div className="flex items-center space-x-4">
-            {/* Status indicators */}
-            <div className="hidden md:flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span className="text-sm text-muted-foreground">API Online</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                <span className="text-sm text-muted-foreground">1,247 Stations</span>
-              </div>
-            </div>
-
-            {/* Quick actions */}
-            <div className="flex items-center space-x-2">
-              <Button variant="outline" size="sm">
-                <TrendingUp className="w-4 h-4 mr-2" />
-                Analytics
-              </Button>
-              <Button variant="outline" size="sm">
-                <AlertTriangle className="w-4 h-4 mr-2" />
-                Alerts
-              </Button>
+          <div className={cn("flex items-center space-x-4", isRTL && "flex-row-reverse space-x-reverse")}>
+            {/* Language Switcher */}
+            <LanguageSwitcher
+              currentLanguage={locale}
+              onLanguageChange={onLanguageChange}
+            />
+            
+            {/* User profile/settings */}
+            <div>
+              <div className="h-10 w-10 rounded-full bg-gray-300 dark:bg-gray-600"></div>
             </div>
           </div>
         </header>
 
-        {/* Page content */}
-        <main className="flex-1 overflow-y-auto bg-muted/30">
-          <div className="p-6">
-            {children}
-          </div>
+        {/* Page Content */}
+        <main className="flex-1 p-6 overflow-auto">
+          {children}
         </main>
       </div>
     </div>

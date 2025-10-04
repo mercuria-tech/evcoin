@@ -1,292 +1,222 @@
 import React from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import {
-  Zap,
-  Users,
-  CreditCard,
-  TrendingUp,
-  TrendingDown,
-  Activity,
-  AlertTriangle,
-  CheckCircle,
-  Clock,
-  MapPin,
-  Battery,
-  DollarSign,
-  BarChart3,
-  PieChart,
-  Calendar,
-  Download,
-  RefreshCw,
-} from 'lucide-react';
-import {
-  LineChart,
-  Line,
-  AreaChart,
-  Area,
-  BarChart,
-  Bar,
-  PieChart as RechartsPieChart,
-  Cell,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from 'recharts';
+import { Card, CardHeader, CardTitle, CardContent } from '../../components/ui/card';
+import { Badge } from '../../components/ui/badge';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { cn } from '../../lib/utils';
 
-const revenueData = [
-  { month: 'Jan', revenue: 45000, sessions: 1200 },
-  { month: 'Feb', revenue: 52000, sessions: 1400 },
-  { month: 'Mar', revenue: 48000, sessions: 1300 },
-  { month: 'Apr', revenue: 61000, sessions: 1600 },
-  { month: 'May', revenue: 55000, sessions: 1500 },
-  { month: 'Jun', revenue: 67000, sessions: 1800 },
-];
+interface DashboardProps {
+  locale: string;
+}
 
-const stationData = [
-  { name: 'Online', value: 1201, color: '#10b981' },
-  { name: 'Maintenance', value: 46, color: '#f59e0b' },
-  { name: 'Offline', value: 12, color: '#ef4444' },
-];
+const Dashboard: React.FC<DashboardProps> = ({ locale }) => {
+  const isRTL = ['ar', 'fa'].includes(locale);
 
-const sessionData = [
-  { time: '00:00', sessions: 45 },
-  { time: '04:00', sessions: 32 },
-  { time: '08:00', sessions: 89 },
-  { time: '12:00', sessions: 156 },
-  { time: '16:00', sessions: 203 },
-  { time: '20:00', sessions: 178 },
-];
+  const data = [
+    { name: 'Jan', revenue: 4000, sessions: 2400 },
+    { name: 'Feb', revenue: 3000, sessions: 1398 },
+    { name: 'Mar', revenue: 2000, sessions: 9800 },
+    { name: 'Apr', revenue: 2780, sessions: 3908 },
+    { name: 'May', revenue: 1890, sessions: 4800 },
+    { name: 'Jun', revenue: 2390, sessions: 3800 },
+    { name: 'Jul', revenue: 3490, sessions: 4300 },
+  ];
 
-const Dashboard: React.FC = () => {
+  // Translation function
+  const t = (key: string) => {
+    const translations: Record<string, Record<string, string>> = {
+      en: {
+        totalRevenue: 'Total Revenue',
+        activeSessions: 'Active Charging Sessions',
+        totalStations: 'Total Stations',
+        newUsers: 'New Users',
+        revenueOverTime: 'Revenue Over Time',
+        liveActivityFeed: 'Live Activity Feed',
+        systemHealth: 'System Health',
+        userJohnDoe: 'User John Doe started charging',
+        stationId: 'Station ID: CH001, Connector: A1',
+        userJaneSmith: 'Payment received from Jane Smith',
+        amount: 'Amount: $15.00',
+        stationCH005: 'Station CH005 reported an error',
+        connectorB2: 'Connector B2 offline',
+        apiGateway: 'API Gateway:',
+        database: 'Database:',
+        paymentGateway: 'Payment Gateway:',
+        operational: 'Operational'
+      },
+      ar: {
+        totalRevenue: 'إجمالي الإيرادات',
+        activeSessions: 'جلسات الشحن النشطة',
+        totalStations: 'إجمالي المحطات',
+        newUsers: 'مستخدمون جدد',
+        revenueOverTime: 'الإيرادات عبر الوقت',
+        liveActivityFeed: 'تغذية النشاط المباشر',
+        systemHealth: 'صحة النظام',
+        userJohnDoe: 'بدأ المستخدم جون دو بالشحن',
+        stationId: 'معرف المحطة: CH001، الموصل: A1',
+        userJaneSmith: 'تم استلام دفعة من جين سميث',
+        amount: 'المبلغ: $15.00',
+        stationCH005: 'أبلغت المحطة CH005 عن خطأ',
+        connectorB2: 'الموصل B2 غير متصل',
+        apiGateway: 'بوابة واجهة برمجة التطبيقات:',
+        database: 'قاعدة البيانات:',
+        paymentGateway: 'بوابة الدفع:',
+        operational: 'تشغيلي'
+      },
+      fa: {
+        totalRevenue: 'کل درآمد',
+        activeSessions: 'جلسات شارژ فعال',
+        totalStations: 'کل ایستگاه‌ها',
+        newUsers: 'کاربران جدید',
+        revenueOverTime: 'درآمد در طول زمان',
+        liveActivityFeed: 'خوراک فعالیت زنده',
+        systemHealth: 'سلامت سیستم',
+        userJohnDoe: 'کاربر جان دو شروع به شارژ کرد',
+        stationId: 'شناسه ایستگاه: CH001، اتصال: A1',
+        userJaneSmith: 'پرداخت از جین اسمیت دریافت شد',
+        amount: 'مبلغ: $15.00',
+        stationCH005: 'ایستگاه CH005 خطا گزارش داد',
+        connectorB2: 'اتصال B2 آفلاین',
+        apiGateway: 'درگاه API:',
+        database: 'پایگاه داده:',
+        paymentGateway: 'درگاه پرداخت:',
+        operational: 'عملیاتی'
+      }
+    };
+    return translations[locale]?.[key] || key;
+  };
+
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground">Dashboard Overview</h1>
-          <p className="text-muted-foreground">Real-time insights into your EV charging platform</p>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Button variant="outline" size="sm">
-            <RefreshCw className="w-4 h-4 mr-2" />
-            Refresh
-          </Button>
-          <Button variant="outline" size="sm">
-            <Download className="w-4 h-4 mr-2" />
-            Export
-          </Button>
-        </div>
-      </div>
-
-      {/* Key Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">$387,421</div>
-            <p className="text-xs text-muted-foreground">
-              <span className="text-green-600 flex items-center">
-                <TrendingUp className="w-3 h-3 mr-1" />
-                +12.5%
-              </span>
-              from last month
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Sessions</CardTitle>
-            <Activity className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">89</div>
-            <p className="text-xs text-muted-foreground">
-              <span className="text-green-600 flex items-center">
-                <TrendingUp className="w-3 h-3 mr-1" />
-                +8.2%
-              </span>
-              from yesterday
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Stations</CardTitle>
-            <Zap className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">1,247</div>
-            <p className="text-xs text-muted-foreground">
-              <span className="text-green-600 flex items-center">
-                <CheckCircle className="w-3 h-3 mr-1" />
-                96.3% online
-              </span>
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Users</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">15,432</div>
-            <p className="text-xs text-muted-foreground">
-              <span className="text-green-600 flex items-center">
-                <TrendingUp className="w-3 h-3 mr-1" />
-                +127 new
-              </span>
-              this week
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Charts Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Revenue Chart */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Revenue Trend</CardTitle>
-            <CardDescription>Monthly revenue and session count</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <AreaChart data={revenueData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip />
-                <Area
-                  type="monotone"
-                  dataKey="revenue"
-                  stroke="#3b82f6"
-                  fill="#3b82f6"
-                  fillOpacity={0.2}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        {/* Station Status */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Station Status</CardTitle>
-            <CardDescription>Current station distribution</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <RechartsPieChart>
-                <Pie
-                  data={stationData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={100}
-                  paddingAngle={5}
-                  dataKey="value"
-                >
-                  {stationData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip />
-                <Legend />
-              </RechartsPieChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Activity Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Session Activity */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Session Activity</CardTitle>
-            <CardDescription>Charging sessions throughout the day</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={sessionData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="time" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="sessions" fill="#10b981" />
-              </BarChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        {/* Recent Activity */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
-            <CardDescription>Latest platform events</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {[
-                { time: '2 min ago', event: 'New charging session started', location: 'Downtown Plaza', status: 'success' },
-                { time: '5 min ago', event: 'Station maintenance completed', location: 'Airport Terminal', status: 'info' },
-                { time: '12 min ago', event: 'Payment processed', location: 'Shopping Mall', status: 'success' },
-                { time: '18 min ago', event: 'Station went offline', location: 'Highway Rest Stop', status: 'warning' },
-                { time: '25 min ago', event: 'New user registered', location: 'Mobile App', status: 'info' },
-              ].map((activity, index) => (
-                <div key={index} className="flex items-center space-x-3 p-3 rounded-lg bg-muted/50">
-                  <div className={`w-2 h-2 rounded-full ${
-                    activity.status === 'success' ? 'bg-green-500' :
-                    activity.status === 'warning' ? 'bg-yellow-500' : 'bg-blue-500'
-                  }`} />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground">{activity.event}</p>
-                    <p className="text-xs text-muted-foreground">{activity.location}</p>
-                  </div>
-                  <span className="text-xs text-muted-foreground">{activity.time}</span>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Quick Actions */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Quick Actions</CardTitle>
-          <CardDescription>Common administrative tasks</CardDescription>
+    <div className={cn("grid gap-6 md:grid-cols-2 lg:grid-cols-4", isRTL && "rtl")}>
+      <Card className="col-span-1 bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg transform hover:scale-105 transition-transform duration-300">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium">{t('totalRevenue')}</CardTitle>
+          <CreditCard className="h-4 w-4 text-white" />
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Button variant="outline" className="h-20 flex-col space-y-2">
-              <Zap className="w-6 h-6" />
-              <span>Add Station</span>
-            </Button>
-            <Button variant="outline" className="h-20 flex-col space-y-2">
-              <Users className="w-6 h-6" />
-              <span>Manage Users</span>
-            </Button>
-            <Button variant="outline" className="h-20 flex-col space-y-2">
-              <BarChart3 className="w-6 h-6" />
-              <span>View Reports</span>
-            </Button>
-            <Button variant="outline" className="h-20 flex-col space-y-2">
-              <Settings className="w-6 h-6" />
-              <span>Platform Settings</span>
-            </Button>
+          <div className="text-2xl font-bold">$45,231.89</div>
+          <p className="text-xs text-blue-100">+20.1% from last month</p>
+        </CardContent>
+      </Card>
+      
+      <Card className="col-span-1 bg-gradient-to-r from-green-500 to-green-600 text-white shadow-lg transform hover:scale-105 transition-transform duration-300">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium">{t('activeSessions')}</CardTitle>
+          <Zap className="h-4 w-4 text-white" />
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold">2,350</div>
+          <p className="text-xs text-green-100">+180.1% from last hour</p>
+        </CardContent>
+      </Card>
+      
+      <Card className="col-span-1 bg-gradient-to-r from-purple-500 to-purple-600 text-white shadow-lg transform hover:scale-105 transition-transform duration-300">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium">{t('totalStations')}</CardTitle>
+          <MapPin className="h-4 w-4 text-white" />
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold">573</div>
+          <p className="text-xs text-purple-100">+19% from last month</p>
+        </CardContent>
+      </Card>
+      
+      <Card className="col-span-1 bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg transform hover:scale-105 transition-transform duration-300">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium">{t('newUsers')}</CardTitle>
+          <Users className="h-4 w-4 text-white" />
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold">+2,150</div>
+          <p className="text-xs text-red-100">+201 since last month</p>
+        </CardContent>
+      </Card>
+
+      <Card className="col-span-full lg:col-span-2 shadow-lg">
+        <CardHeader>
+          <CardTitle>{t('revenueOverTime')}</CardTitle>
+        </CardHeader>
+        <CardContent className="h-[300px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={data}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Line type="monotone" dataKey="revenue" stroke="#8884d8" activeDot={{ r: 8 }} />
+            </LineChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
+
+      <Card className="col-span-full lg:col-span-2 shadow-lg">
+        <CardHeader>
+          <CardTitle>{t('liveActivityFeed')}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className={cn("flex items-center", isRTL && "flex-row-reverse")}>
+              <div className="h-9 w-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                <Zap className="h-5 w-5" />
+              </div>
+              <div className={cn("space-y-1", isRTL ? "ml-4" : "ml-4")}>
+                <p className="text-sm font-medium leading-none">{t('userJohnDoe')}</p>
+                <p className="text-sm text-muted-foreground">{t('stationId')}</p>
+              </div>
+              <div className={cn("font-medium text-green-600", isRTL ? "mr-auto" : "ml-auto")}>
+                <Badge variant="secondary">Active</Badge>
+              </div>
+            </div>
+            
+            <div className={cn("flex items-center", isRTL && "flex-row-reverse")}>
+              <div className="h-9 w-9 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                <CreditCard className="h-5 w-5" />
+              </div>
+              <div className={cn("space-y-1", isRTL ? "ml-4" : "ml-4")}>
+                <p className="text-sm font-medium leading-none">{t('userJaneSmith')}</p>
+                <p className="text-sm text-muted-foreground">{t('amount')}</p>
+              </div>
+              <div className={cn("font-medium text-green-600", isRTL ? "mr-auto" : "ml-auto")}>
+                <Badge variant="default">Completed</Badge>
+              </div>
+            </div>
+            
+            <div className={cn("flex items-center", isRTL && "flex-row-reverse")}>
+              <div className="h-9 w-9 rounded-full bg-red-100 flex items-center justify-center text-red-600">
+                <AlertTriangle className="h-5 w-5" />
+              </div>
+              <div className={cn("space-y-1", isRTL ? "ml-4" : "ml-4")}>
+                <p className="text-sm font-medium leading-none">{t('stationCH005')}</p>
+                <p className="text-sm text-muted-foreground">{t('connectorB2')}</p>
+              </div>
+              <div className={cn("font-medium text-red-600", isRTL ? "mr-auto" : "ml-auto")}>
+                <Badge variant="destructive">Alert</Badge>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="col-span-full shadow-lg">
+        <CardHeader>
+          <CardTitle>{t('systemHealth')}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className={cn("flex items-center space-x-2", isRTL && "flex-row-reverse space-x-reverse")}>
+              <Server className="h-5 w-5 text-blue-500" />
+              <p className="text-sm font-medium">{t('apiGateway')}</p>
+              <Badge variant="default" className="bg-green-500">{t('operational')}</Badge>
+            </div>
+            <div className={cn("flex items-center space-x-2", isRTL && "flex-row-reverse space-x-reverse")}>
+              <Database className="h-5 w-5 text-blue-500" />
+              <p className="text-sm font-medium">{t('database')}</p>
+              <Badge variant="default" className="bg-green-500">{t('operational')}</Badge>
+            </div>
+            <div className={cn("flex items-center space-x-2", isRTL && "flex-row-reverse space-x-reverse")}>
+              <CreditCard className="h-5 w-5 text-blue-500" />
+              <p className="text-sm font-medium">{t('paymentGateway')}</p>
+              <Badge variant="default" className="bg-green-500">{t('operational')}</Badge>
+            </div>
           </div>
         </CardContent>
       </Card>

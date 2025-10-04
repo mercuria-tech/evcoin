@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,6 +46,310 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
+
+        /* RTL Support */
+        [dir="rtl"] {
+            direction: rtl;
+        }
+
+        [dir="rtl"] .ml-auto {
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        [dir="rtl"] .mr-auto {
+            margin-right: auto;
+            margin-left: 0;
+        }
+
+        [dir="rtl"] .ml-2 {
+            margin-left: 0.5rem;
+            margin-right: 0;
+        }
+
+        [dir="rtl"] .mr-2 {
+            margin-right: 0.5rem;
+            margin-left: 0;
+        }
+
+        [dir="rtl"] .ml-3 {
+            margin-left: 0.75rem;
+            margin-right: 0;
+        }
+
+        [dir="rtl"] .mr-3 {
+            margin-right: 0.75rem;
+            margin-left: 0;
+        }
+
+        [dir="rtl"] .ml-4 {
+            margin-left: 1rem;
+            margin-right: 0;
+        }
+
+        [dir="rtl"] .mr-4 {
+            margin-right: 1rem;
+            margin-left: 0;
+        }
+
+        [dir="rtl"] .ml-6 {
+            margin-left: 1.5rem;
+            margin-right: 0;
+        }
+
+        [dir="rtl"] .mr-6 {
+            margin-right: 1.5rem;
+            margin-left: 0;
+        }
+
+        [dir="rtl"] .pl-2 {
+            padding-left: 0.5rem;
+            padding-right: 0;
+        }
+
+        [dir="rtl"] .pr-2 {
+            padding-right: 0.5rem;
+            padding-left: 0;
+        }
+
+        [dir="rtl"] .pl-3 {
+            padding-left: 0.75rem;
+            padding-right: 0;
+        }
+
+        [dir="rtl"] .pr-3 {
+            padding-right: 0.75rem;
+            padding-left: 0;
+        }
+
+        [dir="rtl"] .pl-4 {
+            padding-left: 1rem;
+            padding-right: 0;
+        }
+
+        [dir="rtl"] .pr-4 {
+            padding-right: 1rem;
+            padding-left: 0;
+        }
+
+        [dir="rtl"] .pl-6 {
+            padding-left: 1.5rem;
+            padding-right: 0;
+        }
+
+        [dir="rtl"] .pr-6 {
+            padding-right: 1.5rem;
+            padding-left: 0;
+        }
+
+        [dir="rtl"] .left-0 {
+            left: auto;
+            right: 0;
+        }
+
+        [dir="rtl"] .right-0 {
+            right: auto;
+            left: 0;
+        }
+
+        [dir="rtl"] .left-3 {
+            left: auto;
+            right: 0.75rem;
+        }
+
+        [dir="rtl"] .right-3 {
+            right: auto;
+            left: 0.75rem;
+        }
+
+        [dir="rtl"] .left-4 {
+            left: auto;
+            right: 1rem;
+        }
+
+        [dir="rtl"] .right-4 {
+            right: auto;
+            left: 1rem;
+        }
+
+        [dir="rtl"] .text-left {
+            text-align: right;
+        }
+
+        [dir="rtl"] .text-right {
+            text-align: left;
+        }
+
+        [dir="rtl"] .flex-row {
+            flex-direction: row-reverse;
+        }
+
+        [dir="rtl"] .flex-row-reverse {
+            flex-direction: row;
+        }
+
+        [dir="rtl"] .border-l {
+            border-left: none;
+            border-right: 1px solid;
+        }
+
+        [dir="rtl"] .border-r {
+            border-right: none;
+            border-left: 1px solid;
+        }
+
+        [dir="rtl"] .border-l-4 {
+            border-left: none;
+            border-right: 4px solid;
+        }
+
+        [dir="rtl"] .border-r-4 {
+            border-right: none;
+            border-left: 4px solid;
+        }
+
+        [dir="rtl"] .rounded-l {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-top-right-radius: 0.25rem;
+            border-bottom-right-radius: 0.25rem;
+        }
+
+        [dir="rtl"] .rounded-r {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-top-left-radius: 0.25rem;
+            border-bottom-left-radius: 0.25rem;
+        }
+
+        [dir="rtl"] .rounded-l-lg {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-top-right-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+        }
+
+        [dir="rtl"] .rounded-r-lg {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 0.5rem;
+        }
+
+        [dir="rtl"] .space-x-2 > * + * {
+            margin-left: 0;
+            margin-right: 0.5rem;
+        }
+
+        [dir="rtl"] .space-x-3 > * + * {
+            margin-left: 0;
+            margin-right: 0.75rem;
+        }
+
+        [dir="rtl"] .space-x-4 > * + * {
+            margin-left: 0;
+            margin-right: 1rem;
+        }
+
+        [dir="rtl"] .space-x-6 > * + * {
+            margin-left: 0;
+            margin-right: 1.5rem;
+        }
+
+        [dir="rtl"] .space-y-2 > * + * {
+            margin-top: 0.5rem;
+            margin-bottom: 0;
+        }
+
+        [dir="rtl"] .space-y-3 > * + * {
+            margin-top: 0.75rem;
+            margin-bottom: 0;
+        }
+
+        [dir="rtl"] .space-y-4 > * + * {
+            margin-top: 1rem;
+            margin-bottom: 0;
+        }
+
+        [dir="rtl"] .space-y-6 > * + * {
+            margin-top: 1.5rem;
+            margin-bottom: 0;
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            position: relative;
+            display: inline-block;
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            width: 12rem;
+            background-color: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            z-index: 50;
+        }
+
+        [dir="rtl"] .language-dropdown {
+            right: auto;
+            left: 0;
+        }
+
+        .language-option {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.5rem 1rem;
+            text-align: left;
+            font-size: 0.875rem;
+            color: #374151;
+            border: none;
+            background: none;
+            cursor: pointer;
+            transition: background-color 0.15s ease-in-out;
+        }
+
+        [dir="rtl"] .language-option {
+            text-align: right;
+        }
+
+        .language-option:hover {
+            background-color: #f3f4f6;
+        }
+
+        .language-option.active {
+            background-color: #dbeafe;
+            color: #2563eb;
+        }
+
+        .language-flag {
+            font-size: 1.125rem;
+            margin-right: 0.75rem;
+        }
+
+        [dir="rtl"] .language-flag {
+            margin-right: 0;
+            margin-left: 0.75rem;
+        }
+
+        .language-name {
+            font-weight: 500;
+        }
+
+        .language-check {
+            margin-left: auto;
+            color: #2563eb;
+        }
+
+        [dir="rtl"] .language-check {
+            margin-left: 0;
+            margin-right: auto;
+        }
     </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
@@ -59,8 +363,8 @@
                         <i data-lucide="zap" class="w-5 h-5 text-white"></i>
                     </div>
                     <div>
-                        <h1 class="text-lg font-bold text-gray-900">EV Platform</h1>
-                        <p class="text-xs text-gray-500">Admin Dashboard</p>
+                        <h1 class="text-lg font-bold text-gray-900" id="logo-text">EV Platform</h1>
+                        <p class="text-xs text-gray-500" id="logo-subtitle">Admin Dashboard</p>
                     </div>
                 </div>
             </div>
@@ -70,64 +374,64 @@
                 <a href="dashboard.html" class="nav-item active flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors bg-blue-600 text-white">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
-                        <span>Dashboard</span>
+                        <span id="nav-dashboard">Dashboard</span>
                     </div>
                 </a>
                 <a href="stations.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="zap" class="w-5 h-5"></i>
-                        <span>Stations</span>
+                        <span id="nav-stations">Stations</span>
                     </div>
                     <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">1,247</span>
                 </a>
                 <a href="users.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="users" class="w-5 h-5"></i>
-                        <span>Users</span>
+                        <span id="nav-users">Users</span>
                     </div>
                     <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">15.4K</span>
                 </a>
                 <a href="charging.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="activity" class="w-5 h-5"></i>
-                        <span>Charging Sessions</span>
+                        <span id="nav-charging">Charging Sessions</span>
                     </div>
                 </a>
                 <a href="payments.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="credit-card" class="w-5 h-5"></i>
-                        <span>Payments</span>
+                        <span id="nav-payments">Payments</span>
                     </div>
                 </a>
                 <a href="analytics.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
-                        <span>Analytics</span>
+                        <span id="nav-analytics">Analytics</span>
                     </div>
                 </a>
                 <a href="reports.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="file-text" class="w-5 h-5"></i>
-                        <span>Reports</span>
+                        <span id="nav-reports">Reports</span>
                     </div>
                 </a>
                 <a href="notifications.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="bell" class="w-5 h-5"></i>
-                        <span>Notifications</span>
+                        <span id="nav-notifications">Notifications</span>
                     </div>
                     <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">3</span>
                 </a>
                 <a href="support.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="help-circle" class="w-5 h-5"></i>
-                        <span>Support</span>
+                        <span id="nav-support">Support</span>
                     </div>
                 </a>
                 <a href="settings.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="settings" class="w-5 h-5"></i>
-                        <span>Settings</span>
+                        <span id="nav-settings">Settings</span>
                     </div>
                 </a>
             </nav>
@@ -151,10 +455,37 @@
             <!-- Top Bar -->
             <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6">
                 <div class="flex items-center space-x-4">
-                    <h2 class="text-xl font-semibold text-gray-900">Dashboard Overview</h2>
+                    <h2 class="text-xl font-semibold text-gray-900" id="page-title">Dashboard Overview</h2>
                 </div>
 
                 <div class="flex items-center space-x-4">
+                    <!-- Language Switcher -->
+                    <div class="language-switcher">
+                        <button class="btn-secondary px-3 py-1 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors flex items-center space-x-2" onclick="toggleLanguageDropdown()">
+                            <i data-lucide="globe" class="w-4 h-4"></i>
+                            <span id="current-language-flag">🇺🇸</span>
+                            <span id="current-language-name">English</span>
+                        </button>
+                        
+                        <div id="language-dropdown" class="language-dropdown hidden">
+                            <button class="language-option" onclick="changeLanguage('en')">
+                                <span class="language-flag">🇺🇸</span>
+                                <span class="language-name">English</span>
+                                <span class="language-check" id="check-en">✓</span>
+                            </button>
+                            <button class="language-option" onclick="changeLanguage('ar')">
+                                <span class="language-flag">🇸🇦</span>
+                                <span class="language-name">العربية</span>
+                                <span class="language-check hidden" id="check-ar">✓</span>
+                            </button>
+                            <button class="language-option" onclick="changeLanguage('fa')">
+                                <span class="language-flag">🇮🇷</span>
+                                <span class="language-name">فارسی</span>
+                                <span class="language-check hidden" id="check-fa">✓</span>
+                            </button>
+                        </div>
+                    </div>
+
                     <!-- Status Indicators -->
                     <div class="hidden md:flex items-center space-x-4">
                         <div class="flex items-center space-x-2">
@@ -188,7 +519,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
                         <div class="card rounded-lg p-6 hover-lift">
                             <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-sm font-medium text-gray-600">Total Revenue</h3>
+                                <h3 class="text-sm font-medium text-gray-600" id="metric-revenue">Total Revenue</h3>
                                 <i data-lucide="dollar-sign" class="w-4 h-4 text-gray-400"></i>
                             </div>
                             <div class="text-2xl font-bold text-gray-900 mb-1">$387,421</div>
@@ -203,7 +534,7 @@
 
                         <div class="card rounded-lg p-6 hover-lift">
                             <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-sm font-medium text-gray-600">Active Sessions</h3>
+                                <h3 class="text-sm font-medium text-gray-600" id="metric-sessions">Active Sessions</h3>
                                 <i data-lucide="activity" class="w-4 h-4 text-gray-400"></i>
                             </div>
                             <div class="text-2xl font-bold text-gray-900 mb-1">89</div>
@@ -218,7 +549,7 @@
 
                         <div class="card rounded-lg p-6 hover-lift">
                             <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-sm font-medium text-gray-600">Total Stations</h3>
+                                <h3 class="text-sm font-medium text-gray-600" id="metric-stations">Total Stations</h3>
                                 <i data-lucide="zap" class="w-4 h-4 text-gray-400"></i>
                             </div>
                             <div class="text-2xl font-bold text-gray-900 mb-1">1,247</div>
@@ -232,7 +563,7 @@
 
                         <div class="card rounded-lg p-6 hover-lift">
                             <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-sm font-medium text-gray-600">Total Users</h3>
+                                <h3 class="text-sm font-medium text-gray-600" id="metric-users">Total Users</h3>
                                 <i data-lucide="users" class="w-4 h-4 text-gray-400"></i>
                             </div>
                             <div class="text-2xl font-bold text-gray-900 mb-1">15,432</div>
@@ -251,7 +582,7 @@
                         <!-- Revenue Chart -->
                         <div class="card rounded-lg p-6 hover-lift">
                             <div class="mb-4">
-                                <h3 class="text-lg font-semibold text-gray-900">Revenue Trend</h3>
+                                <h3 class="text-lg font-semibold text-gray-900" id="chart-revenue-title">Revenue Trend</h3>
                                 <p class="text-sm text-gray-600">Monthly revenue and session count</p>
                             </div>
                             <div class="h-80">
@@ -262,7 +593,7 @@
                         <!-- Station Status -->
                         <div class="card rounded-lg p-6 hover-lift">
                             <div class="mb-4">
-                                <h3 class="text-lg font-semibold text-gray-900">Station Status</h3>
+                                <h3 class="text-lg font-semibold text-gray-900" id="chart-station-title">Station Status</h3>
                                 <p class="text-sm text-gray-600">Current station distribution</p>
                             </div>
                             <div class="h-80">
@@ -276,7 +607,7 @@
                         <!-- Real-time Activity -->
                         <div class="card rounded-lg p-6 hover-lift">
                             <div class="mb-4">
-                                <h3 class="text-lg font-semibold text-gray-900">Real-time Activity</h3>
+                                <h3 class="text-lg font-semibold text-gray-900" id="activity-title">Real-time Activity</h3>
                                 <p class="text-sm text-gray-600">Live platform events</p>
                             </div>
                             <div class="space-y-3">
@@ -310,7 +641,7 @@
                         <!-- Quick Actions -->
                         <div class="card rounded-lg p-6 hover-lift">
                             <div class="mb-4">
-                                <h3 class="text-lg font-semibold text-gray-900">Quick Actions</h3>
+                                <h3 class="text-lg font-semibold text-gray-900" id="actions-title">Quick Actions</h3>
                                 <p class="text-sm text-gray-600">Common administrative tasks</p>
                             </div>
                             <div class="grid grid-cols-2 gap-3">
@@ -336,7 +667,7 @@
                         <!-- System Health -->
                         <div class="card rounded-lg p-6 hover-lift">
                             <div class="mb-4">
-                                <h3 class="text-lg font-semibold text-gray-900">System Health</h3>
+                                <h3 class="text-lg font-semibold text-gray-900" id="health-title">System Health</h3>
                                 <p class="text-sm text-gray-600">Platform status monitoring</p>
                             </div>
                             <div class="space-y-4">
@@ -375,7 +706,7 @@
                     <!-- API Status -->
                     <div class="card rounded-lg p-6 hover-lift">
                         <div class="mb-4">
-                            <h3 class="text-lg font-semibold text-gray-900">API Status & Endpoints</h3>
+                            <h3 class="text-lg font-semibold text-gray-900" id="api-title">API Status & Endpoints</h3>
                             <p class="text-sm text-gray-600">Your EV Charging Platform API is live and operational</p>
                         </div>
                         
@@ -416,8 +747,155 @@
         // Initialize Lucide icons
         lucide.createIcons();
         
+        // Language translations
+        const translations = {
+            en: {
+                'logo-text': 'EV Platform',
+                'logo-subtitle': 'Admin Dashboard',
+                'nav-dashboard': 'Dashboard',
+                'nav-stations': 'Stations',
+                'nav-users': 'Users',
+                'nav-charging': 'Charging Sessions',
+                'nav-payments': 'Payments',
+                'nav-analytics': 'Analytics',
+                'nav-reports': 'Reports',
+                'nav-notifications': 'Notifications',
+                'nav-support': 'Support',
+                'nav-settings': 'Settings',
+                'page-title': 'Dashboard Overview',
+                'metric-revenue': 'Total Revenue',
+                'metric-sessions': 'Active Sessions',
+                'metric-stations': 'Total Stations',
+                'metric-users': 'Total Users',
+                'chart-revenue-title': 'Revenue Trend',
+                'chart-station-title': 'Station Status',
+                'activity-title': 'Real-time Activity',
+                'actions-title': 'Quick Actions',
+                'health-title': 'System Health',
+                'api-title': 'API Status & Endpoints'
+            },
+            ar: {
+                'logo-text': 'منصة المركبات الكهربائية',
+                'logo-subtitle': 'لوحة تحكم الإدارة',
+                'nav-dashboard': 'لوحة التحكم',
+                'nav-stations': 'المحطات',
+                'nav-users': 'المستخدمون',
+                'nav-charging': 'جلسات الشحن',
+                'nav-payments': 'المدفوعات',
+                'nav-analytics': 'التحليلات',
+                'nav-reports': 'التقارير',
+                'nav-notifications': 'الإشعارات',
+                'nav-support': 'الدعم',
+                'nav-settings': 'الإعدادات',
+                'page-title': 'نظرة عامة على لوحة التحكم',
+                'metric-revenue': 'إجمالي الإيرادات',
+                'metric-sessions': 'الجلسات النشطة',
+                'metric-stations': 'إجمالي المحطات',
+                'metric-users': 'إجمالي المستخدمين',
+                'chart-revenue-title': 'اتجاه الإيرادات',
+                'chart-station-title': 'حالة المحطة',
+                'activity-title': 'النشاط في الوقت الفعلي',
+                'actions-title': 'الإجراءات السريعة',
+                'health-title': 'صحة النظام',
+                'api-title': 'حالة وواجهات برمجة التطبيقات'
+            },
+            fa: {
+                'logo-text': 'پلتفرم خودروهای برقی',
+                'logo-subtitle': 'داشبورد مدیریت',
+                'nav-dashboard': 'داشبورد',
+                'nav-stations': 'ایستگاه‌ها',
+                'nav-users': 'کاربران',
+                'nav-charging': 'جلسات شارژ',
+                'nav-payments': 'پرداخت‌ها',
+                'nav-analytics': 'تحلیل‌ها',
+                'nav-reports': 'گزارش‌ها',
+                'nav-notifications': 'اطلاعیه‌ها',
+                'nav-support': 'پشتیبانی',
+                'nav-settings': 'تنظیمات',
+                'page-title': 'نمای کلی داشبورد',
+                'metric-revenue': 'کل درآمد',
+                'metric-sessions': 'جلسات فعال',
+                'metric-stations': 'کل ایستگاه‌ها',
+                'metric-users': 'کل کاربران',
+                'chart-revenue-title': 'روند درآمد',
+                'chart-station-title': 'وضعیت ایستگاه',
+                'activity-title': 'فعالیت زمان واقعی',
+                'actions-title': 'اقدامات سریع',
+                'health-title': 'سلامت سیستم',
+                'api-title': 'وضعیت و نقاط پایانی API'
+            }
+        };
+
+        let currentLanguage = 'en';
+
+        // Load saved language preference
+        function loadLanguagePreference() {
+            const savedLanguage = localStorage.getItem('ev-admin-language');
+            if (savedLanguage && ['en', 'ar', 'fa'].includes(savedLanguage)) {
+                currentLanguage = savedLanguage;
+                applyLanguage(currentLanguage);
+            }
+        }
+
+        // Apply language changes
+        function applyLanguage(language) {
+            currentLanguage = language;
+            
+            // Update document direction and language
+            document.documentElement.dir = ['ar', 'fa'].includes(language) ? 'rtl' : 'ltr';
+            document.documentElement.lang = language;
+            
+            // Update all translatable elements
+            const elements = translations[language];
+            for (const [id, text] of Object.entries(elements)) {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = text;
+                }
+            }
+            
+            // Update language switcher
+            const languageNames = { en: 'English', ar: 'العربية', fa: 'فارسی' };
+            const languageFlags = { en: '🇺🇸', ar: '🇸🇦', fa: '🇮🇷' };
+            
+            document.getElementById('current-language-name').textContent = languageNames[language];
+            document.getElementById('current-language-flag').textContent = languageFlags[language];
+            
+            // Update checkmarks
+            document.querySelectorAll('.language-check').forEach(check => check.classList.add('hidden'));
+            document.getElementById(`check-${language}`).classList.remove('hidden');
+            
+            // Save preference
+            localStorage.setItem('ev-admin-language', language);
+        }
+
+        // Toggle language dropdown
+        function toggleLanguageDropdown() {
+            const dropdown = document.getElementById('language-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Change language
+        function changeLanguage(language) {
+            applyLanguage(language);
+            toggleLanguageDropdown();
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('language-dropdown');
+            const button = event.target.closest('.language-switcher button');
+            
+            if (!button && !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
         // Initialize charts
         document.addEventListener('DOMContentLoaded', function() {
+            // Load language preference
+            loadLanguagePreference();
+            
             // Revenue Chart
             const revenueCtx = document.getElementById('revenueChart').getContext('2d');
             new Chart(revenueCtx, {
@@ -481,7 +959,10 @@
         // Simulate real-time updates
         setInterval(() => {
             const activeSessions = Math.floor(Math.random() * 20) + 80;
-            document.querySelector('.text-2xl.font-bold').textContent = activeSessions;
+            const sessionsElement = document.querySelector('.text-2xl.font-bold');
+            if (sessionsElement) {
+                sessionsElement.textContent = activeSessions;
+            }
         }, 5000);
     </script>
 </body>
