@@ -4,7 +4,363 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EV Charging Platform - Payments</title>
+        // Comprehensive translations
+        const comprehensiveTranslations = {
+            en: {
+                "page-title": "Payment Management",
+                "dashboard": "Dashboard",
+                "stations": "Stations",
+                "users": "Users",
+                "charging_sessions": "Charging Sessions",
+                "payments": "Payments",
+                "analytics": "Analytics",
+                "reports": "Reports",
+                "notifications": "Notifications",
+                "support": "Support",
+                "settings": "Settings",
+                "search": "Search",
+                "filter": "Filter",
+                "export": "Export",
+                "add_new": "Add New",
+                "edit": "Edit",
+                "delete": "Delete",
+                "view_details": "View Details",
+                "save": "Save",
+                "cancel": "Cancel",
+                "loading": "Loading",
+                "no_data": "No data available",
+                "active": "Active",
+                "inactive": "Inactive",
+                "pending": "Pending",
+                "completed": "Completed",
+                "cancelled": "Cancelled",
+                "failed": "Failed",
+                "total": "Total",
+                "average": "Average",
+                "status": "Status",
+                "actions": "Actions",
+                "refresh": "Refresh",
+                "download": "Download",
+                "print": "Print",
+                "language": "Language",
+                "english": "English",
+                "arabic": "Arabic",
+                "farsi": "Farsi"
+            },
+            ar: {
+                "page-title": "Payment Management",
+                "dashboard": "لوحة القيادة",
+                "stations": "المحطات",
+                "users": "المستخدمون",
+                "charging_sessions": "جلسات الشحن",
+                "payments": "المدفوعات",
+                "analytics": "التحليلات",
+                "reports": "التقارير",
+                "notifications": "الإشعارات",
+                "support": "الدعم",
+                "settings": "الإعدادات",
+                "search": "بحث",
+                "filter": "تصفية",
+                "export": "تصدير",
+                "add_new": "إضافة جديد",
+                "edit": "تعديل",
+                "delete": "حذف",
+                "view_details": "عرض التفاصيل",
+                "save": "حفظ",
+                "cancel": "إلغاء",
+                "loading": "جاري التحميل",
+                "no_data": "لا توجد بيانات متاحة",
+                "active": "نشط",
+                "inactive": "غير نشط",
+                "pending": "معلق",
+                "completed": "مكتمل",
+                "cancelled": "ملغى",
+                "failed": "فشل",
+                "total": "المجموع",
+                "average": "المتوسط",
+                "status": "الحالة",
+                "actions": "الإجراءات",
+                "refresh": "تحديث",
+                "download": "تحميل",
+                "print": "طباعة",
+                "language": "اللغة",
+                "english": "الإنجليزية",
+                "arabic": "العربية",
+                "farsi": "الفارسية"
+            },
+            fa: {
+                "page-title": "Payment Management",
+                "dashboard": "داشبورد",
+                "stations": "ایستگاه‌ها",
+                "users": "کاربران",
+                "charging_sessions": "جلسات شارژ",
+                "payments": "پرداخت‌ها",
+                "analytics": "تحلیل‌ها",
+                "reports": "گزارش‌ها",
+                "notifications": "اعلان‌ها",
+                "support": "پشتیبانی",
+                "settings": "تنظیمات",
+                "search": "جستجو",
+                "filter": "فیلتر",
+                "export": "خروجی",
+                "add_new": "افزودن جدید",
+                "edit": "ویرایش",
+                "delete": "حذف",
+                "view_details": "مشاهده جزئیات",
+                "save": "ذخیره",
+                "cancel": "لغو",
+                "loading": "در حال بارگذاری",
+                "no_data": "داده‌ای موجود نیست",
+                "active": "فعال",
+                "inactive": "غیرفعال",
+                "pending": "در انتظار",
+                "completed": "تکمیل شده",
+                "cancelled": "لغو شده",
+                "failed": "ناموفق",
+                "total": "کل",
+                "average": "میانگین",
+                "status": "وضعیت",
+                "actions": "عملیات",
+                "refresh": "تازه‌سازی",
+                "download": "دانلود",
+                "print": "چاپ",
+                "language": "زبان",
+                "english": "انگلیسی",
+                "arabic": "عربی",
+                "farsi": "فارسی"
+            }
+        };
+
+        // Enhanced translation function
+        function applyComprehensiveTranslations(language) {
+            currentLanguage = language;
+            
+            // Update document direction and language
+            document.documentElement.dir = ["ar", "fa"].includes(language) ? "rtl" : "ltr";
+            document.documentElement.lang = language;
+            
+            // Update all translatable elements
+            const elements = comprehensiveTranslations[language];
+            for (const [id, text] of Object.entries(elements)) {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = text;
+                }
+                
+                // Also update elements with data-i18n attribute
+                const i18nElements = document.querySelectorAll(`[data-i18n="${id}"]`);
+                i18nElements.forEach(el => {
+                    el.textContent = text;
+                });
+            }
+            
+            // Update language switcher
+            const languageNames = { en: "English", ar: "العربية", fa: "فارسی" };
+            const languageFlags = { en: "🇺🇸", ar: "🇸🇦", fa: "🇮🇷" };
+            
+            if (document.getElementById("current-language-name")) {
+                document.getElementById("current-language-name").textContent = languageNames[language];
+            }
+            if (document.getElementById("current-language-flag")) {
+                document.getElementById("current-language-flag").textContent = languageFlags[language];
+            }
+            
+            // Update checkmarks
+            document.querySelectorAll(".language-check").forEach(check => check.classList.add("hidden"));
+            const checkElement = document.getElementById(`check-${language}`);
+            if (checkElement) {
+                checkElement.classList.remove("hidden");
+            }
+            
+            // Save preference
+            localStorage.setItem("ev-admin-language", language);
+        }
+
+        // Override the existing applyLanguage function
+        if (typeof applyLanguage !== "undefined") {
+            applyLanguage = applyComprehensiveTranslations;
+        } else {
+            window.applyLanguage = applyComprehensiveTranslations;
+        }
     <script src="https://cdn.tailwindcss.com"></script>
+        // Comprehensive translations
+        const comprehensiveTranslations = {
+            en: {
+                "page-title": "Payment Management",
+                "dashboard": "Dashboard",
+                "stations": "Stations",
+                "users": "Users",
+                "charging_sessions": "Charging Sessions",
+                "payments": "Payments",
+                "analytics": "Analytics",
+                "reports": "Reports",
+                "notifications": "Notifications",
+                "support": "Support",
+                "settings": "Settings",
+                "search": "Search",
+                "filter": "Filter",
+                "export": "Export",
+                "add_new": "Add New",
+                "edit": "Edit",
+                "delete": "Delete",
+                "view_details": "View Details",
+                "save": "Save",
+                "cancel": "Cancel",
+                "loading": "Loading",
+                "no_data": "No data available",
+                "active": "Active",
+                "inactive": "Inactive",
+                "pending": "Pending",
+                "completed": "Completed",
+                "cancelled": "Cancelled",
+                "failed": "Failed",
+                "total": "Total",
+                "average": "Average",
+                "status": "Status",
+                "actions": "Actions",
+                "refresh": "Refresh",
+                "download": "Download",
+                "print": "Print",
+                "language": "Language",
+                "english": "English",
+                "arabic": "Arabic",
+                "farsi": "Farsi"
+            },
+            ar: {
+                "page-title": "Payment Management",
+                "dashboard": "لوحة القيادة",
+                "stations": "المحطات",
+                "users": "المستخدمون",
+                "charging_sessions": "جلسات الشحن",
+                "payments": "المدفوعات",
+                "analytics": "التحليلات",
+                "reports": "التقارير",
+                "notifications": "الإشعارات",
+                "support": "الدعم",
+                "settings": "الإعدادات",
+                "search": "بحث",
+                "filter": "تصفية",
+                "export": "تصدير",
+                "add_new": "إضافة جديد",
+                "edit": "تعديل",
+                "delete": "حذف",
+                "view_details": "عرض التفاصيل",
+                "save": "حفظ",
+                "cancel": "إلغاء",
+                "loading": "جاري التحميل",
+                "no_data": "لا توجد بيانات متاحة",
+                "active": "نشط",
+                "inactive": "غير نشط",
+                "pending": "معلق",
+                "completed": "مكتمل",
+                "cancelled": "ملغى",
+                "failed": "فشل",
+                "total": "المجموع",
+                "average": "المتوسط",
+                "status": "الحالة",
+                "actions": "الإجراءات",
+                "refresh": "تحديث",
+                "download": "تحميل",
+                "print": "طباعة",
+                "language": "اللغة",
+                "english": "الإنجليزية",
+                "arabic": "العربية",
+                "farsi": "الفارسية"
+            },
+            fa: {
+                "page-title": "Payment Management",
+                "dashboard": "داشبورد",
+                "stations": "ایستگاه‌ها",
+                "users": "کاربران",
+                "charging_sessions": "جلسات شارژ",
+                "payments": "پرداخت‌ها",
+                "analytics": "تحلیل‌ها",
+                "reports": "گزارش‌ها",
+                "notifications": "اعلان‌ها",
+                "support": "پشتیبانی",
+                "settings": "تنظیمات",
+                "search": "جستجو",
+                "filter": "فیلتر",
+                "export": "خروجی",
+                "add_new": "افزودن جدید",
+                "edit": "ویرایش",
+                "delete": "حذف",
+                "view_details": "مشاهده جزئیات",
+                "save": "ذخیره",
+                "cancel": "لغو",
+                "loading": "در حال بارگذاری",
+                "no_data": "داده‌ای موجود نیست",
+                "active": "فعال",
+                "inactive": "غیرفعال",
+                "pending": "در انتظار",
+                "completed": "تکمیل شده",
+                "cancelled": "لغو شده",
+                "failed": "ناموفق",
+                "total": "کل",
+                "average": "میانگین",
+                "status": "وضعیت",
+                "actions": "عملیات",
+                "refresh": "تازه‌سازی",
+                "download": "دانلود",
+                "print": "چاپ",
+                "language": "زبان",
+                "english": "انگلیسی",
+                "arabic": "عربی",
+                "farsi": "فارسی"
+            }
+        };
+
+        // Enhanced translation function
+        function applyComprehensiveTranslations(language) {
+            currentLanguage = language;
+            
+            // Update document direction and language
+            document.documentElement.dir = ["ar", "fa"].includes(language) ? "rtl" : "ltr";
+            document.documentElement.lang = language;
+            
+            // Update all translatable elements
+            const elements = comprehensiveTranslations[language];
+            for (const [id, text] of Object.entries(elements)) {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = text;
+                }
+                
+                // Also update elements with data-i18n attribute
+                const i18nElements = document.querySelectorAll(`[data-i18n="${id}"]`);
+                i18nElements.forEach(el => {
+                    el.textContent = text;
+                });
+            }
+            
+            // Update language switcher
+            const languageNames = { en: "English", ar: "العربية", fa: "فارسی" };
+            const languageFlags = { en: "🇺🇸", ar: "🇸🇦", fa: "🇮🇷" };
+            
+            if (document.getElementById("current-language-name")) {
+                document.getElementById("current-language-name").textContent = languageNames[language];
+            }
+            if (document.getElementById("current-language-flag")) {
+                document.getElementById("current-language-flag").textContent = languageFlags[language];
+            }
+            
+            // Update checkmarks
+            document.querySelectorAll(".language-check").forEach(check => check.classList.add("hidden"));
+            const checkElement = document.getElementById(`check-${language}`);
+            if (checkElement) {
+                checkElement.classList.remove("hidden");
+            }
+            
+            // Save preference
+            localStorage.setItem("ev-admin-language", language);
+        }
+
+        // Override the existing applyLanguage function
+        if (typeof applyLanguage !== "undefined") {
+            applyLanguage = applyComprehensiveTranslations;
+        } else {
+            window.applyLanguage = applyComprehensiveTranslations;
+        }
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <style>
         .card {
@@ -763,6 +1119,184 @@
         document.addEventListener('DOMContentLoaded', function() {
             loadLanguagePreference();
         });
+        // Comprehensive translations
+        const comprehensiveTranslations = {
+            en: {
+                "page-title": "Payment Management",
+                "dashboard": "Dashboard",
+                "stations": "Stations",
+                "users": "Users",
+                "charging_sessions": "Charging Sessions",
+                "payments": "Payments",
+                "analytics": "Analytics",
+                "reports": "Reports",
+                "notifications": "Notifications",
+                "support": "Support",
+                "settings": "Settings",
+                "search": "Search",
+                "filter": "Filter",
+                "export": "Export",
+                "add_new": "Add New",
+                "edit": "Edit",
+                "delete": "Delete",
+                "view_details": "View Details",
+                "save": "Save",
+                "cancel": "Cancel",
+                "loading": "Loading",
+                "no_data": "No data available",
+                "active": "Active",
+                "inactive": "Inactive",
+                "pending": "Pending",
+                "completed": "Completed",
+                "cancelled": "Cancelled",
+                "failed": "Failed",
+                "total": "Total",
+                "average": "Average",
+                "status": "Status",
+                "actions": "Actions",
+                "refresh": "Refresh",
+                "download": "Download",
+                "print": "Print",
+                "language": "Language",
+                "english": "English",
+                "arabic": "Arabic",
+                "farsi": "Farsi"
+            },
+            ar: {
+                "page-title": "Payment Management",
+                "dashboard": "لوحة القيادة",
+                "stations": "المحطات",
+                "users": "المستخدمون",
+                "charging_sessions": "جلسات الشحن",
+                "payments": "المدفوعات",
+                "analytics": "التحليلات",
+                "reports": "التقارير",
+                "notifications": "الإشعارات",
+                "support": "الدعم",
+                "settings": "الإعدادات",
+                "search": "بحث",
+                "filter": "تصفية",
+                "export": "تصدير",
+                "add_new": "إضافة جديد",
+                "edit": "تعديل",
+                "delete": "حذف",
+                "view_details": "عرض التفاصيل",
+                "save": "حفظ",
+                "cancel": "إلغاء",
+                "loading": "جاري التحميل",
+                "no_data": "لا توجد بيانات متاحة",
+                "active": "نشط",
+                "inactive": "غير نشط",
+                "pending": "معلق",
+                "completed": "مكتمل",
+                "cancelled": "ملغى",
+                "failed": "فشل",
+                "total": "المجموع",
+                "average": "المتوسط",
+                "status": "الحالة",
+                "actions": "الإجراءات",
+                "refresh": "تحديث",
+                "download": "تحميل",
+                "print": "طباعة",
+                "language": "اللغة",
+                "english": "الإنجليزية",
+                "arabic": "العربية",
+                "farsi": "الفارسية"
+            },
+            fa: {
+                "page-title": "Payment Management",
+                "dashboard": "داشبورد",
+                "stations": "ایستگاه‌ها",
+                "users": "کاربران",
+                "charging_sessions": "جلسات شارژ",
+                "payments": "پرداخت‌ها",
+                "analytics": "تحلیل‌ها",
+                "reports": "گزارش‌ها",
+                "notifications": "اعلان‌ها",
+                "support": "پشتیبانی",
+                "settings": "تنظیمات",
+                "search": "جستجو",
+                "filter": "فیلتر",
+                "export": "خروجی",
+                "add_new": "افزودن جدید",
+                "edit": "ویرایش",
+                "delete": "حذف",
+                "view_details": "مشاهده جزئیات",
+                "save": "ذخیره",
+                "cancel": "لغو",
+                "loading": "در حال بارگذاری",
+                "no_data": "داده‌ای موجود نیست",
+                "active": "فعال",
+                "inactive": "غیرفعال",
+                "pending": "در انتظار",
+                "completed": "تکمیل شده",
+                "cancelled": "لغو شده",
+                "failed": "ناموفق",
+                "total": "کل",
+                "average": "میانگین",
+                "status": "وضعیت",
+                "actions": "عملیات",
+                "refresh": "تازه‌سازی",
+                "download": "دانلود",
+                "print": "چاپ",
+                "language": "زبان",
+                "english": "انگلیسی",
+                "arabic": "عربی",
+                "farsi": "فارسی"
+            }
+        };
+
+        // Enhanced translation function
+        function applyComprehensiveTranslations(language) {
+            currentLanguage = language;
+            
+            // Update document direction and language
+            document.documentElement.dir = ["ar", "fa"].includes(language) ? "rtl" : "ltr";
+            document.documentElement.lang = language;
+            
+            // Update all translatable elements
+            const elements = comprehensiveTranslations[language];
+            for (const [id, text] of Object.entries(elements)) {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = text;
+                }
+                
+                // Also update elements with data-i18n attribute
+                const i18nElements = document.querySelectorAll(`[data-i18n="${id}"]`);
+                i18nElements.forEach(el => {
+                    el.textContent = text;
+                });
+            }
+            
+            // Update language switcher
+            const languageNames = { en: "English", ar: "العربية", fa: "فارسی" };
+            const languageFlags = { en: "🇺🇸", ar: "🇸🇦", fa: "🇮🇷" };
+            
+            if (document.getElementById("current-language-name")) {
+                document.getElementById("current-language-name").textContent = languageNames[language];
+            }
+            if (document.getElementById("current-language-flag")) {
+                document.getElementById("current-language-flag").textContent = languageFlags[language];
+            }
+            
+            // Update checkmarks
+            document.querySelectorAll(".language-check").forEach(check => check.classList.add("hidden"));
+            const checkElement = document.getElementById(`check-${language}`);
+            if (checkElement) {
+                checkElement.classList.remove("hidden");
+            }
+            
+            // Save preference
+            localStorage.setItem("ev-admin-language", language);
+        }
+
+        // Override the existing applyLanguage function
+        if (typeof applyLanguage !== "undefined") {
+            applyLanguage = applyComprehensiveTranslations;
+        } else {
+            window.applyLanguage = applyComprehensiveTranslations;
+        }
     </script>
 </body>
 </html>
