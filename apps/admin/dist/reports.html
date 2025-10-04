@@ -30,6 +30,309 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
+        /* RTL Support */
+        [dir="rtl"] {
+            direction: rtl;
+        }
+
+        [dir="rtl"] .ml-auto {
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        [dir="rtl"] .mr-auto {
+            margin-right: auto;
+            margin-left: 0;
+        }
+
+        [dir="rtl"] .ml-2 {
+            margin-left: 0.5rem;
+            margin-right: 0;
+        }
+
+        [dir="rtl"] .mr-2 {
+            margin-right: 0.5rem;
+            margin-left: 0;
+        }
+
+        [dir="rtl"] .ml-3 {
+            margin-left: 0.75rem;
+            margin-right: 0;
+        }
+
+        [dir="rtl"] .mr-3 {
+            margin-right: 0.75rem;
+            margin-left: 0;
+        }
+
+        [dir="rtl"] .ml-4 {
+            margin-left: 1rem;
+            margin-right: 0;
+        }
+
+        [dir="rtl"] .mr-4 {
+            margin-right: 1rem;
+            margin-left: 0;
+        }
+
+        [dir="rtl"] .ml-6 {
+            margin-left: 1.5rem;
+            margin-right: 0;
+        }
+
+        [dir="rtl"] .mr-6 {
+            margin-right: 1.5rem;
+            margin-left: 0;
+        }
+
+        [dir="rtl"] .pl-2 {
+            padding-left: 0.5rem;
+            padding-right: 0;
+        }
+
+        [dir="rtl"] .pr-2 {
+            padding-right: 0.5rem;
+            padding-left: 0;
+        }
+
+        [dir="rtl"] .pl-3 {
+            padding-left: 0.75rem;
+            padding-right: 0;
+        }
+
+        [dir="rtl"] .pr-3 {
+            padding-right: 0.75rem;
+            padding-left: 0;
+        }
+
+        [dir="rtl"] .pl-4 {
+            padding-left: 1rem;
+            padding-right: 0;
+        }
+
+        [dir="rtl"] .pr-4 {
+            padding-right: 1rem;
+            padding-left: 0;
+        }
+
+        [dir="rtl"] .pl-6 {
+            padding-left: 1.5rem;
+            padding-right: 0;
+        }
+
+        [dir="rtl"] .pr-6 {
+            padding-right: 1.5rem;
+            padding-left: 0;
+        }
+
+        [dir="rtl"] .left-0 {
+            left: auto;
+            right: 0;
+        }
+
+        [dir="rtl"] .right-0 {
+            right: auto;
+            left: 0;
+        }
+
+        [dir="rtl"] .left-3 {
+            left: auto;
+            right: 0.75rem;
+        }
+
+        [dir="rtl"] .right-3 {
+            right: auto;
+            left: 0.75rem;
+        }
+
+        [dir="rtl"] .left-4 {
+            left: auto;
+            right: 1rem;
+        }
+
+        [dir="rtl"] .right-4 {
+            right: auto;
+            left: 1rem;
+        }
+
+        [dir="rtl"] .text-left {
+            text-align: right;
+        }
+
+        [dir="rtl"] .text-right {
+            text-align: left;
+        }
+
+        [dir="rtl"] .flex-row {
+            flex-direction: row-reverse;
+        }
+
+        [dir="rtl"] .flex-row-reverse {
+            flex-direction: row;
+        }
+
+        [dir="rtl"] .border-l {
+            border-left: none;
+            border-right: 1px solid;
+        }
+
+        [dir="rtl"] .border-r {
+            border-right: none;
+            border-left: 1px solid;
+        }
+
+        [dir="rtl"] .border-l-4 {
+            border-left: none;
+            border-right: 4px solid;
+        }
+
+        [dir="rtl"] .border-r-4 {
+            border-right: none;
+            border-left: 4px solid;
+        }
+
+        [dir="rtl"] .rounded-l {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-top-right-radius: 0.25rem;
+            border-bottom-right-radius: 0.25rem;
+        }
+
+        [dir="rtl"] .rounded-r {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-top-left-radius: 0.25rem;
+            border-bottom-left-radius: 0.25rem;
+        }
+
+        [dir="rtl"] .rounded-l-lg {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-top-right-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+        }
+
+        [dir="rtl"] .rounded-r-lg {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 0.5rem;
+        }
+
+        [dir="rtl"] .space-x-2 > * + * {
+            margin-left: 0;
+            margin-right: 0.5rem;
+        }
+
+        [dir="rtl"] .space-x-3 > * + * {
+            margin-left: 0;
+            margin-right: 0.75rem;
+        }
+
+        [dir="rtl"] .space-x-4 > * + * {
+            margin-left: 0;
+            margin-right: 1rem;
+        }
+
+        [dir="rtl"] .space-x-6 > * + * {
+            margin-left: 0;
+            margin-right: 1.5rem;
+        }
+
+        [dir="rtl"] .space-y-2 > * + * {
+            margin-top: 0.5rem;
+            margin-bottom: 0;
+        }
+
+        [dir="rtl"] .space-y-3 > * + * {
+            margin-top: 0.75rem;
+            margin-bottom: 0;
+        }
+
+        [dir="rtl"] .space-y-4 > * + * {
+            margin-top: 1rem;
+            margin-bottom: 0;
+        }
+
+        [dir="rtl"] .space-y-6 > * + * {
+            margin-top: 1.5rem;
+            margin-bottom: 0;
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            position: relative;
+            display: inline-block;
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            width: 12rem;
+            background-color: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            z-index: 50;
+        }
+
+        [dir="rtl"] .language-dropdown {
+            right: auto;
+            left: 0;
+        }
+
+        .language-option {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.5rem 1rem;
+            text-align: left;
+            font-size: 0.875rem;
+            color: #374151;
+            border: none;
+            background: none;
+            cursor: pointer;
+            transition: background-color 0.15s ease-in-out;
+        }
+
+        [dir="rtl"] .language-option {
+            text-align: right;
+        }
+
+        .language-option:hover {
+            background-color: #f3f4f6;
+        }
+
+        .language-option.active {
+            background-color: #dbeafe;
+            color: #2563eb;
+        }
+
+        .language-flag {
+            font-size: 1.125rem;
+            margin-right: 0.75rem;
+        }
+
+        [dir="rtl"] .language-flag {
+            margin-right: 0;
+            margin-left: 0.75rem;
+        }
+
+        .language-name {
+            font-weight: 500;
+        }
+
+        .language-check {
+            margin-left: auto;
+            color: #2563eb;
+        }
+
+        [dir="rtl"] .language-check {
+            margin-left: 0;
+            margin-right: auto;
+        }
     </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
@@ -135,10 +438,39 @@
             <!-- Top Bar -->
             <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6">
                 <div class="flex items-center space-x-4">
-                    <h2 class="text-xl font-semibold text-gray-900">Reports & Analytics</h2>
+                    <h2 class="text-xl font-semibold text-gray-900" id="page-title">Reports & Analytics</h2>
                 </div>
 
-                <div class="flex items-center space-x-2">
+                <div class="flex items-center space-x-4">
+                    <!-- Language Switcher -->
+                    <div class="language-switcher">
+                        <button class="btn-secondary px-3 py-1 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors flex items-center space-x-2" onclick="toggleLanguageDropdown()">
+                            <i data-lucide="globe" class="w-4 h-4"></i>
+                            <span id="current-language-flag">🇺🇸</span>
+                            <span id="current-language-name">English</span>
+                        </button>
+                        
+                        <div id="language-dropdown" class="language-dropdown hidden">
+                            <button class="language-option" onclick="changeLanguage('en')">
+                                <span class="language-flag">🇺🇸</span>
+                                <span class="language-name">English</span>
+                                <span class="language-check" id="check-en">✓</span>
+                            </button>
+                            <button class="language-option" onclick="changeLanguage('ar')">
+                                <span class="language-flag">🇸🇦</span>
+                                <span class="language-name">العربية</span>
+                                <span class="language-check hidden" id="check-ar">✓</span>
+                            </button>
+                            <button class="language-option" onclick="changeLanguage('fa')">
+                                <span class="language-flag">🇮🇷</span>
+                                <span class="language-name">فارسی</span>
+                                <span class="language-check hidden" id="check-fa">✓</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="flex items-center space-x-2">
                     <button class="btn-secondary px-3 py-1 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
                         <i data-lucide="calendar" class="w-4 h-4 mr-2 inline"></i>
                         Schedule Report
@@ -375,6 +707,89 @@
     <script>
         // Initialize Lucide icons
         lucide.createIcons();
+        
+        // Language translations
+        const translations = {
+            en: {
+                'page-title': 'Reports & Analytics'
+            },
+            ar: {
+                'page-title': 'التقارير والتحليلات'
+            },
+            fa: {
+                'page-title': 'گزارش‌ها و تحلیل‌ها'
+            }
+        };
+
+        let currentLanguage = 'en';
+
+        // Load saved language preference
+        function loadLanguagePreference() {
+            const savedLanguage = localStorage.getItem('ev-admin-language');
+            if (savedLanguage && ['en', 'ar', 'fa'].includes(savedLanguage)) {
+                currentLanguage = savedLanguage;
+                applyLanguage(currentLanguage);
+            }
+        }
+
+        // Apply language changes
+        function applyLanguage(language) {
+            currentLanguage = language;
+            
+            // Update document direction and language
+            document.documentElement.dir = ['ar', 'fa'].includes(language) ? 'rtl' : 'ltr';
+            document.documentElement.lang = language;
+            
+            // Update all translatable elements
+            const elements = translations[language];
+            for (const [id, text] of Object.entries(elements)) {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = text;
+                }
+            }
+            
+            // Update language switcher
+            const languageNames = { en: 'English', ar: 'العربية', fa: 'فارسی' };
+            const languageFlags = { en: '🇺🇸', ar: '🇸🇦', fa: '🇮🇷' };
+            
+            document.getElementById('current-language-name').textContent = languageNames[language];
+            document.getElementById('current-language-flag').textContent = languageFlags[language];
+            
+            // Update checkmarks
+            document.querySelectorAll('.language-check').forEach(check => check.classList.add('hidden'));
+            document.getElementById(`check-${language}`).classList.remove('hidden');
+            
+            // Save preference
+            localStorage.setItem('ev-admin-language', language);
+        }
+
+        // Toggle language dropdown
+        function toggleLanguageDropdown() {
+            const dropdown = document.getElementById('language-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Change language
+        function changeLanguage(language) {
+            applyLanguage(language);
+            toggleLanguageDropdown();
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('language-dropdown');
+            const button = event.target.closest('.language-switcher button');
+            
+            if (!button && !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadLanguagePreference();
+        });
     </script>
 </body>
 </html>
