@@ -1,0 +1,118 @@
+name: Deploy EV Charging Platform to Cloudflare
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+jobs:
+  deploy-backend:
+    name: Deploy Backend Workers
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install Wrangler CLI
+        run: npm install -g wrangler
+
+      - name: Setup Cloudflare Workers dependencies
+        working-directory: ./cloudflare
+        run: npm ci
+
+      - name: Create D1 database
+        run: |
+          wrangler d1 create ev-charging-database || echo "Database may already exist"
+
+      - name: Run database migrations
+        run: |
+          wrangler d1 migrations apply ev-charging-database --env production
+
+      - name: Deploy Workers to Production
+        run: |
+          wrangler deploy --env production --compatibility-date 2023-12-01
+
+  deploy-mobile-frontend:
+    name: Deploy Mobile App Assets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Setup Expo CLI
+        run: npm install -g @expo/cli
+
+      - name: Install mobile dependencies
+        working-directory: ./apps/mobile
+        run: npm ci
+
+      - name: Build mobile app
+        working-directory: ./apps/mobile
+        run: expo build --platform all --non-interactive
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+  deploy-admin-dashboard:
+    name: Deploy Admin Dashboard to Cloudflare Pages
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install static site generator dependencies
+        working-directory: ./apps/admin
+        run: npm ci
+
+      - name: Build admin dashboard
+        working-directory: ./apps/admin
+        run: npm run build
+        env:
+          VITE_API_BASE_URL: https://ev-charging-platform.workers.dev/api/v1
+          VITE_WS_URL: wss://ev-charging-platform.workers.dev/api/v1/ws
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: ev-charging-admin
+          directory: ./apps/admin/dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy-documentation:
+    name: Deploy Documentation Site
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup MkDocs
+        uses: mhausenblas/mkdocs-deploy-gh-pages@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DOC_DIR: ./docs

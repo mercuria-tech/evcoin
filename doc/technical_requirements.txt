@@ -1,0 +1,2480 @@
+# Technical Requirements Document (TRD)
+## EV Charging Platform
+
+**Version:** 1.0  
+**Date:** October 1, 2025  
+**Status:** Draft  
+**Classification:** Internal - Technical Team
+
+---
+
+## TABLE OF CONTENTS
+
+1. System Architecture
+2. Functional Requirements
+3. Non-Functional Requirements
+4. API Specifications
+5. Database Design
+6. Security Requirements
+7. Integration Requirements
+8. Performance Requirements
+9. Infrastructure Requirements
+
+---
+
+## 1. SYSTEM ARCHITECTURE
+
+### 1.1 Architecture Pattern
+**Microservices Architecture** with the following benefits:
+- Independent scaling of services
+- Technology flexibility per service
+- Isolated failure domains
+- Faster deployment cycles
+
+### 1.2 Core Services
+
+#### 1.2.1 User Service
+- User registration and authentication
+- Profile management
+- Vehicle management
+- Preferences and settings
+- JWT token generation and validation
+
+#### 1.2.2 Station Service
+- Station registry and management
+- Real-time availability tracking
+- Location-based search
+- Station metadata (connectors, power, amenities)
+- Operating hours and pricing
+
+#### 1.2.3 Charging Service
+- Session initiation (QR, RFID, App)
+- Real-time session monitoring
+- Session termination
+- Energy consumption tracking
+- Session history
+
+#### 1.2.4 Reservation Service
+- Availability checking
+- Reservation creation/cancellation
+- Time slot management
+- Reminder notifications
+- No-show handling
+
+#### 1.2.5 Payment Service
+- Payment method management
+- Transaction processing
+- Refund handling
+- Invoice generation
+- Payment history
+- Fraud detection
+
+#### 1.2.6 Notification Service
+- Push notifications (FCM/APNS)
+- Email notifications
+- SMS notifications
+- In-app notifications
+- Notification preferences
+
+#### 1.2.7 Support Service
+- Ticket management
+- Chat integration
+- Call center integration
+- FAQ and help center
+- Feedback collection
+
+#### 1.2.8 Analytics Service
+- Usage analytics
+- Business intelligence
+- Reporting
+- Data aggregation
+- ML model serving
+
+### 1.3 System Architecture Diagram
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                        CLIENT LAYER                          │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
+│  │   iOS App    │  │ Android App  │  │  Web Portal  │      │
+│  └──────────────┘  └──────────────┘  └──────────────┘      │
+└────────────────────────────┬────────────────────────────────┘
+                             │
+                             ▼
+┌─────────────────────────────────────────────────────────────┐
+│                      API GATEWAY LAYER                       │
+│  ┌────────────────────────────────────────────────────┐     │
+│  │  Kong / AWS API Gateway / Azure API Management     │     │
+│  │  - Rate Limiting                                    │     │
+│  │  - Authentication                                   │     │
+│  │  - Request Routing                                  │     │
+│  │  - Load Balancing                                   │     │
+│  └────────────────────────────────────────────────────┘     │
+└────────────────────────────┬────────────────────────────────┘
+                             │
+        ┌────────────────────┼────────────────────┐
+        │                    │                    │
+        ▼                    ▼                    ▼
+┌──────────────┐    ┌──────────────┐    ┌──────────────┐
+│    User      │    │   Station    │    │   Charging   │
+│   Service    │    │   Service    │    │   Service    │
+│              │    │              │    │              │
+│ - Auth       │    │ - Search     │    │ - Sessions   │
+│ - Profile    │    │ - Status     │    │ - Monitor    │
+│ - Vehicles   │    │ - Manage     │    │ - Control    │
+└──────┬───────┘    └──────┬───────┘    └──────┬───────┘
+       │                   │                    │
+       ▼                   ▼                    ▼
+┌──────────────┐    ┌──────────────┐    ┌──────────────┐
+│ Reservation  │    │   Payment    │    │ Notification │
+│   Service    │    │   Service    │    │   Service    │
+│              │    │              │    │              │
+│ - Booking    │    │ - Process    │    │ - Push       │
+│ - Slots      │    │ - Refund     │    │ - Email      │
+│ - Reminders  │    │ - Invoice    │    │ - SMS        │
+└──────┬───────┘    └──────┬───────┘    └──────┬───────┘
+       │                   │                    │
+       └───────────────────┼────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────────────┐
+│                       DATA LAYER                             │
+│  ┌────────────┐  ┌────────────┐  ┌────────────┐            │
+│  │ PostgreSQL │  │   Redis    │  │  InfluxDB  │            │
+│  │ (Primary)  │  │  (Cache)   │  │(Time-series)│           │
+│  └────────────┘  └────────────┘  └────────────┘            │
+│                                                              │
+│  ┌────────────┐  ┌────────────┐  ┌────────────┐            │
+│  │   S3/Blob  │  │ RabbitMQ/  │  │Elasticsearch│           │
+│  │  Storage   │  │   Kafka    │  │  (Search)   │           │
+│  └────────────┘  └────────────┘  └────────────┘            │
+└─────────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    EXTERNAL SERVICES                         │
+│  ┌────────────┐  ┌────────────┐  ┌────────────┐            │
+│  │  Payment   │  │   Maps     │  │    SMS     │            │
+│  │  Gateway   │  │    API     │  │  Provider  │            │
+│  └────────────┘  └────────────┘  └────────────┘            │
+│                                                              │
+│  ┌────────────┐  ┌────────────┐  ┌────────────┐            │
+│  │  Charging  │  │    FCM     │  │   Email    │            │
+│  │  Stations  │  │   APNS     │  │  Service   │            │
+│  │   (OCPP)   │  └────────────┘  └────────────┘            │
+│  └────────────┘                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 2. FUNCTIONAL REQUIREMENTS
+
+### 2.1 User Management (UM)
+
+#### UM-001: User Registration
+**Priority:** High  
+**Description:** Users must be able to register using email/phone  
+**Requirements:**
+- Email validation
+- Phone number verification (OTP)
+- Password strength requirements (min 8 chars, 1 uppercase, 1 number, 1 special)
+- Terms and conditions acceptance
+- Privacy policy acceptance
+- Optional social login (Google, Apple)
+
+#### UM-002: User Authentication
+**Priority:** High  
+**Description:** Secure login mechanism  
+**Requirements:**
+- Email/phone + password login
+- JWT-based session management
+- Token refresh mechanism
+- Biometric authentication support (fingerprint, face ID)
+- "Remember me" functionality
+- Password reset via email/SMS
+
+#### UM-003: Profile Management
+**Priority:** High  
+**Description:** Users can manage their profile information  
+**Requirements:**
+- Update personal information
+- Change password
+- Manage notification preferences
+- Account deletion
+- Privacy settings
+- Language preferences
+
+#### UM-004: Vehicle Management
+**Priority:** High  
+**Description:** Users can add and manage multiple vehicles  
+**Requirements:**
+- Add vehicle (make, model, year, VIN)
+- Vehicle charging specifications
+- Default vehicle selection
+- Vehicle deletion
+- Charging history per vehicle
+
+### 2.2 Station Management (SM)
+
+#### SM-001: Station Search
+**Priority:** High  
+**Description:** Find charging stations based on location  
+**Requirements:**
+- GPS-based location search
+- Address-based search
+- Search radius filter (1km, 5km, 10km, 25km, 50km)
+- Real-time availability display
+- Distance calculation
+- Map view and list view
+
+#### SM-002: Station Filtering
+**Priority:** Medium  
+**Description:** Filter stations by various criteria  
+**Requirements:**
+- Connector type (Type 1, Type 2, CCS, CHAdeMO)
+- Power level (AC: 3.7kW, 7kW, 22kW | DC: 50kW, 150kW, 350kW)
+- Availability status
+- Pricing range
+- Amenities (WiFi, restroom, shopping, restaurant)
+- Operator/network
+
+#### SM-003: Station Details
+**Priority:** High  
+**Description:** Display comprehensive station information  
+**Requirements:**
+- Station name and address
+- Available connectors with status
+- Pricing information
+- Operating hours
+- Amenities
+- Photos
+- User ratings and reviews
+- Navigation button
+- Contact information
+
+#### SM-004: Station Status
+**Priority:** Critical  
+**Description:** Real-time station availability  
+**Requirements:**
+- Available/Occupied/Out of Service status
+- Estimated availability time
+- Queue status (if applicable)
+- Last updated timestamp
+- Auto-refresh every 30 seconds
+
+### 2.3 Charging Session (CS)
+
+#### CS-001: Session Initiation
+**Priority:** Critical  
+**Description:** Start charging session  
+**Requirements:**
+- QR code scanning
+- RFID card tap
+- Manual station selection in app
+- Connector selection
+- Pre-authorization check
+- Session confirmation
+
+#### CS-002: Real-time Monitoring
+**Priority:** High  
+**Description:** Monitor active charging session  
+**Requirements:**
+- Current power (kW)
+- Energy delivered (kWh)
+- Charging duration
+- Estimated completion time
+- Current cost
+- Battery percentage (if available via ISO 15118)
+- Live graph of charging curve
+
+#### CS-003: Session Control
+**Priority:** High  
+**Description:** Control charging session  
+**Requirements:**
+- Stop charging remotely
+- Pause charging (if supported)
+- Emergency stop
+- Session timeout handling
+- Error handling and notifications
+
+#### CS-004: Session History
+**Priority:** Medium  
+**Description:** View past charging sessions  
+**Requirements:**
+- List of all sessions
+- Filter by date range
+- Filter by station
+- Filter by vehicle
+- Session details (duration, energy, cost)
+- Export functionality (PDF, CSV)
+
+### 2.4 Reservation System (RS)
+
+#### RS-001: Create Reservation
+**Priority:** High  
+**Description:** Reserve a charging station in advance  
+**Requirements:**
+- Select station and connector
+- Choose date and time slot
+- Duration selection (30min, 1hr, 2hr, 3hr)
+- Availability validation
+- Reservation fee (if applicable)
+- Confirmation notification
+
+#### RS-002: Manage Reservations
+**Priority:** High  
+**Description:** View and manage existing reservations  
+**Requirements:**
+- List active reservations
+- View reservation details
+- Cancel reservation
+- Modify reservation (if allowed)
+- Reminder notifications (30min, 15min before)
+- Grace period handling (15 minutes late arrival)
+
+#### RS-003: No-Show Handling
+**Priority:** Medium  
+**Description:** Handle missed reservations  
+**Requirements:**
+- Auto-cancel after grace period
+- No-show fee application
+- User notification
+- Penalty system for repeat offenders
+- Dispute mechanism
+
+### 2.5 Payment System (PS)
+
+#### PS-001: Payment Methods
+**Priority:** Critical  
+**Description:** Manage payment methods  
+**Requirements:**
+- Add credit/debit card
+- Card tokenization
+- Set default payment method
+- Multiple cards support
+- Remove payment method
+- PCI-DSS compliant storage
+
+#### PS-002: Transaction Processing
+**Priority:** Critical  
+**Description:** Process charging payments  
+**Requirements:**
+- Pre-authorization hold
+- Real-time pricing calculation
+- Final charge on session end
+- Automatic payment retry on failure
+- Payment confirmation
+- Receipt generation
+
+#### PS-003: Pricing Models
+**Priority:** High  
+**Description:** Support various pricing structures  
+**Requirements:**
+- Per kWh pricing
+- Per minute pricing
+- Flat rate
+- Time-of-use pricing (peak/off-peak)
+- Membership discounts
+- Promotional pricing
+
+#### PS-004: Billing and Invoices
+**Priority:** High  
+**Description:** Generate billing documents  
+**Requirements:**
+- Transaction history
+- Monthly statements
+- Invoice generation (PDF)
+- Tax calculations
+- Email delivery
+- Download and print
+
+#### PS-005: Refunds
+**Priority:** Medium  
+**Description:** Handle refund requests  
+**Requirements:**
+- Partial refund support
+- Full refund support
+- Refund request workflow
+- Admin approval process
+- Refund processing (5-7 business days)
+- Refund notification
+
+### 2.6 Notification System (NS)
+
+#### NS-001: Push Notifications
+**Priority:** High  
+**Description:** Send push notifications to mobile devices  
+**Requirements:**
+- Charging session updates
+- Reservation reminders
+- Payment confirmations
+- Promotional messages
+- System announcements
+- User preference management
+
+#### NS-002: Email Notifications
+**Priority:** Medium  
+**Description:** Send email notifications  
+**Requirements:**
+- Registration confirmation
+- Password reset
+- Transaction receipts
+- Monthly statements
+- Marketing emails (opt-in)
+- HTML email templates
+
+#### NS-003: SMS Notifications
+**Priority:** Low  
+**Description:** Send SMS for critical updates  
+**Requirements:**
+- OTP for verification
+- Critical alerts
+- Payment failures
+- Emergency notifications
+
+### 2.7 Customer Support (CST)
+
+#### CST-001: Help Center
+**Priority:** Medium  
+**Description:** Self-service help resources  
+**Requirements:**
+- FAQ section
+- How-to guides
+- Video tutorials
+- Troubleshooting guides
+- Search functionality
+- Categories and tags
+
+#### CST-002: In-App Chat
+**Priority:** Medium  
+**Description:** Real-time chat support  
+**Requirements:**
+- Live chat with support agents
+- Chatbot for common queries
+- File/image upload
+- Chat history
+- Typing indicators
+- Read receipts
+
+#### CST-003: Ticket System
+**Priority:** Medium  
+**Description:** Submit and track support tickets  
+**Requirements:**
+- Create support ticket
+- Attach images/documents
+- Ticket categories
+- Priority levels
+- Status tracking
+- Email updates
+- Resolution rating
+
+### 2.8 Admin Dashboard (AD)
+
+#### AD-001: Dashboard Overview
+**Priority:** High  
+**Description:** Admin dashboard with key metrics  
+**Requirements:**
+- Total users count
+- Active sessions
+- Revenue today/week/month
+- Station status overview
+- Recent transactions
+- Support tickets pending
+- Performance metrics
+
+#### AD-002: User Management
+**Priority:** High  
+**Description:** Manage platform users  
+**Requirements:**
+- View all users
+- Search and filter users
+- View user details
+- Suspend/unsuspend users
+- Reset user password
+- View user activity
+- Export user data
+
+#### AD-003: Station Management
+**Priority:** Critical  
+**Description:** Manage charging stations  
+**Requirements:**
+- Add new station
+- Edit station details
+- Enable/disable station
+- Configure pricing
+- View station analytics
+- Manage connectors
+- Upload station images
+
+#### AD-004: Transaction Management
+**Priority:** High  
+**Description:** Monitor and manage transactions  
+**Requirements:**
+- View all transactions
+- Filter by date, status, user
+- Transaction details
+- Issue refunds
+- Export transaction data
+- Revenue reports
+
+#### AD-005: Content Management
+**Priority:** Medium  
+**Description:** Manage app content  
+**Requirements:**
+- FAQ management
+- Announcement management
+- Promotion management
+- Email template editor
+- Push notification composer
+- Banner management
+
+---
+
+## 3. NON-FUNCTIONAL REQUIREMENTS
+
+### 3.1 Performance Requirements
+
+#### NFR-P-001: API Response Time
+- **Requirement:** 95th percentile response time < 200ms
+- **Critical APIs:** < 100ms (authentication, session start)
+- **Measurement:** APM tools (New Relic, DataDog)
+
+#### NFR-P-002: Mobile App Performance
+- **App Launch:** < 3 seconds (cold start)
+- **Screen Transitions:** < 300ms
+- **Map Rendering:** < 2 seconds for 100 stations
+- **Search Results:** < 1 second
+
+#### NFR-P-003: Concurrent Users
+- **Support:** 10,000 concurrent users initially
+- **Scale:** 100,000 concurrent users within 2 years
+- **Auto-scaling:** Based on CPU/Memory thresholds
+
+#### NFR-P-004: Database Performance
+- **Query Time:** < 50ms for indexed queries
+- **Connection Pool:** Minimum 20 connections per service
+- **Replication:** Master-slave with < 1s lag
+
+### 3.2 Availability Requirements
+
+#### NFR-A-001: System Uptime
+- **Target:** 99.9% uptime (43.2 minutes downtime/month)
+- **Maintenance Window:** Sundays 02:00-04:00 AM
+- **Planned Downtime:** < 2 hours/month
+
+#### NFR-A-002: Service Redundancy
+- **Load Balancing:** Multi-AZ deployment
+- **Database:** Primary + 2 read replicas
+- **Cache:** Redis cluster with failover
+- **Queue:** RabbitMQ cluster (3 nodes minimum)
+
+#### NFR-A-003: Disaster Recovery
+- **RPO:** 1 hour (Recovery Point Objective)
+- **RTO:** 4 hours (Recovery Time Objective)
+- **Backups:** Daily full + hourly incremental
+- **Backup Retention:** 30 days
+
+### 3.3 Scalability Requirements
+
+#### NFR-S-001: Horizontal Scaling
+- **Services:** Stateless, container-based
+- **Auto-scaling:** Based on metrics (CPU > 70%, Memory > 80%)
+- **Scale-up:** < 5 minutes
+- **Scale-down:** Gradual, with connection draining
+
+#### NFR-S-002: Database Scaling
+- **Read Scaling:** Read replicas (up to 5)
+- **Write Scaling:** Partitioning strategy for > 1M users
+- **Sharding:** Geographic or user-based sharding plan
+
+#### NFR-S-003: Storage Scaling
+- **Object Storage:** Unlimited (S3/Blob)
+- **Database Storage:** Auto-grow enabled
+- **Archive Strategy:** Move old data (> 2 years) to cold storage
+
+### 3.4 Security Requirements
+
+#### NFR-SEC-001: Authentication & Authorization
+- **Authentication:** JWT with RS256 algorithm
+- **Token Expiry:** Access token: 15 min, Refresh token: 30 days
+- **Password Policy:** Min 8 chars, complexity requirements
+- **Failed Login:** Lock account after 5 attempts
+- **MFA:** Optional 2FA for sensitive operations
+
+#### NFR-SEC-002: Data Encryption
+- **At Rest:** AES-256 encryption for sensitive data
+- **In Transit:** TLS 1.3 minimum
+- **Database:** Encrypted at rest
+- **Backups:** Encrypted backups
+
+#### NFR-SEC-003: API Security
+- **Rate Limiting:** 100 requests/minute per user
+- **API Keys:** For third-party integrations
+- **CORS:** Whitelist allowed origins
+- **Input Validation:** All inputs sanitized
+- **SQL Injection:** Parameterized queries only
+
+#### NFR-SEC-004: PCI-DSS Compliance
+- **Card Storage:** Tokenized via payment gateway
+- **PCI Scope:** Minimize by using third-party processor
+- **Audit:** Annual PCI compliance audit
+- **Network:** Segregated payment processing network
+
+#### NFR-SEC-005: Audit Logging
+- **Log Events:** Authentication, authorization, transactions, admin actions
+- **Retention:** 1 year minimum
+- **Immutability:** Logs cannot be modified
+- **Monitoring:** Real-time anomaly detection
+
+### 3.5 Reliability Requirements
+
+#### NFR-R-001: Error Handling
+- **Graceful Degradation:** Non-critical features fail gracefully
+- **Retry Logic:** Exponential backoff for failed requests
+- **Circuit Breaker:** Prevent cascade failures
+- **Timeout:** All external calls have timeouts
+
+#### NFR-R-002: Data Integrity
+- **Transactions:** ACID compliance for financial data
+- **Consistency:** Eventual consistency acceptable for non-critical data
+- **Validation:** Input validation at API and database level
+- **Checksums:** For file uploads and data transfers
+
+#### NFR-R-003: Monitoring & Alerting
+- **Health Checks:** Every service exposes /health endpoint
+- **Metrics:** CPU, Memory, Disk, Network, Response times
+- **Alerts:** Critical: < 5 min response, High: < 30 min
+- **Dashboard:** Real-time system health dashboard
+
+### 3.6 Usability Requirements
+
+#### NFR-U-001: Mobile App Usability
+- **Platform:** iOS 15+, Android 8+
+- **Screen Support:** All screen sizes and orientations
+- **Accessibility:** WCAG 2.1 Level AA compliance
+- **Localization:** Support minimum 5 languages
+- **Offline Mode:** Basic functionality (view history, help)
+
+#### NFR-U-002: Response Times
+- **User Feedback:** Loading indicators for > 1 second operations
+- **Error Messages:** Clear, actionable error messages
+- **Success Feedback:** Confirmation for all critical actions
+
+### 3.7 Maintainability Requirements
+
+#### NFR-M-001: Code Quality
+- **Test Coverage:** Minimum 80% for critical services
+- **Code Review:** All PRs require 2 approvals
+- **Linting:** Automated code style enforcement
+- **Documentation:** API documentation (OpenAPI/Swagger)
+
+#### NFR-M-002: Deployment
+- **CI/CD:** Automated build, test, deploy pipeline
+- **Rollback:** One-click rollback capability
+- **Blue-Green:** Zero-downtime deployments
+- **Versioning:** Semantic versioning for all services
+
+---
+
+## 4. API SPECIFICATIONS
+
+### 4.1 API Design Principles
+- RESTful architecture
+- JSON request/response format
+- Consistent error handling
+- API versioning in URL (v1, v2)
+- Pagination for list endpoints
+- HATEOAS where applicable
+
+### 4.2 Authentication Flow
+
+```
+POST /api/v1/auth/register
+Request:
+{
+  "email": "user@example.com",
+  "phone": "+1234567890",
+  "password": "SecurePass123!",
+  "first_name": "John",
+  "last_name": "Doe",
+  "accept_terms": true
+}
+
+Response: 201 Created
+{
+  "user_id": "usr_1234567890",
+  "email": "user@example.com",
+  "phone": "+1234567890",
+  "verification_required": true,
+  "message": "OTP sent to phone"
+}
+```
+
+```
+POST /api/v1/auth/verify-otp
+Request:
+{
+  "phone": "+1234567890",
+  "otp": "123456"
+}
+
+Response: 200 OK
+{
+  "verified": true,
+  "message": "Phone verified successfully"
+}
+```
+
+```
+POST /api/v1/auth/login
+Request:
+{
+  "email": "user@example.com",
+  "password": "SecurePass123!"
+}
+
+Response: 200 OK
+{
+  "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "refresh_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "token_type": "Bearer",
+  "expires_in": 900,
+  "user": {
+    "id": "usr_1234567890",
+    "email": "user@example.com",
+    "first_name": "John",
+    "last_name": "Doe"
+  }
+}
+```
+
+### 4.3 Station APIs
+
+```
+GET /api/v1/stations/search
+Query Parameters:
+  - latitude: 40.7128 (required)
+  - longitude: -74.0060 (required)
+  - radius: 10 (in km, optional, default: 5)
+  - connector_type: CCS,Type2 (optional, comma-separated)
+  - power_min: 50 (in kW, optional)
+  - available_only: true (optional)
+  - limit: 50 (optional, default: 20)
+  - offset: 0 (optional)
+
+Response: 200 OK
+{
+  "stations": [
+    {
+      "id": "stn_1234567890",
+      "name": "Downtown Charging Hub",
+      "address": {
+        "street": "123 Main St",
+        "city": "New York",
+        "state": "NY",
+        "zip": "10001",
+        "country": "US"
+      },
+      "location": {
+        "latitude": 40.7128,
+        "longitude": -74.0060
+      },
+      "distance": 2.5,
+      "connectors": [
+        {
+          "id": "con_1234567890",
+          "type": "CCS",
+          "power_kw": 150,
+          "status": "available",
+          "pricing": {
+            "per_kwh": 0.35,
+            "currency": "USD"
+          }
+        }
+      ],
+      "amenities": ["wifi", "restroom", "shopping"],
+      "rating": 4.5,
+      "operating_hours": "24/7"
+    }
+  ],
+  "total": 45,
+  "limit": 20,
+  "offset": 0
+}
+```
+
+```
+GET /api/v1/stations/{station_id}
+Response: 200 OK
+{
+  "id": "stn_1234567890",
+  "name": "Downtown Charging Hub",
+  "description": "Fast charging station in city center",
+  "operator": {
+    "id": "opr_1234567890",
+    "name": "ChargePoint"
+  },
+  "address": { ... },
+  "location": { ... },
+  "connectors": [ ... ],
+  "amenities": [ ... ],
+  "photos": [
+    "https://cdn.example.com/station1.jpg"
+  ],
+  "rating": 4.5,
+  "reviews_count": 234,
+  "operating_hours": {
+    "monday": "00:00-23:59",
+    "tuesday": "00:00-23:59",
+    ...
+  },
+  "contact": {
+    "phone": "+1234567890",
+    "email": "support@example.com"
+  }
+}
+```
+
+### 4.4 Charging Session APIs
+
+```
+POST /api/v1/charging/sessions
+Request:
+{
+  "station_id": "stn_1234567890",
+  "connector_id": "con_1234567890",
+  "vehicle_id": "veh_1234567890",
+  "payment_method_id": "pm_1234567890",
+  "start_method": "qr_code"
+}
+
+Response: 201 Created
+{
+  "session_id": "ses_1234567890",
+  "station_id": "stn_1234567890",
+  "connector_id": "con_1234567890",
+  "status": "starting",
+  "started_at": "2025-10-01T10:30:00Z",
+  "estimated_cost": {
+    "amount": 0.00,
+    "currency": "USD"
+  },
+  "authorization_hold": {
+    "amount": 50.00,
+    "currency": "USD"
+  }
+}
+```
+
+```
+GET /api/v1/charging/sessions/{session_id}
+Response: 200 OK
+{
+  "session_id": "ses_1234567890",
+  "status": "charging",
+  "started_at": "2025-10-01T10:30:00Z",
+  "duration_seconds": 1800,
+  "energy_delivered_kwh": 25.5,
+  "current_power_kw": 145.2,
+  "estimated_completion": "2025-10-01T11:45:00Z",
+  "cost": {
+    "amount": 8.93,
+    "currency": "USD"
+  },
+  "charging_curve": [
+    {"timestamp": "2025-10-01T10:30:00Z", "power_kw": 150.0},
+    {"timestamp": "2025-10-01T10:35:00Z", "power_kw": 148.5}
+  ]
+}
+```
+
+```
+POST /api/v1/charging/sessions/{session_id}/stop
+Response: 200 OK
+{
+  "session_id": "ses_1234567890",
+  "status": "completed",
+  "started_at": "2025-10-01T10:30:00Z",
+  "ended_at": "2025-10-01T11:15:00Z",
+  "duration_seconds": 2700,
+  "energy_delivered_kwh": 42.3,
+  "final_cost": {
+    "amount": 14.81,
+    "currency": "USD",
+    "breakdown": {
+      "energy_cost": 14.81,
+      "idle_fee": 0.00,
+      "service_fee": 0.00
+    }
+  },
+  "receipt_url": "https://receipts.example.com/ses_1234567890.pdf"
+}
+```
+
+### 4.5 Reservation APIs
+
+```
+POST /api/v1/reservations
+Request:
+{
+  "station_id": "stn_1234567890",
+  "connector_id": "con_1234567890",
+  "start_time": "2025-10-02T14:00:00Z",
+  "duration_minutes": 60,
+  "vehicle_id": "veh_1234567890"
+}
+
+Response: 201 Created
+{
+  "reservation_id": "rsv_1234567890",
+  "station_id": "stn_1234567890",
+  "connector_id": "con_1234567890",
+  "start_time": "2025-10-02T14:00:00Z",
+  "end_time": "2025-10-02T15:00:00Z",
+  "status": "confirmed",
+  "reservation_fee": {
+    "amount": 2.00,
+    "currency": "USD"
+  },
+  "grace_period_minutes": 15
+}
+```
+
+```
+DELETE /api/v1/reservations/{reservation_id}
+Response: 200 OK
+{
+  "reservation_id": "rsv_1234567890",
+  "status": "cancelled",
+  "cancelled_at": "2025-10-01T12:00:00Z",
+  "refund": {
+    "amount": 2.00,
+    "currency": "USD",
+    "status": "processing"
+  }
+}
+```
+
+### 4.6 Payment APIs
+
+```
+POST /api/v1/payment-methods
+Request:
+{
+  "type": "card",
+  "card": {
+    "number": "4242424242424242",
+    "exp_month": 12,
+    "exp_year": 2028,
+    "cvc": "123",
+    "name": "John Doe"
+  },
+  "billing_address": {
+    "street": "123 Main St",
+    "city": "New York",
+    "state": "NY",
+    "zip": "10001",
+    "country": "US"
+  },
+  "set_as_default": true
+}
+
+Response: 201 Created
+{
+  "payment_method_id": "pm_1234567890",
+  "type": "card",
+  "card": {
+    "brand": "visa",
+    "last4": "4242",
+    "exp_month": 12,
+    "exp_year": 2028
+  },
+  "is_default": true
+}
+```
+
+```
+GET /api/v1/transactions?limit=20&offset=0
+Response: 200 OK
+{
+  "transactions": [
+    {
+      "id": "txn_1234567890",
+      "type": "charging_session",
+      "session_id": "ses_1234567890",
+      "amount": 14.81,
+      "currency": "USD",
+      "status": "completed",
+      "payment_method": {
+        "type": "card",
+        "last4": "4242"
+      },
+      "created_at": "2025-10-01T11:15:00Z",
+      "receipt_url": "https://receipts.example.com/txn_1234567890.pdf"
+    }
+  ],
+  "total": 156,
+  "limit": 20,
+  "offset": 0
+}
+```
+
+### 4.7 Error Response Format
+
+```
+Standard Error Response:
+{
+  "error": {
+    "code": "INVALID_CREDENTIALS",
+    "message": "The email or password you entered is incorrect",
+    "details": {
+      "field": "password",
+      "reason": "invalid"
+    },
+    "request_id": "req_1234567890",
+    "timestamp": "2025-10-01T10:30:00Z"
+  }
+}
+
+HTTP Status Codes:
+- 200: Success
+- 201: Created
+- 204: No Content
+- 400: Bad Request
+- 401: Unauthorized
+- 403: Forbidden
+- 404: Not Found
+- 409: Conflict
+- 422: Unprocessable Entity
+- 429: Too Many Requests
+- 500: Internal Server Error
+- 503: Service Unavailable
+```
+
+---
+
+## 5. DATABASE DESIGN
+
+### 5.1 Database Technology Stack
+- **Primary Database:** PostgreSQL 15+ (ACID compliance, JSON support)
+- **Cache:** Redis 7+ (Session, rate limiting)
+- **Search:** Elasticsearch 8+ (Station search, logs)
+- **Time-Series:** InfluxDB 2+ (Charging metrics, analytics)
+
+### 5.2 Core Tables Schema
+
+#### Users Table
+```sql
+CREATE TABLE users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    email VARCHAR(255) UNIQUE NOT NULL,
+    phone VARCHAR(20) UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    email_verified BOOLEAN DEFAULT FALSE,
+    phone_verified BOOLEAN DEFAULT FALSE,
+    status VARCHAR(20) DEFAULT 'active', -- active, suspended, deleted
+    preferences JSONB DEFAULT '{}',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_login_at TIMESTAMP,
+    CONSTRAINT users_status_check CHECK (status IN ('active', 'suspended', 'deleted'))
+);
+
+CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_users_phone ON users(phone);
+CREATE INDEX idx_users_status ON users(status);
+```
+
+#### Vehicles Table
+```sql
+CREATE TABLE vehicles (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    make VARCHAR(100) NOT NULL,
+    model VARCHAR(100) NOT NULL,
+    year INTEGER NOT NULL,
+    vin VARCHAR(17),
+    battery_capacity_kwh DECIMAL(5,2),
+    connector_types TEXT[], -- Array of connector types
+    is_default BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_vehicles_user_id ON vehicles(user_id);
+CREATE INDEX idx_vehicles_is_default ON vehicles(user_id, is_default) WHERE is_default = TRUE;
+```
+
+#### Stations Table
+```sql
+CREATE TABLE stations (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    operator_id UUID NOT NULL REFERENCES operators(id),
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    address_street VARCHAR(255) NOT NULL,
+    address_city VARCHAR(100) NOT NULL,
+    address_state VARCHAR(100),
+    address_zip VARCHAR(20),
+    address_country VARCHAR(2) NOT NULL,
+    latitude DECIMAL(10, 8) NOT NULL,
+    longitude DECIMAL(11, 8) NOT NULL,
+    amenities TEXT[],
+    operating_hours JSONB,
+    contact_phone VARCHAR(20),
+    contact_email VARCHAR(255),
+    status VARCHAR(20) DEFAULT 'active',
+    rating DECIMAL(3,2) DEFAULT 0.00,
+    reviews_count INTEGER DEFAULT 0,
+    photos TEXT[],
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT stations_status_check CHECK (status IN ('active', 'maintenance', 'inactive'))
+);
+
+CREATE INDEX idx_stations_location ON stations USING GIST (
+    ll_to_earth(latitude, longitude)
+);
+CREATE INDEX idx_stations_operator ON stations(operator_id);
+CREATE INDEX idx_stations_status ON stations(status);
+```
+
+#### Connectors Table
+```sql
+CREATE TABLE connectors (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    station_id UUID NOT NULL REFERENCES stations(id) ON DELETE CASCADE,
+    connector_number INTEGER NOT NULL,
+    connector_type VARCHAR(20) NOT NULL, -- Type2, CCS, CHAdeMO, etc.
+    power_kw DECIMAL(6,2) NOT NULL,
+    status VARCHAR(20) DEFAULT 'available',
+    pricing_per_kwh DECIMAL(6,4),
+    pricing_per_minute DECIMAL(6,4),
+    last_status_update TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT connectors_status_check CHECK (status IN ('available', 'occupied', 'reserved', 'out_of_service')),
+    UNIQUE(station_id, connector_number)
+);
+
+CREATE INDEX idx_connectors_station ON connectors(station_id);
+CREATE INDEX idx_connectors_status ON connectors(status);
+CREATE INDEX idx_connectors_type ON connectors(connector_type);
+```
+
+#### Charging Sessions Table
+```sql
+CREATE TABLE charging_sessions (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id),
+    vehicle_id UUID REFERENCES vehicles(id),
+    station_id UUID NOT NULL REFERENCES stations(id),
+    connector_id UUID NOT NULL REFERENCES connectors(id),
+    status VARCHAR(20) NOT NULL,
+    start_method VARCHAR(20), -- qr_code, rfid, app
+    started_at TIMESTAMP NOT NULL,
+    ended_at TIMESTAMP,
+    duration_seconds INTEGER,
+    energy_delivered_kwh DECIMAL(8,3),
+    max_power_kw DECIMAL(6,2),
+    avg_power_kw DECIMAL(6,2),
+    cost_amount DECIMAL(10,2),
+    cost_currency VARCHAR(3) DEFAULT 'USD',
+    payment_method_id UUID REFERENCES payment_methods(id),
+    transaction_id UUID REFERENCES transactions(id),
+    error_code VARCHAR(50),
+    error_message TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT sessions_status_check CHECK (status IN ('starting', 'charging', 'completed', 'failed', 'cancelled'))
+);
+
+CREATE INDEX idx_sessions_user ON charging_sessions(user_id);
+CREATE INDEX idx_sessions_station ON charging_sessions(station_id);
+CREATE INDEX idx_sessions_status ON charging_sessions(status);
+CREATE INDEX idx_sessions_started_at ON charging_sessions(started_at DESC);
+```
+
+#### Reservations Table
+```sql
+CREATE TABLE reservations (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id),
+    station_id UUID NOT NULL REFERENCES stations(id),
+    connector_id UUID NOT NULL REFERENCES connectors(id),
+    vehicle_id UUID REFERENCES vehicles(id),
+    start_time TIMESTAMP NOT NULL,
+    end_time TIMESTAMP NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    reservation_fee DECIMAL(10,2),
+    no_show_fee DECIMAL(10,2),
+    grace_period_minutes INTEGER DEFAULT 15,
+    check_in_time TIMESTAMP,
+    cancelled_at TIMESTAMP,
+    cancellation_reason TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT reservations_status_check CHECK (status IN ('confirmed', 'checked_in', 'completed', 'cancelled', 'no_show'))
+);
+
+CREATE INDEX idx_reservations_user ON reservations(user_id);
+CREATE INDEX idx_reservations_station ON reservations(station_id);
+CREATE INDEX idx_reservations_start_time ON reservations(start_time);
+CREATE INDEX idx_reservations_status ON reservations(status);
+```
+
+#### Payment Methods Table
+```sql
+CREATE TABLE payment_methods (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    type VARCHAR(20) NOT NULL, -- card, wallet, etc.
+    provider VARCHAR(50), -- stripe, paypal, etc.
+    provider_payment_method_id VARCHAR(255) NOT NULL,
+    card_brand VARCHAR(20),
+    card_last4 VARCHAR(4),
+    card_exp_month INTEGER,
+    card_exp_year INTEGER,
+    billing_address JSONB,
+    is_default BOOLEAN DEFAULT FALSE,
+    status VARCHAR(20) DEFAULT 'active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT payment_methods_type_check CHECK (type IN ('card', 'wallet', 'bank_account')),
+    CONSTRAINT payment_methods_status_check CHECK (status IN ('active', 'expired', 'removed'))
+);
+
+CREATE INDEX idx_payment_methods_user ON payment_methods(user_id);
+CREATE INDEX idx_payment_methods_default ON payment_methods(user_id, is_default) WHERE is_default = TRUE;
+```
+
+#### Transactions Table
+```sql
+CREATE TABLE transactions (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id),
+    type VARCHAR(30) NOT NULL,
+    session_id UUID REFERENCES charging_sessions(id),
+    reservation_id UUID REFERENCES reservations(id),
+    amount DECIMAL(10,2) NOT NULL,
+    currency VARCHAR(3) NOT NULL DEFAULT 'USD',
+    status VARCHAR(20) NOT NULL,
+    payment_method_id UUID REFERENCES payment_methods(id),
+    provider VARCHAR(50),
+    provider_transaction_id VARCHAR(255),
+    authorization_code VARCHAR(255),
+    description TEXT,
+    metadata JSONB,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT transactions_type_check CHECK (type IN ('charge', 'refund', 'authorization', 'capture', 'fee')),
+    CONSTRAINT transactions_status_check CHECK (status IN ('pending', 'processing', 'completed', 'failed', 'refunded', 'cancelled'))
+);
+
+CREATE INDEX idx_transactions_user ON transactions(user_id);
+CREATE INDEX idx_transactions_status ON transactions(status);
+CREATE INDEX idx_transactions_created_at ON transactions(created_at DESC);
+CREATE INDEX idx_transactions_session ON transactions(session_id);
+```
+
+### 5.3 Additional Tables
+
+```sql
+-- Operators Table
+CREATE TABLE operators (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255),
+    phone VARCHAR(20),
+    website VARCHAR(255),
+    status VARCHAR(20) DEFAULT 'active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Reviews Table
+CREATE TABLE reviews (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id),
+    station_id UUID NOT NULL REFERENCES stations(id),
+    session_id UUID REFERENCES charging_sessions(id),
+    rating INTEGER NOT NULL CHECK (rating BETWEEN 1 AND 5),
+    comment TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(user_id, station_id, session_id)
+);
+
+CREATE INDEX idx_reviews_station ON reviews(station_id);
+CREATE INDEX idx_reviews_rating ON reviews(rating);
+
+-- Notifications Table
+CREATE TABLE notifications (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id),
+    type VARCHAR(50) NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    data JSONB,
+    read BOOLEAN DEFAULT FALSE,
+    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    read_at TIMESTAMP
+);
+
+CREATE INDEX idx_notifications_user ON notifications(user_id);
+CREATE INDEX idx_notifications_read ON notifications(user_id, read) WHERE read = FALSE;
+
+-- Support Tickets Table
+CREATE TABLE support_tickets (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id),
+    subject VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    category VARCHAR(50),
+    priority VARCHAR(20) DEFAULT 'medium',
+    status VARCHAR(20) DEFAULT 'open',
+    assigned_to UUID,
+    session_id UUID REFERENCES charging_sessions(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    resolved_at TIMESTAMP,
+    CONSTRAINT tickets_priority_check CHECK (priority IN ('low', 'medium', 'high', 'critical')),
+    CONSTRAINT tickets_status_check CHECK (status IN ('open', 'in_progress', 'waiting_customer', 'resolved', 'closed'))
+);
+
+CREATE INDEX idx_tickets_user ON support_tickets(user_id);
+CREATE INDEX idx_tickets_status ON support_tickets(status);
+CREATE INDEX idx_tickets_priority ON support_tickets(priority);
+```
+
+### 5.4 Redis Cache Structure
+
+```
+# User Sessions
+key: session:{user_id}
+value: {access_token, refresh_token, expires_at}
+ttl: 1800 seconds
+
+# Station Availability Cache
+key: station:{station_id}:availability
+value: {available_connectors: [], last_updated: timestamp}
+ttl: 30 seconds
+
+# Rate Limiting
+key: ratelimit:{user_id}:{endpoint}
+value: request_count
+ttl: 60 seconds
+
+# OTP Storage
+key: otp:{phone}
+value: {code: "123456", attempts: 0, expires_at: timestamp}
+ttl: 300 seconds
+```
+
+---
+
+## 6. SECURITY REQUIREMENTS
+
+### 6.1 Authentication Security
+
+```javascript
+// JWT Token Structure
+{
+  "header": {
+    "alg": "RS256",
+    "typ": "JWT"
+  },
+  "payload": {
+    "sub": "usr_1234567890",
+    "email": "user@example.com",
+    "role": "user",
+    "iat": 1696176000,
+    "exp": 1696176900,
+    "jti": "token_unique_id"
+  }
+}
+
+// Password Hashing
+Algorithm: bcrypt
+Cost Factor: 12
+Salt: Automatically generated per password
+```
+
+### 6.2 API Security Headers
+
+```
+Required Headers:
+- X-API-Key: For third-party integrations
+- Authorization: Bearer {token}
+- X-Request-ID: Unique request identifier
+- X-Client-Version: Mobile app version
+- X-Device-ID: Device unique identifier
+
+Response Headers:
+- X-RateLimit-Limit: 100
+- X-RateLimit-Remaining: 95
+- X-RateLimit-Reset: 1696176900
+- X-Content-Type-Options: nosniff
+- X-Frame-Options: DENY
+- X-XSS-Protection: 1; mode=block
+- Strict-Transport-Security: max-age=31536000; includeSubDomains
+```
+
+### 6.3 Data Privacy & Compliance
+
+```
+GDPR Compliance:
+- Right to access data export
+- Right to deletion (anonymization)
+- Right to rectification
+- Consent management
+- Data portability
+- Privacy by design
+
+PCI-DSS Requirements:
+- No card data storage (use tokenization)
+- Quarterly vulnerability scans
+- Annual penetration testing
+- Access logging and monitoring
+- Encrypted transmission (TLS 1.3)
+```
+
+---
+
+## 7. INTEGRATION REQUIREMENTS
+
+### 7.1 Charging Station Integration (OCPP)
+
+```
+Protocol: OCPP 1.6 JSON or OCPP 2.0.1
+Transport: WebSocket (wss://)
+Authentication: Basic Auth or Certificate-based
+
+Key Messages:
+- BootNotification
+- Heartbeat
+- StatusNotification
+- StartTransaction
+- StopTransaction
+- MeterValues
+- RemoteStartTransaction
+- RemoteStopTransaction
+```
+
+### 7.2 Payment Gateway Integration
+
+```
+Primary: Stripe
+Secondary: PayPal (optional)
+
+Required APIs:
+- Create Payment Intent
+- Confirm Payment
+- Create Customer
+- Attach Payment Method
+- Create Refund
+- Webhook handling for events
+```
+
+### 7.3 Maps Integration
+
+```
+Provider: Google Maps API
+Alternative: Mapbox
+
+Required APIs:
+- Geocoding API
+- Places API
+- Directions API
+- Distance Matrix API
+- Static Maps API (for thumbnails)
+```
+
+### 7.4 Notification Services
+
+```
+Push Notifications:
+- Firebase Cloud Messaging (Android)
+- Apple Push Notification Service (iOS)
+
+Email:
+- SendGrid or AWS SES
+- Transactional and marketing emails
+
+SMS:
+- Twilio or AWS SNS
+- OTP and critical alerts
+```
+
+---
+
+## 8. PERFORMANCE REQUIREMENTS DETAILS
+
+### 8.1 Load Testing Scenarios
+
+```
+Scenario 1: Normal Load
+- 1,000 concurrent users
+- 50 requests/second
+- Duration: 1 hour
+- Success rate: > 99%
+
+Scenario 2: Peak Load
+- 5,000 concurrent users
+- 250 requests/second
+- Duration: 30 minutes
+- Success rate: > 95%
+
+Scenario 3: Stress Test
+- Gradually increase to 10,000 users
+- Monitor breaking point
+- Measure recovery time
+
+Scenario 4: Spike Test
+- Sudden jump from 1,000 to 5,000 users
+- Measure auto-scaling response
+- Recovery time < 5 minutes
+```
+
+### 8.2 Database Performance Targets
+
+```
+Queries:
+- Simple SELECT: < 10ms
+- JOIN queries: < 50ms
+- Complex aggregations: < 200ms
+- Full-text search: < 100ms
+
+Connections:
+- Connection pool size: 20-50 per service
+- Max connections: 1000
+- Connection timeout: 30 seconds
+
+Replication:
+- Replication lag: < 1 second
+- Failover time: < 30 seconds
+```
+
+---
+
+## 9. INFRASTRUCTURE REQUIREMENTS
+
+### 9.1 Cloud Architecture (AWS Example)
+
+```
+Compute:
+- ECS Fargate or EKS for container orchestration
+- Auto Scaling Groups
+- Application Load Balancer
+- Lambda for serverless functions
+
+Database:
+- RDS PostgreSQL (Multi-AZ)
+- ElastiCache Redis (Cluster mode)
+- DocumentDB (optional for NoSQL needs)
+
+Storage:
+- S3 for object storage
+- EBS for persistent volumes
+- CloudFront CDN
+
+Network:
+- VPC with public/private subnets
+- NAT Gateway
+- VPC Peering for cross-region
+- Route 53 for DNS
+
+Security:
+- AWS WAF for API protection
+- AWS Shield for DDoS protection
+- KMS for encryption keys
+- Secrets Manager for credentials
+- IAM roles and policies
+```
+
+### 9.2 Kubernetes Configuration (If using K8s)
+
+```yaml
+# Example deployment configuration
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+      - name: user-service
+        image: registry.example.com/user-service:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: url
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+```
+
+### 9.3 CI/CD Pipeline
+
+```yaml
+# Example GitHub Actions workflow
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run tests
+        run: npm test
+      - name: Run linter
+        run: npm run lint
+      - name: Security scan
+        run: npm audit
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build Docker image
+        run: docker build -t service:${{ github.sha }} .
+      - name: Push to registry
+        run: docker push registry.example.com/service:${{ github.sha }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl set image deployment/service \
+            service=registry.example.com/service:${{ github.sha }}
+          kubectl rollout status deployment/service
+```
+
+### 9.4 Monitoring & Observability
+
+```
+Metrics Collection:
+- Prometheus for metrics collection
+- Grafana for visualization
+- Custom dashboards for each service
+
+Logging:
+- ELK Stack (Elasticsearch, Logstash, Kibana)
+- Centralized logging
+- Log retention: 30 days hot, 90 days cold
+
+Tracing:
+- Jaeger or AWS X-Ray
+- Distributed tracing across microservices
+- Performance bottleneck identification
+
+Alerting:
+- PagerDuty or Opsgenie
+- Alert rules for critical metrics
+- Escalation policies
+- On-call rotation
+```
+
+---
+
+## 10. MOBILE APP SPECIFICATIONS
+
+### 10.1 React Native Architecture (Recommended)
+
+```javascript
+// Project Structure
+ev-charging-app/
+├── src/
+│   ├── api/                 # API clients
+│   ├── components/          # Reusable components
+│   │   ├── common/
+│   │   ├── station/
+│   │   ├── charging/
+│   │   └── payment/
+│   ├── screens/            # Screen components
+│   │   ├── auth/
+│   │   ├── home/
+│   │   ├── stations/
+│   │   ├── charging/
+│   │   └── profile/
+│   ├── navigation/         # Navigation setup
+│   ├── store/              # Redux store
+│   │   ├── slices/
+│   │   └── middleware/
+│   ├── services/           # Business logic
+│   ├── utils/              # Helper functions
+│   ├── hooks/              # Custom hooks
+│   ├── constants/          # Constants
+│   └── assets/             # Images, fonts
+├── android/
+├── ios/
+└── package.json
+
+// Key Dependencies
+{
+  "dependencies": {
+    "react-native": "^0.72.0",
+    "@react-navigation/native": "^6.1.0",
+    "@react-navigation/stack": "^6.3.0",
+    "react-redux": "^8.1.0",
+    "@reduxjs/toolkit": "^1.9.0",
+    "axios": "^1.4.0",
+    "react-native-maps": "^1.7.0",
+    "react-native-qrcode-scanner": "^1.5.0",
+    "react-native-push-notification": "^8.1.0",
+    "react-native-biometrics": "^3.0.0",
+    "react-native-keychain": "^8.1.0",
+    "@stripe/stripe-react-native": "^0.28.0",
+    "react-native-reanimated": "^3.3.0"
+  }
+}
+```
+
+### 10.2 Key Mobile Features Implementation
+
+```javascript
+// Location Services
+import Geolocation from '@react-native-community/geolocation';
+
+const getUserLocation = () => {
+  return new Promise((resolve, reject) => {
+    Geolocation.getCurrentPosition(
+      (position) => {
+        resolve({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        });
+      },
+      (error) => reject(error),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    );
+  });
+};
+
+// QR Code Scanner
+import QRCodeScanner from 'react-native-qrcode-scanner';
+
+const ChargingQRScanner = () => {
+  const onSuccess = (e) => {
+    const stationData = JSON.parse(e.data);
+    // Start charging session
+    startChargingSession(stationData.station_id, stationData.connector_id);
+  };
+
+  return (
+    <QRCodeScanner
+      onRead={onSuccess}
+      topContent={<Text>Scan station QR code</Text>}
+    />
+  );
+};
+
+// Push Notifications
+import PushNotification from 'react-native-push-notification';
+
+PushNotification.configure({
+  onNotification: function(notification) {
+    // Handle notification
+    if (notification.data.type === 'charging_complete') {
+      navigation.navigate('SessionComplete', { 
+        sessionId: notification.data.session_id 
+      });
+    }
+  },
+  permissions: {
+    alert: true,
+    badge: true,
+    sound: true,
+  },
+  popInitialNotification: true,
+});
+
+// Biometric Authentication
+import ReactNativeBiometrics from 'react-native-biometrics';
+
+const authenticateWithBiometrics = async () => {
+  const { available } = await ReactNativeBiometrics.isSensorAvailable();
+  
+  if (available) {
+    const { success } = await ReactNativeBiometrics.simplePrompt({
+      promptMessage: 'Authenticate to continue'
+    });
+    return success;
+  }
+  return false;
+};
+```
+
+### 10.3 State Management (Redux)
+
+```javascript
+// store/slices/chargingSlice.js
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
+export const startCharging = createAsyncThunk(
+  'charging/start',
+  async (params) => {
+    const response = await api.post('/charging/sessions', params);
+    return response.data;
+  }
+);
+
+const chargingSlice = createSlice({
+  name: 'charging',
+  initialState: {
+    activeSession: null,
+    sessions: [],
+    loading: false,
+    error: null
+  },
+  reducers: {
+    updateSessionStatus: (state, action) => {
+      if (state.activeSession) {
+        state.activeSession = { ...state.activeSession, ...action.payload };
+      }
+    }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(startCharging.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(startCharging.fulfilled, (state, action) => {
+        state.loading = false;
+        state.activeSession = action.payload;
+      })
+      .addCase(startCharging.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
+  }
+});
+```
+
+---
+
+## 11. ADMIN DASHBOARD SPECIFICATIONS
+
+### 11.1 Dashboard Technology Stack
+
+```javascript
+// Recommended: React.js with TypeScript
+{
+  "dependencies": {
+    "react": "^18.2.0",
+    "typescript": "^5.0.0",
+    "react-router-dom": "^6.14.0",
+    "recharts": "^2.7.0",
+    "antd": "^5.7.0",
+    "axios": "^1.4.0",
+    "react-query": "^3.39.0",
+    "socket.io-client": "^4.7.0"
+  }
+}
+
+// Project Structure
+admin-dashboard/
+├── src/
+│   ├── components/
+│   │   ├── layout/
+│   │   ├── charts/
+│   │   ├── tables/
+│   │   └── forms/
+│   ├── pages/
+│   │   ├── Dashboard/
+│   │   ├── Users/
+│   │   ├── Stations/
+│   │   ├── Transactions/
+│   │   ├── Analytics/
+│   │   └── Settings/
+│   ├── services/
+│   ├── hooks/
+│   ├── utils/
+│   └── types/
+```
+
+### 11.2 Key Dashboard Features
+
+```typescript
+// Real-time Metrics Dashboard
+interface DashboardMetrics {
+  activeSessions: number;
+  totalUsers: number;
+  todayRevenue: number;
+  availableStations: number;
+  alertsCount: number;
+}
+
+// Station Management
+interface Station {
+  id: string;
+  name: string;
+  location: {
+    latitude: number;
+    longitude: number;
+  };
+  connectors: Connector[];
+  status: 'active' | 'maintenance' | 'inactive';
+  utilization: number; // percentage
+}
+
+// User Management
+interface User {
+  id: string;
+  email: string;
+  name: string;
+  status: 'active' | 'suspended';
+  totalSessions: number;
+  lifetimeRevenue: number;
+  registeredAt: Date;
+}
+
+// Analytics
+interface AnalyticsData {
+  dateRange: { start: Date; end: Date };
+  metrics: {
+    totalSessions: number;
+    totalEnergy: number; // kWh
+    totalRevenue: number;
+    avgSessionDuration: number; // minutes
+    peakUsageHour: number;
+  };
+  chartData: {
+    date: string;
+    sessions: number;
+    revenue: number;
+  }[];
+}
+```
+
+---
+
+## 12. TESTING REQUIREMENTS
+
+### 12.1 Testing Strategy
+
+```
+Unit Tests:
+- Coverage: 80% minimum
+- Framework: Jest (JavaScript), pytest (Python)
+- Run on every commit
+- Mock external dependencies
+
+Integration Tests:
+- API endpoint testing
+- Database integration
+- Third-party service integration
+- Test environment required
+
+End-to-End Tests:
+- Critical user flows
+- Framework: Cypress, Detox (mobile)
+- Run before deployment
+- Automated in CI/CD
+
+Performance Tests:
+- Load testing with k6 or JMeter
+- Stress testing
+- Spike testing
+- Endurance testing
+```
+
+### 12.2 Test Cases Example
+
+```javascript
+// Unit Test Example
+describe('ChargingSession', () => {
+  test('should calculate correct charging cost', () => {
+    const session = {
+      energyDelivered: 50, // kWh
+      pricePerKwh: 0.35,
+      duration: 3600, // seconds
+      idleTime: 900 // 15 minutes
+    };
+    
+    const cost = calculateSessionCost(session);
+    expect(cost.energyCost).toBe(17.50);
+    expect(cost.idleFee).toBe(5.00);
+    expect(cost.total).toBe(22.50);
+  });
+});
+
+// Integration Test Example
+describe('POST /api/v1/charging/sessions', () => {
+  test('should start charging session successfully', async () => {
+    const response = await request(app)
+      .post('/api/v1/charging/sessions')
+      .set('Authorization', `Bearer ${validToken}`)
+      .send({
+        station_id: 'stn_123',
+        connector_id: 'con_456',
+        vehicle_id: 'veh_789',
+        payment_method_id: 'pm_012'
+      });
+    
+    expect(response.status).toBe(201);
+    expect(response.body.session_id).toBeDefined();
+    expect(response.body.status).toBe('starting');
+  });
+});
+
+// E2E Test Example (Cypress)
+describe('Charging Flow', () => {
+  it('should complete full charging session', () => {
+    cy.login('user@example.com', 'password');
+    cy.visit('/stations');
+    cy.get('[data-testid=station-list]').first().click();
+    cy.get('[data-testid=start-charging]').click();
+    cy.get('[data-testid=qr-scanner]').should('be.visible');
+    // Simulate QR scan
+    cy.mockQRScan('station_data_json');
+    cy.get('[data-testid=charging-active]').should('be.visible');
+    cy.get('[data-testid=stop-charging]').click();
+    cy.get('[data-testid=session-complete]').should('contain', 'Charging Complete');
+  });
+});
+```
+
+### 12.3 Quality Gates
+
+```
+Before Merge:
+✓ All unit tests pass
+✓ Code coverage ≥ 80%
+✓ No critical security vulnerabilities
+✓ Code review approved (2 reviewers)
+✓ Linting passes
+✓ No console errors
+
+Before Deployment to Staging:
+✓ Integration tests pass
+✓ API documentation updated
+✓ Database migrations tested
+✓ Performance benchmarks meet targets
+
+Before Production Deployment:
+✓ E2E tests pass
+✓ Load testing completed
+✓ Security scan passed
+✓ Rollback plan documented
+✓ Monitoring alerts configured
+✓ Stakeholder approval
+```
+
+---
+
+## 13. DEPLOYMENT STRATEGY
+
+### 13.1 Environments
+
+```
+Development:
+- Purpose: Active development
+- Deploy: On every commit to dev branch
+- Data: Synthetic test data
+- Access: Development team
+
+Staging:
+- Purpose: Pre-production testing
+- Deploy: On merge to staging branch
+- Data: Anonymized production data
+- Access: QA team, stakeholders
+
+Production:
+- Purpose: Live system
+- Deploy: Manual trigger after approval
+- Data: Real user data
+- Access: Operations team
+
+Hotfix:
+- Purpose: Emergency fixes
+- Deploy: Direct to production with approval
+- Rollback: Immediate if issues detected
+```
+
+### 13.2 Deployment Process
+
+```
+1. Pre-deployment Checklist:
+   □ All tests passing
+   □ Code reviewed and approved
+   □ Database migrations tested
+   □ Rollback plan ready
+   □ Monitoring configured
+   □ Stakeholders notified
+
+2. Deployment Steps:
+   □ Create deployment tag
+   □ Build Docker images
+   □ Push to container registry
+   □ Run database migrations
+   □ Deploy to Kubernetes/ECS
+   □ Health check verification
+   □ Smoke tests execution
+   □ Monitor for 30 minutes
+
+3. Post-deployment:
+   □ Verify key metrics
+   □ Check error rates
+   □ Review user feedback
+   □ Document any issues
+   □ Update changelog
+
+4. Rollback Procedure (if needed):
+   □ Stop traffic to new version
+   □ Revert to previous version
+   □ Rollback database migrations (if safe)
+   □ Investigate and fix issues
+   □ Schedule re-deployment
+```
+
+### 13.3 Blue-Green Deployment
+
+```
+Process:
+1. Current production (Blue) serving traffic
+2. Deploy new version to Green environment
+3. Run smoke tests on Green
+4. Gradually shift traffic: 10% → 25% → 50% → 100%
+5. Monitor metrics at each stage
+6. If issues detected, route back to Blue
+7. If successful, Green becomes production
+8. Keep Blue as backup for 24 hours
+```
+
+---
+
+## 14. OPERATIONAL REQUIREMENTS
+
+### 14.1 Monitoring Dashboards
+
+```
+System Health Dashboard:
+- API response times (p50, p95, p99)
+- Error rates by endpoint
+- Active sessions count
+- Database connections
+- Cache hit rates
+- Queue depth
+- CPU and memory usage
+
+Business Metrics Dashboard:
+- New user registrations
+- Active users (DAU, MAU)
+- Charging sessions started/completed
+- Revenue (hourly, daily, monthly)
+- Average session duration
+- Average energy delivered
+- Station utilization rates
+
+User Experience Dashboard:
+- App crash rate
+- API success rate
+- Page load times
+- User satisfaction scores
+- Support ticket volume
+- Average resolution time
+```
+
+### 14.2 Alert Configuration
+
+```
+Critical Alerts (Immediate Response):
+- Service down (> 1 minute)
+- Database connection failures
+- Payment processing failures
+- Error rate > 5%
+- Response time > 2 seconds
+- Security breach detected
+
+High Priority (< 30 minutes):
+- Error rate > 2%
+- Response time > 1 second
+- Disk usage > 80%
+- Memory usage > 85%
+- Queue backlog growing
+
+Medium Priority (< 2 hours):
+- Cache hit rate < 70%
+- Unusual traffic patterns
+- Scheduled job failures
+- Certificate expiring soon (< 30 days)
+```
+
+### 14.3 Backup Strategy
+
+```
+Database Backups:
+- Full backup: Daily at 02:00 UTC
+- Incremental: Every 6 hours
+- Transaction logs: Continuous
+- Retention: 30 days online, 1 year archived
+- Test restore: Weekly
+
+Application Backups:
+- Configuration files: Daily
+- Docker images: Tagged and stored
+- Infrastructure as Code: Version controlled
+- Secrets: Encrypted backup in vault
+
+Recovery Procedures:
+- Point-in-time recovery capability
+- Maximum data loss: 1 hour
+- Recovery time objective: 4 hours
+- Documented recovery procedures
+- Quarterly disaster recovery drill
+```
+
+---
+
+## 15. DOCUMENTATION REQUIREMENTS
+
+### 15.1 Technical Documentation
+
+```
+Architecture Documentation:
+- System architecture diagrams
+- Data flow diagrams
+- Infrastructure diagrams
+- Security architecture
+- Integration points
+
+API Documentation:
+- OpenAPI/Swagger specs
+- Request/response examples
+- Authentication guide
+- Error codes reference
+- Rate limiting details
+- Changelog
+
+Database Documentation:
+- Schema diagrams
+- Table relationships
+- Index strategy
+- Migration history
+- Backup procedures
+
+Deployment Documentation:
+- Environment setup
+- Deployment procedures
+- Rollback procedures
+- Configuration management
+- Troubleshooting guide
+```
+
+### 15.2 User Documentation
+
+```
+End User Documentation:
+- Getting started guide
+- User manual (mobile app)
+- FAQ
+- Video tutorials
+- Troubleshooting guide
+- Contact support
+
+Admin Documentation:
+- Admin panel guide
+- Station management guide
+- User management guide
+- Analytics and reporting
+- Configuration guide
+```
+
+---
+
+## 16. COMPLIANCE & LEGAL
+
+### 16.1 Data Protection Compliance
+
+```
+GDPR Requirements:
+- Data processing agreements
+- Privacy policy
+- Cookie policy
+- User consent management
+- Data portability
+- Right to be forgotten
+- Data breach notification (< 72 hours)
+
+Local Regulations:
+- Terms of service
+- Payment regulations
+- Consumer protection laws
+- Electrical safety standards
+- Accessibility requirements
+```
+
+### 16.2 Security Compliance
+
+```
+Required Certifications:
+- SOC 2 Type II (within first year)
+- ISO 27001 (within 18 months)
+- PCI-DSS (for payment processing)
+
+Security Assessments:
+- Quarterly vulnerability scans
+- Annual penetration testing
+- Code security reviews
+- Third-party security audits
+- Incident response plan
+```
+
+---
+
+## 17. MAINTENANCE & SUPPORT
+
+### 17.1 Support Levels
+
+```
+Level 1 (Customer Support):
+- User inquiries
+- Account issues
+- Basic troubleshooting
+- Ticket creation
+- Response time: < 1 hour
+
+Level 2 (Technical Support):
+- Technical issues
+- Payment problems
+- Station connectivity
+- App crashes
+- Response time: < 4 hours
+
+Level 3 (Engineering):
+- Critical bugs
+- Performance issues
+- Security incidents
+- Integration problems
+- Response time: < 1 hour for critical
+```
+
+### 17.2 Maintenance Windows
+
+```
+Regular Maintenance:
+- Schedule: Sunday 02:00-04:00 UTC
+- Frequency: Weekly
+- Notification: 48 hours advance
+- Duration: < 2 hours
+
+Emergency Maintenance:
+- As needed for critical issues
+- Notification: Immediate
+- Duration: Minimize downtime
+- Communication: Status page updates
+```
+
+---
+
+## 18. SUCCESS METRICS & KPIs
+
+### 18.1 Technical KPIs
+
+```
+Performance:
+- API response time p95: < 200ms
+- App crash rate: < 0.1%
+- System uptime: > 99.9%
+- Database query time: < 50ms
+- Cache hit rate: > 80%
+
+Reliability:
+- Mean time between failures: > 720 hours
+- Mean time to recovery: < 1 hour
+- Deployment success rate: > 95%
+- Rollback frequency: < 5% of deployments
+```
+
+### 18.2 Business KPIs
+
+```
+Growth:
+- Monthly active users growth: > 10%
+- New station additions: > 20/month
+- Charging sessions growth: > 15%/month
+
+Revenue:
+- Monthly recurring revenue
+- Average revenue per user
+- Transaction success rate: > 99%
+- Payment failure rate: < 1%
+
+Customer Satisfaction:
+- App store rating: > 4.0
+- NPS score: > 50
+- Support ticket resolution: < 24 hours
+- Customer retention: > 80%
+```
+
+---
+
+## DOCUMENT APPROVAL
+
+**Technical Lead:** _________________________ Date: _________
+
+**Backend Lead:** _________________________ Date: _________
+
+**Mobile Lead:** _________________________ Date: _________
+
+**DevOps Lead:** _________________________ Date: _________
+
+**Security Officer:** _________________________ Date: _________
+
+---
+
+## DOCUMENT VERSION HISTORY
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Oct 1, 2025 | Technical Team | Initial comprehensive TRD |
+
+**Next Review Date:** November 15, 2025
+
+---
+
+*End of Technical Requirements Document*

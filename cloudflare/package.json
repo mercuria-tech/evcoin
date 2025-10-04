@@ -1,0 +1,43 @@
+{
+  "name": "ev-charging-cloudflare-workers",
+  "version": "1.0.0",
+  "description": "Cloudflare Workers for EV Charging Platform API Gateway",
+  "main": "src/index.ts",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "deploy:staging": "wrangler deploy --env staging",
+    "deploy:production": "wrangler deploy --env production",
+    "dev": "wrangler dev",
+    "dev:local": "wrangler dev --local",
+    "build": "esbuild src/index.ts --bundle --format=esm --outfile=dist/index.js",
+    "preview": "wrangler dev --local",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "d1:migrate": "wrangler d1 migrations apply ev-charging-database",
+    "d1:local": "wrangler d1 execute ev-charging-database --local --file=./schema.sql",
+    "kv:bulk:put": "wrangler kv:bulk put",
+    "tail": "wrangler tail",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@cloudflare/workers-types": "^4.20230919.0",
+    "itty-router": "^3.0.11",
+    "jose": "^4.15.4",
+    "nanoid": "^4.0.2",
+    "qs": "^6.11.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.0",
+    "@typescript-eslint/eslint-plugin": "^6.9.0",
+    "@typescript-eslint/parser": "^6.9.0",
+    "esbuild": "^0.19.5",
+    "eslint": "^8.50.0",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.6",
+    "wrangler": "^3.20.0"
+  }
+}

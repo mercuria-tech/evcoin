@@ -1,0 +1,64 @@
+name = "ev-charging-platform"
+main = "src/index.ts"
+compatibility_date = "2023-12-01"
+compatibility_flags = ["nodejs_compat"]
+
+[env.production]
+vars = { ENVIRONMENT = "production", LOG_LEVEL = "info" }
+kv_namespaces = [
+  { binding = "EV_PLATFORM_KV", id = "b92b397eebf6464ca26fa4ed89230a46" },
+  { binding = "SESSION_STORE", id = "5f91285f64d845cbb925826c6f45557e" },
+  { binding = "CACHE_STORE", id = "f46f46a620f4412fbf27b0366a292d46" }
+]
+d1_databases = [
+  { binding = "D1_DATABASE", database_name = "ev-charging-database", database_id = "fda4a74f-c302-41b8-9359-4305ad456806" }
+]
+r2_buckets = [
+  { binding = "STATIC_ASSETS", bucket_name = "ev-charging-static-assets" },
+  { binding = "USER_UPLOADS", bucket_name = "ev-charging-user-uploads" },
+  { binding = "LOGS_BUCKET", bucket_name = "ev-charging-logs" }
+]
+
+[env.staging]
+vars = { ENVIRONMENT = "staging", LOG_LEVEL = "debug" }
+kv_namespaces = [
+  { binding = "EV_PLATFORM_KV", id = "staging-kv-id" },
+  { binding = "SESSION_STORE", id = "staging-session-kv-id" },
+  { binding = "CACHE_STORE", id = "staging-cache-kv-id" }
+]
+durable_objects.bindings = [
+  { name = "CHARGE_SESSION", class_name = "ChargeSessionObject" },
+  { name = "NOTIFICATION_BATCH", class_name = "NotificationBatchObject" },
+  { name = "STATION_STATUS", class_name = "StationStatusObject" }
+]
+
+[env.development]
+vars = { ENVIRONMENT = "development", LOG_LEVEL = "debug" }
+
+[[d1_databases]]
+binding = "D1_DATABASE"
+database_name = "ev-charging-database"
+database_id = "fda4a74f-c302-41b8-9359-4305ad456806"
+
+[[r2_buckets]]
+binding = "STATIC_ASSETS"
+bucket_name = "ev-charging-static-assets"
+
+[[r2_buckets]]
+binding = "USER_UPLOADS"
+bucket_name = "ev-charging-user-uploads"
+
+[[r2_buckets]]
+binding = "LOGS_BUCKET"
+bucket_name = "ev-charging-logs"
+
+# [build]
+# command = "npm run build"
+# cwd = "cloudflare"
+
+[triggers]
+crons = [
+  "0,15,30,45 * * * *",
+  "0 0 * * *",
+  "0 */6 * * *"
+]

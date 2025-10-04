@@ -1,0 +1,26 @@
+{
+  "name": "@ev-charging/database",
+  "version": "1.0.0",
+  "description": "Shared database configuration and utilities for EV Charging Platform",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "migrate": "node dist/migrations/run.js",
+    "seed": "node dist/seeds/run.js",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "pg": "^8.11.3",
+    "knex": "^3.0.1",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "@types/pg": "^8.10.7",
+    "@types/node": "^20.8.0"
+  },
+  "files": [
+    "dist/**/*"
+  ]
+}

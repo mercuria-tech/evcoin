@@ -1,0 +1,60 @@
+{
+  "name": "ev-charging-platform",
+  "version": "1.0.0",
+  "description": "Comprehensive EV Charging Platform connecting drivers with charging infrastructure",
+  "private": true,
+  "workspaces": [
+    "services/*",
+    "shared/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:user-service\" \"npm run dev:station-service\" \"npm run dev:charging-service\" \"npm run dev:payment-service\" \"npm run dev:reservation-service\" \"npm run dev:notification-service\"",
+    "dev:user-service": "cd services/user-service && npm run dev",
+    "dev:station-service": "cd services/station-service && npm run dev",
+    "dev:charging-service": "cd services/charging-service && npm run dev",
+    "dev:payment-service": "cd services/payment-service && npm run dev",
+    "dev:reservation-service": "cd services/reservation-service && npm run dev",
+    "dev:notification-service": "cd services/notification-service && npm run dev",
+    "dev:mobile": "cd apps/mobile && npm run android",
+    "dev:admin": "cd apps/admin-dashboard && npm run dev",
+    "build": "npm run build:services && npm run build:apps",
+    "build:services": "npm run build:user-service && npm run build:station-service && npm run build:charging-service && npm run build:payment-service && npm run build:reservation-service && npm run build:notification-service",
+    "build:user-service": "cd services/user-service && npm run build",
+    "build:station-service": "cd services/station-service && npm run build",
+    "build:charging-service": "cd services/charging-service && npm run build",
+    "build:payment-service": "cd services/payment-service && npm run build",
+    "build:reservation-service": "cd services/reservation-service && npm run build",
+    "build:notification-service": "cd services/notification-service && npm run build",
+    "build:apps": "npm run build:admin",
+    "build:admin": "cd apps/admin-dashboard && npm run build",
+    "test": "npm run test:services && npm run test:apps",
+    "test:services": "npm run test:user-service && npm run test:station-service && npm run test:charging-service && npm run test:payment-service && npm run test:reservation-service && npm run test:notification-service",
+    "test:user-service": "cd services/user-service && npm test",
+    "test:station-service": "cd services/station-service && npm test",
+    "test:charging-service": "cd services/charging-service && npm test",
+    "test:payment-service": "cd services/payment-service && npm test",
+    "test:reservation-service": "cd services/reservation-service && npm test",
+    "test:notification-service": "cd services/notification-service && npm test",
+    "test:apps": "npm run test:admin",
+    "test:admin": "cd apps/admin-dashboard && npm test",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:build": "docker-compose build",
+    "db:migrate": "cd services/shared/database && npm run migrate",
+    "db:seed": "cd services/shared/database && npm run seed",
+    "lint": "npm run lint:services && npm run lint:apps",
+    "lint:fix": "npm run lint:services:fix && npm run lint:apps:fix"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "typescript": "^5.2.2",
+    "@types/node": "^20.8.0",
+    "eslint": "^8.50.0",
+    "prettier": "^3.0.3"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}

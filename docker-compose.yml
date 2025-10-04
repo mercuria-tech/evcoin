@@ -1,0 +1,246 @@
+version: '3.8'
+
+services:
+  # Database Services
+  postgres:
+    image: postgres:15-alpine
+    container_name: ev-postgres
+    environment:
+      POSTGRES_DB: ev_charging_platform
+      POSTGRES_USER: ev_user
+      POSTGRES_PASSWORD: ev_password
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./services/shared/database/init:/docker-entrypoint-initdb.d
+    networks:
+      - ev-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: ev-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - ev-network
+
+  # Message Queue
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: ev-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: ev_admin
+      RABBITMQ_DEFAULT_PASS: ev_password
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - ev-network
+
+  # Search Engine
+  elasticsearch:
+    image: elasticsearch:8.9.0
+    container_name: ev-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - ev-network
+
+  # API Gateway
+  kong:
+    image: kong:3.4-alpine
+    container_name: ev-kong
+    environment:
+      KONG_DATABASE: "off"
+      KONG_DECLARATIVE_CONFIG: /kong/declarative/kong.yml
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+    volumes:
+      - ./infrastructure/kong/kong.yml:/kong/declarative/kong.yml
+    networks:
+      - ev-network
+    depends_on:
+      - user-service
+      - station-service
+      - charging-service
+      - payment-service
+      - reservation-service
+      - notification-service
+
+  # Microservices
+  user-service:
+    build:
+      context: ./services/user-service
+      dockerfile: Dockerfile
+    container_name: ev-user-service
+    environment:
+      NODE_ENV: development
+      PORT: 3001
+      DATABASE_URL: postgresql://ev_user:ev_password@postgres:5432/ev_charging_platform
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: your-super-secret-jwt-key
+      JWT_EXPIRES_IN: 15m
+      REFRESH_TOKEN_SECRET: your-super-secret-refresh-key
+      REFRESH_TOKEN_EXPIRES_IN: 7d
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./services/user-service:/app
+      - /app/node_modules
+    networks:
+      - ev-network
+    depends_on:
+      - postgres
+      - redis
+    command: npm run dev
+
+  station-service:
+    build:
+      context: ./services/station-service
+      dockerfile: Dockerfile
+    container_name: ev-station-service
+    environment:
+      NODE_ENV: development
+      PORT: 3002
+      DATABASE_URL: postgresql://ev_user:ev_password@postgres:5432/ev_charging_platform
+      REDIS_URL: redis://redis:6379
+      GOOGLE_MAPS_API_KEY: your-google-maps-api-key
+    ports:
+      - "3002:3002"
+    volumes:
+      - ./services/station-service:/app
+      - /app/node_modules
+    networks:
+      - ev-network
+    depends_on:
+      - postgres
+      - redis
+    command: npm run dev
+
+  charging-service:
+    build:
+      context: ./services/charging-service
+      dockerfile: Dockerfile
+    container_name: ev-charging-service
+    environment:
+      NODE_ENV: development
+      PORT: 3003
+      DATABASE_URL: postgresql://ev_user:ev_password@postgres:5432/ev_charging_platform
+      REDIS_URL: redis://redis:6379
+      RABBITMQ_URL: amqp://ev_admin:ev_password@rabbitmq:5672
+    ports:
+      - "3003:3003"
+    volumes:
+      - ./services/charging-service:/app
+      - /app/node_modules
+    networks:
+      - ev-network
+    depends_on:
+      - postgres
+      - redis
+      - rabbitmq
+    command: npm run dev
+
+  payment-service:
+    build:
+      context: ./services/payment-service
+      dockerfile: Dockerfile
+    container_name: ev-payment-service
+    environment:
+      NODE_ENV: development
+      PORT: 3004
+      DATABASE_URL: postgresql://ev_user:ev_password@postgres:5432/ev_charging_platform
+      REDIS_URL: redis://redis:6379
+      STRIPE_SECRET_KEY: your-stripe-secret-key
+      STRIPE_WEBHOOK_SECRET: your-stripe-webhook-secret
+    ports:
+      - "3004:3004"
+    volumes:
+      - ./services/payment-service:/app
+      - /app/node_modules
+    networks:
+      - ev-network
+    depends_on:
+      - postgres
+      - redis
+    command: npm run dev
+
+  reservation-service:
+    build:
+      context: ./services/reservation-service
+      dockerfile: Dockerfile
+    container_name: ev-reservation-service
+    environment:
+      NODE_ENV: development
+      PORT: 3005
+      DATABASE_URL: postgresql://ev_user:ev_password@postgres:5432/ev_charging_platform
+      REDIS_URL: redis://redis:6379
+      RABBITMQ_URL: amqp://ev_admin:ev_password@rabbitmq:5672
+    ports:
+      - "3005:3005"
+    volumes:
+      - ./services/reservation-service:/app
+      - /app/node_modules
+    networks:
+      - ev-network
+    depends_on:
+      - postgres
+      - redis
+      - rabbitmq
+    command: npm run dev
+
+  notification-service:
+    build:
+      context: ./services/notification-service
+      dockerfile: Dockerfile
+    container_name: ev-notification-service
+    environment:
+      NODE_ENV: development
+      PORT: 3006
+      DATABASE_URL: postgresql://ev_user:ev_password@postgres:5432/ev_charging_platform
+      REDIS_URL: redis://redis:6379
+      RABBITMQ_URL: amqp://ev_admin:ev_password@rabbitmq:5672
+      FIREBASE_SERVER_KEY: your-firebase-server-key
+      SENDGRID_API_KEY: your-sendgrid-api-key
+      TWILIO_ACCOUNT_SID: your-twilio-account-sid
+      TWILIO_AUTH_TOKEN: your-twilio-auth-token
+    ports:
+      - "3006:3006"
+    volumes:
+      - ./services/notification-service:/app
+      - /app/node_modules
+    networks:
+      - ev-network
+    depends_on:
+      - postgres
+      - redis
+      - rabbitmq
+    command: npm run dev
+
+volumes:
+  postgres_data:
+  redis_data:
+  rabbitmq_data:
+  elasticsearch_data:
+
+networks:
+  ev-network:
+    driver: bridge
