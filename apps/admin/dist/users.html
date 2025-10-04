@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,19 +7,34 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <style>
+        :root {
+            --background: 0 0% 100%;
+            --foreground: 222.2 84% 4.9%;
+            --card: 0 0% 100%;
+            --card-foreground: 222.2 84% 4.9%;
+            --primary: 221.2 83.2% 53.3%;
+            --primary-foreground: 210 40% 98%;
+            --secondary: 210 40% 96%;
+            --secondary-foreground: 222.2 84% 4.9%;
+            --muted: 210 40% 96%;
+            --muted-foreground: 215.4 16.3% 46.9%;
+            --border: 214.3 31.8% 91.4%;
+        }
+        
         .card {
-            background-color: white;
-            border: 1px solid #e5e7eb;
+            background-color: hsl(var(--card));
+            color: hsl(var(--card-foreground));
+            border: 1px solid hsl(var(--border));
         }
         
         .btn-primary {
-            background-color: #3b82f6;
-            color: white;
+            background-color: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
         }
         
         .btn-secondary {
-            background-color: #f3f4f6;
-            color: #374151;
+            background-color: hsl(var(--secondary));
+            color: hsl(var(--secondary-foreground));
         }
         
         .hover-lift {
@@ -45,10 +60,309 @@
             background-color: #ef4444;
             color: white;
         }
-        
-        .badge-secondary {
-            background-color: #6b7280;
-            color: white;
+
+        /* RTL Support */
+        [dir="rtl"] {
+            direction: rtl;
+        }
+
+        [dir="rtl"] .ml-auto {
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        [dir="rtl"] .mr-auto {
+            margin-right: auto;
+            margin-left: 0;
+        }
+
+        [dir="rtl"] .ml-2 {
+            margin-left: 0.5rem;
+            margin-right: 0;
+        }
+
+        [dir="rtl"] .mr-2 {
+            margin-right: 0.5rem;
+            margin-left: 0;
+        }
+
+        [dir="rtl"] .ml-3 {
+            margin-left: 0.75rem;
+            margin-right: 0;
+        }
+
+        [dir="rtl"] .mr-3 {
+            margin-right: 0.75rem;
+            margin-left: 0;
+        }
+
+        [dir="rtl"] .ml-4 {
+            margin-left: 1rem;
+            margin-right: 0;
+        }
+
+        [dir="rtl"] .mr-4 {
+            margin-right: 1rem;
+            margin-left: 0;
+        }
+
+        [dir="rtl"] .ml-6 {
+            margin-left: 1.5rem;
+            margin-right: 0;
+        }
+
+        [dir="rtl"] .mr-6 {
+            margin-right: 1.5rem;
+            margin-left: 0;
+        }
+
+        [dir="rtl"] .pl-2 {
+            padding-left: 0.5rem;
+            padding-right: 0;
+        }
+
+        [dir="rtl"] .pr-2 {
+            padding-right: 0.5rem;
+            padding-left: 0;
+        }
+
+        [dir="rtl"] .pl-3 {
+            padding-left: 0.75rem;
+            padding-right: 0;
+        }
+
+        [dir="rtl"] .pr-3 {
+            padding-right: 0.75rem;
+            padding-left: 0;
+        }
+
+        [dir="rtl"] .pl-4 {
+            padding-left: 1rem;
+            padding-right: 0;
+        }
+
+        [dir="rtl"] .pr-4 {
+            padding-right: 1rem;
+            padding-left: 0;
+        }
+
+        [dir="rtl"] .pl-6 {
+            padding-left: 1.5rem;
+            padding-right: 0;
+        }
+
+        [dir="rtl"] .pr-6 {
+            padding-right: 1.5rem;
+            padding-left: 0;
+        }
+
+        [dir="rtl"] .left-0 {
+            left: auto;
+            right: 0;
+        }
+
+        [dir="rtl"] .right-0 {
+            right: auto;
+            left: 0;
+        }
+
+        [dir="rtl"] .left-3 {
+            left: auto;
+            right: 0.75rem;
+        }
+
+        [dir="rtl"] .right-3 {
+            right: auto;
+            left: 0.75rem;
+        }
+
+        [dir="rtl"] .left-4 {
+            left: auto;
+            right: 1rem;
+        }
+
+        [dir="rtl"] .right-4 {
+            right: auto;
+            left: 1rem;
+        }
+
+        [dir="rtl"] .text-left {
+            text-align: right;
+        }
+
+        [dir="rtl"] .text-right {
+            text-align: left;
+        }
+
+        [dir="rtl"] .flex-row {
+            flex-direction: row-reverse;
+        }
+
+        [dir="rtl"] .flex-row-reverse {
+            flex-direction: row;
+        }
+
+        [dir="rtl"] .border-l {
+            border-left: none;
+            border-right: 1px solid;
+        }
+
+        [dir="rtl"] .border-r {
+            border-right: none;
+            border-left: 1px solid;
+        }
+
+        [dir="rtl"] .border-l-4 {
+            border-left: none;
+            border-right: 4px solid;
+        }
+
+        [dir="rtl"] .border-r-4 {
+            border-right: none;
+            border-left: 4px solid;
+        }
+
+        [dir="rtl"] .rounded-l {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-top-right-radius: 0.25rem;
+            border-bottom-right-radius: 0.25rem;
+        }
+
+        [dir="rtl"] .rounded-r {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-top-left-radius: 0.25rem;
+            border-bottom-left-radius: 0.25rem;
+        }
+
+        [dir="rtl"] .rounded-l-lg {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-top-right-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+        }
+
+        [dir="rtl"] .rounded-r-lg {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 0.5rem;
+        }
+
+        [dir="rtl"] .space-x-2 > * + * {
+            margin-left: 0;
+            margin-right: 0.5rem;
+        }
+
+        [dir="rtl"] .space-x-3 > * + * {
+            margin-left: 0;
+            margin-right: 0.75rem;
+        }
+
+        [dir="rtl"] .space-x-4 > * + * {
+            margin-left: 0;
+            margin-right: 1rem;
+        }
+
+        [dir="rtl"] .space-x-6 > * + * {
+            margin-left: 0;
+            margin-right: 1.5rem;
+        }
+
+        [dir="rtl"] .space-y-2 > * + * {
+            margin-top: 0.5rem;
+            margin-bottom: 0;
+        }
+
+        [dir="rtl"] .space-y-3 > * + * {
+            margin-top: 0.75rem;
+            margin-bottom: 0;
+        }
+
+        [dir="rtl"] .space-y-4 > * + * {
+            margin-top: 1rem;
+            margin-bottom: 0;
+        }
+
+        [dir="rtl"] .space-y-6 > * + * {
+            margin-top: 1.5rem;
+            margin-bottom: 0;
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            position: relative;
+            display: inline-block;
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            width: 12rem;
+            background-color: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            z-index: 50;
+        }
+
+        [dir="rtl"] .language-dropdown {
+            right: auto;
+            left: 0;
+        }
+
+        .language-option {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.5rem 1rem;
+            text-align: left;
+            font-size: 0.875rem;
+            color: #374151;
+            border: none;
+            background: none;
+            cursor: pointer;
+            transition: background-color 0.15s ease-in-out;
+        }
+
+        [dir="rtl"] .language-option {
+            text-align: right;
+        }
+
+        .language-option:hover {
+            background-color: #f3f4f6;
+        }
+
+        .language-option.active {
+            background-color: #dbeafe;
+            color: #2563eb;
+        }
+
+        .language-flag {
+            font-size: 1.125rem;
+            margin-right: 0.75rem;
+        }
+
+        [dir="rtl"] .language-flag {
+            margin-right: 0;
+            margin-left: 0.75rem;
+        }
+
+        .language-name {
+            font-weight: 500;
+        }
+
+        .language-check {
+            margin-left: auto;
+            color: #2563eb;
+        }
+
+        [dir="rtl"] .language-check {
+            margin-left: 0;
+            margin-right: auto;
         }
     </style>
 </head>
@@ -63,8 +377,8 @@
                         <i data-lucide="zap" class="w-5 h-5 text-white"></i>
                     </div>
                     <div>
-                        <h1 class="text-lg font-bold text-gray-900">EV Platform</h1>
-                        <p class="text-xs text-gray-500">Admin Dashboard</p>
+                        <h1 class="text-lg font-bold text-gray-900" id="logo-text">EV Platform</h1>
+                        <p class="text-xs text-gray-500" id="logo-subtitle">Admin Dashboard</p>
                     </div>
                 </div>
             </div>
@@ -74,64 +388,64 @@
                 <a href="dashboard.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
-                        <span>Dashboard</span>
+                        <span id="nav-dashboard">Dashboard</span>
                     </div>
                 </a>
                 <a href="stations.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="zap" class="w-5 h-5"></i>
-                        <span>Stations</span>
+                        <span id="nav-stations">Stations</span>
                     </div>
                     <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">1,247</span>
                 </a>
                 <a href="users.html" class="nav-item active flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors bg-blue-600 text-white">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="users" class="w-5 h-5"></i>
-                        <span>Users</span>
+                        <span id="nav-users">Users</span>
                     </div>
-                    <span class="bg-white text-blue-600 text-xs px-2 py-1 rounded-full">15.4K</span>
+                    <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">15.4K</span>
                 </a>
                 <a href="charging.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="activity" class="w-5 h-5"></i>
-                        <span>Charging Sessions</span>
+                        <span id="nav-charging">Charging Sessions</span>
                     </div>
                 </a>
                 <a href="payments.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="credit-card" class="w-5 h-5"></i>
-                        <span>Payments</span>
+                        <span id="nav-payments">Payments</span>
                     </div>
                 </a>
                 <a href="analytics.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
-                        <span>Analytics</span>
+                        <span id="nav-analytics">Analytics</span>
                     </div>
                 </a>
                 <a href="reports.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="file-text" class="w-5 h-5"></i>
-                        <span>Reports</span>
+                        <span id="nav-reports">Reports</span>
                     </div>
                 </a>
                 <a href="notifications.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="bell" class="w-5 h-5"></i>
-                        <span>Notifications</span>
+                        <span id="nav-notifications">Notifications</span>
                     </div>
                     <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">3</span>
                 </a>
                 <a href="support.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="help-circle" class="w-5 h-5"></i>
-                        <span>Support</span>
+                        <span id="nav-support">Support</span>
                     </div>
                 </a>
                 <a href="settings.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="settings" class="w-5 h-5"></i>
-                        <span>Settings</span>
+                        <span id="nav-settings">Settings</span>
                     </div>
                 </a>
             </nav>
@@ -155,416 +469,252 @@
             <!-- Top Bar -->
             <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6">
                 <div class="flex items-center space-x-4">
-                    <h2 class="text-xl font-semibold text-gray-900">User Management</h2>
+                    <h2 class="text-xl font-semibold text-gray-900" id="page-title">User Management</h2>
                 </div>
 
-                <div class="flex items-center space-x-2">
-                    <button class="btn-secondary px-3 py-1 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
-                        <i data-lucide="download" class="w-4 h-4 mr-2 inline"></i>
-                        Export
-                    </button>
-                    <button class="btn-primary px-3 py-1 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
-                        <i data-lucide="user-plus" class="w-4 h-4 mr-2 inline"></i>
-                        Add User
-                    </button>
+                <div class="flex items-center space-x-4">
+                    <!-- Language Switcher -->
+                    <div class="language-switcher">
+                        <button class="btn-secondary px-3 py-1 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors flex items-center space-x-2" onclick="toggleLanguageDropdown()">
+                            <i data-lucide="globe" class="w-4 h-4"></i>
+                            <span id="current-language-flag">🇺🇸</span>
+                            <span id="current-language-name">English</span>
+                        </button>
+                        
+                        <div id="language-dropdown" class="language-dropdown hidden">
+                            <button class="language-option" onclick="changeLanguage('en')">
+                                <span class="language-flag">🇺🇸</span>
+                                <span class="language-name">English</span>
+                                <span class="language-check" id="check-en">✓</span>
+                            </button>
+                            <button class="language-option" onclick="changeLanguage('ar')">
+                                <span class="language-flag">🇸🇦</span>
+                                <span class="language-name">العربية</span>
+                                <span class="language-check hidden" id="check-ar">✓</span>
+                            </button>
+                            <button class="language-option" onclick="changeLanguage('fa')">
+                                <span class="language-flag">🇮🇷</span>
+                                <span class="language-name">فارسی</span>
+                                <span class="language-check hidden" id="check-fa">✓</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Status Indicators -->
+                    <div class="hidden md:flex items-center space-x-4">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                            <span class="text-sm text-gray-600">API Online</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <span class="text-sm text-gray-600">15.4K Users</span>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="flex items-center space-x-2">
+                        <button class="btn-secondary px-3 py-1 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
+                            <i data-lucide="plus" class="w-4 h-4 mr-2 inline"></i>
+                            <span id="add-user">Add User</span>
+                        </button>
+                        <button class="btn-secondary px-3 py-1 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
+                            <i data-lucide="filter" class="w-4 h-4 mr-2 inline"></i>
+                            <span id="filter-users">Filter</span>
+                        </button>
+                    </div>
                 </div>
             </header>
 
             <!-- Page Content -->
             <main class="flex-1 overflow-y-auto bg-gray-50">
                 <div class="p-6">
-                    <!-- Stats Cards -->
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                    <!-- User Statistics -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
                         <div class="card rounded-lg p-6 hover-lift">
                             <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-sm font-medium text-gray-600">Total Users</h3>
+                                <h3 class="text-sm font-medium text-gray-600" id="stat-total">Total Users</h3>
                                 <i data-lucide="users" class="w-4 h-4 text-gray-400"></i>
                             </div>
                             <div class="text-2xl font-bold text-gray-900 mb-1">15,432</div>
-                            <p class="text-xs text-gray-500">+127 new this week</p>
+                            <p class="text-xs text-gray-500">
+                                <span class="text-green-600 flex items-center">
+                                    <i data-lucide="trending-up" class="w-3 h-3 mr-1"></i>
+                                    +127 new
+                                </span>
+                                this week
+                            </p>
                         </div>
 
                         <div class="card rounded-lg p-6 hover-lift">
                             <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-sm font-medium text-gray-600">Active Users</h3>
-                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i>
+                                <h3 class="text-sm font-medium text-gray-600" id="stat-active">Active Users</h3>
+                                <i data-lucide="user-check" class="w-4 h-4 text-gray-400"></i>
                             </div>
-                            <div class="text-2xl font-bold text-gray-900 mb-1">14,891</div>
-                            <p class="text-xs text-gray-500">96.5% active rate</p>
+                            <div class="text-2xl font-bold text-gray-900 mb-1">12,847</div>
+                            <p class="text-xs text-gray-500">
+                                <span class="text-green-600 flex items-center">
+                                    <i data-lucide="activity" class="w-3 h-3 mr-1"></i>
+                                    83.2% active
+                                </span>
+                            </p>
                         </div>
 
                         <div class="card rounded-lg p-6 hover-lift">
                             <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-sm font-medium text-gray-600">Premium Users</h3>
-                                <i data-lucide="shield" class="w-4 h-4 text-gray-400"></i>
+                                <h3 class="text-sm font-medium text-gray-600" id="stat-premium">Premium Users</h3>
+                                <i data-lucide="crown" class="w-4 h-4 text-gray-400"></i>
                             </div>
-                            <div class="text-2xl font-bold text-gray-900 mb-1">3,247</div>
-                            <p class="text-xs text-gray-500">21% conversion rate</p>
+                            <div class="text-2xl font-bold text-gray-900 mb-1">3,421</div>
+                            <p class="text-xs text-gray-500">
+                                <span class="text-blue-600 flex items-center">
+                                    <i data-lucide="trending-up" class="w-3 h-3 mr-1"></i>
+                                    +45 new
+                                </span>
+                                this month
+                            </p>
                         </div>
 
                         <div class="card rounded-lg p-6 hover-lift">
                             <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-sm font-medium text-gray-600">Monthly Revenue</h3>
-                                <i data-lucide="trending-up" class="w-4 h-4 text-gray-400"></i>
+                                <h3 class="text-sm font-medium text-gray-600" id="stat-suspended">Suspended</h3>
+                                <i data-lucide="user-x" class="w-4 h-4 text-gray-400"></i>
                             </div>
-                            <div class="text-2xl font-bold text-gray-900 mb-1">$387,421</div>
-                            <p class="text-xs text-gray-500">+15.2% from last month</p>
+                            <div class="text-2xl font-bold text-gray-900 mb-1">23</div>
+                            <p class="text-xs text-gray-500">
+                                <span class="text-red-600 flex items-center">
+                                    <i data-lucide="alert-triangle" class="w-3 h-3 mr-1"></i>
+                                    Needs review
+                                </span>
+                            </p>
                         </div>
                     </div>
 
-                    <!-- Filters -->
-                    <div class="card rounded-lg p-6 mb-6">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-4">User Search & Filters</h3>
-                        <div class="flex flex-col md:flex-row gap-4">
-                            <div class="flex-1">
-                                <div class="relative">
-                                    <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4"></i>
-                                    <input
-                                        type="text"
-                                        placeholder="Search users by name or email..."
-                                        class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                </div>
+                    <!-- User List -->
+                    <div class="card rounded-lg p-6 hover-lift">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900" id="user-list-title">User List</h3>
+                                <p class="text-sm text-gray-600" id="user-list-subtitle">Manage and monitor all platform users</p>
                             </div>
-                            <div class="flex gap-2">
-                                <select class="px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                    <option value="all">All Status</option>
-                                    <option value="active">Active</option>
-                                    <option value="suspended">Suspended</option>
-                                    <option value="pending">Pending</option>
-                                </select>
-                                <button class="btn-secondary px-3 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors">
-                                    <i data-lucide="filter" class="w-4 h-4 mr-2 inline"></i>
-                                    More Filters
+                            <div class="flex items-center space-x-2">
+                                <button class="btn-secondary px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
+                                    <i data-lucide="download" class="w-4 h-4 mr-2 inline"></i>
+                                    <span id="export-users">Export</span>
+                                </button>
+                                <button class="btn-primary px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
+                                    <i data-lucide="plus" class="w-4 h-4 mr-2 inline"></i>
+                                    <span id="add-new-user">Add User</span>
                                 </button>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Users List -->
-                    <div class="space-y-4">
-                        <!-- User 1 -->
-                        <div class="card rounded-lg hover-lift">
-                            <div class="p-6">
-                                <div class="flex items-center justify-between mb-4">
-                                    <div class="flex items-center space-x-4">
-                                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                                            <i data-lucide="user" class="w-6 h-6 text-blue-600"></i>
-                                        </div>
-                                        <div>
-                                            <h3 class="text-lg font-semibold text-gray-900">John Smith</h3>
-                                            <p class="text-sm text-gray-600 flex items-center space-x-4">
-                                                <span class="flex items-center">
-                                                    <i data-lucide="mail" class="w-4 h-4 mr-1"></i>
-                                                    john.smith@email.com
-                                                </span>
-                                                <span class="flex items-center">
-                                                    <i data-lucide="phone" class="w-4 h-4 mr-1"></i>
-                                                    +1 (555) 123-4567
-                                                </span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center space-x-2">
-                                        <span class="badge-success px-2 py-1 rounded-full text-xs font-medium">Active</span>
-                                        <span class="badge-secondary px-2 py-1 rounded-full text-xs font-medium">Premium</span>
-                                        <button class="text-gray-400 hover:text-gray-600">
-                                            <i data-lucide="more-horizontal" class="w-5 h-5"></i>
-                                        </button>
+                        <!-- Search and Filter -->
+                        <div class="mb-6">
+                            <div class="flex items-center space-x-4">
+                                <div class="flex-1">
+                                    <div class="relative">
+                                        <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"></i>
+                                        <input type="text" placeholder="Search users..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="search-input">
                                     </div>
                                 </div>
-                                
-                                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                                    <!-- Activity Stats -->
-                                    <div>
-                                        <h4 class="font-medium mb-2 text-gray-900">Activity Stats</h4>
-                                        <div class="space-y-2">
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Total Sessions</span>
-                                                <span class="font-medium text-sm">45</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Total Spent</span>
-                                                <span class="font-medium text-sm">$1,250.50</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Last Activity</span>
-                                                <span class="font-medium text-sm">2 hours ago</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Account Info -->
-                                    <div>
-                                        <h4 class="font-medium mb-2 text-gray-900">Account Info</h4>
-                                        <div class="space-y-2">
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Join Date</span>
-                                                <span class="font-medium text-sm">2023-01-15</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Subscription</span>
-                                                <span class="badge-secondary text-xs px-2 py-1 rounded">Premium</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Status</span>
-                                                <span class="badge-success text-xs px-2 py-1 rounded">Active</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Payment Methods -->
-                                    <div>
-                                        <h4 class="font-medium mb-2 text-gray-900">Payment Methods</h4>
-                                        <div class="space-y-2">
-                                            <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
-                                                <div class="flex items-center">
-                                                    <i data-lucide="credit-card" class="w-4 h-4 mr-2"></i>
-                                                    <span class="text-sm">**** 1234</span>
-                                                </div>
-                                                <span class="badge-success text-xs px-2 py-1 rounded">Active</span>
-                                            </div>
-                                            <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
-                                                <div class="flex items-center">
-                                                    <i data-lucide="credit-card" class="w-4 h-4 mr-2"></i>
-                                                    <span class="text-sm">**** 5678</span>
-                                                </div>
-                                                <span class="badge-secondary text-xs px-2 py-1 rounded">Backup</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Actions -->
-                                    <div>
-                                        <h4 class="font-medium mb-2 text-gray-900">Actions</h4>
-                                        <div class="space-y-2">
-                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
-                                                View Profile
-                                            </button>
-                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
-                                                Edit User
-                                            </button>
-                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
-                                                View Sessions
-                                            </button>
-                                            <button class="btn-destructive w-full py-1 rounded text-sm font-medium hover:bg-red-600 transition-colors">
-                                                Suspend User
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                <select class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="status-filter">
+                                    <option value="" id="filter-all">All Status</option>
+                                    <option value="active" id="filter-active">Active</option>
+                                    <option value="inactive" id="filter-inactive">Inactive</option>
+                                    <option value="suspended" id="filter-suspended">Suspended</option>
+                                </select>
+                                <select class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="plan-filter">
+                                    <option value="" id="filter-all-plans">All Plans</option>
+                                    <option value="basic" id="filter-basic">Basic</option>
+                                    <option value="premium" id="filter-premium">Premium</option>
+                                </select>
                             </div>
                         </div>
 
-                        <!-- User 2 -->
-                        <div class="card rounded-lg hover-lift">
-                            <div class="p-6">
-                                <div class="flex items-center justify-between mb-4">
-                                    <div class="flex items-center space-x-4">
-                                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                                            <i data-lucide="user" class="w-6 h-6 text-green-600"></i>
-                                        </div>
-                                        <div>
-                                            <h3 class="text-lg font-semibold text-gray-900">Sarah Johnson</h3>
-                                            <p class="text-sm text-gray-600 flex items-center space-x-4">
-                                                <span class="flex items-center">
-                                                    <i data-lucide="mail" class="w-4 h-4 mr-1"></i>
-                                                    sarah.j@email.com
-                                                </span>
-                                                <span class="flex items-center">
-                                                    <i data-lucide="phone" class="w-4 h-4 mr-1"></i>
-                                                    +1 (555) 987-6543
-                                                </span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center space-x-2">
-                                        <span class="badge-success px-2 py-1 rounded-full text-xs font-medium">Active</span>
-                                        <span class="badge-secondary px-2 py-1 rounded-full text-xs font-medium">Basic</span>
-                                        <button class="text-gray-400 hover:text-gray-600">
-                                            <i data-lucide="more-horizontal" class="w-5 h-5"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                
-                                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                                    <!-- Activity Stats -->
-                                    <div>
-                                        <h4 class="font-medium mb-2 text-gray-900">Activity Stats</h4>
-                                        <div class="space-y-2">
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Total Sessions</span>
-                                                <span class="font-medium text-sm">78</span>
+                        <!-- User Table -->
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="border-b border-gray-200">
+                                        <th class="text-left py-3 px-4 font-medium text-gray-600" id="col-user-id">User ID</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-600" id="col-name">Name</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-600" id="col-email">Email</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-600" id="col-phone">Phone</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-600" id="col-status">Status</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-600" id="col-plan">Plan</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-600" id="col-registered">Registered</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-600" id="col-actions">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                        <td class="py-3 px-4 text-sm font-medium text-gray-900">U001</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">John Doe</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">john.doe@email.com</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">+1 234 567 8900</td>
+                                        <td class="py-3 px-4">
+                                            <span class="badge-success px-2 py-1 rounded-full text-xs" id="status-active">Active</span>
+                                        </td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">Premium</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">2024-01-15</td>
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center space-x-2">
+                                                <button class="text-blue-600 hover:text-blue-800 text-sm" id="view-profile">View</button>
+                                                <button class="text-gray-600 hover:text-gray-800 text-sm" id="edit-user">Edit</button>
+                                                <button class="text-gray-600 hover:text-gray-800 text-sm" id="suspend-user">Suspend</button>
                                             </div>
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Total Spent</span>
-                                                <span class="font-medium text-sm">$2,100.75</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                        <td class="py-3 px-4 text-sm font-medium text-gray-900">U002</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">Jane Smith</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">jane.smith@email.com</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">+1 234 567 8901</td>
+                                        <td class="py-3 px-4">
+                                            <span class="badge-success px-2 py-1 rounded-full text-xs" id="status-active-2">Active</span>
+                                        </td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">Basic</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">2024-02-20</td>
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center space-x-2">
+                                                <button class="text-blue-600 hover:text-blue-800 text-sm" id="view-profile-2">View</button>
+                                                <button class="text-gray-600 hover:text-gray-800 text-sm" id="edit-user-2">Edit</button>
+                                                <button class="text-gray-600 hover:text-gray-800 text-sm" id="suspend-user-2">Suspend</button>
                                             </div>
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Last Activity</span>
-                                                <span class="font-medium text-sm">1 day ago</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                        <td class="py-3 px-4 text-sm font-medium text-gray-900">U003</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">Mike Johnson</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">mike.johnson@email.com</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">+1 234 567 8902</td>
+                                        <td class="py-3 px-4">
+                                            <span class="badge-warning px-2 py-1 rounded-full text-xs" id="status-inactive">Inactive</span>
+                                        </td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">Basic</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">2024-03-10</td>
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center space-x-2">
+                                                <button class="text-blue-600 hover:text-blue-800 text-sm" id="view-profile-3">View</button>
+                                                <button class="text-gray-600 hover:text-gray-800 text-sm" id="edit-user-3">Edit</button>
+                                                <button class="text-gray-600 hover:text-gray-800 text-sm" id="suspend-user-3">Suspend</button>
                                             </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Account Info -->
-                                    <div>
-                                        <h4 class="font-medium mb-2 text-gray-900">Account Info</h4>
-                                        <div class="space-y-2">
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Join Date</span>
-                                                <span class="font-medium text-sm">2023-03-22</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Subscription</span>
-                                                <span class="badge-secondary text-xs px-2 py-1 rounded">Basic</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Status</span>
-                                                <span class="badge-success text-xs px-2 py-1 rounded">Active</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Payment Methods -->
-                                    <div>
-                                        <h4 class="font-medium mb-2 text-gray-900">Payment Methods</h4>
-                                        <div class="space-y-2">
-                                            <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
-                                                <div class="flex items-center">
-                                                    <i data-lucide="credit-card" class="w-4 h-4 mr-2"></i>
-                                                    <span class="text-sm">**** 9876</span>
-                                                </div>
-                                                <span class="badge-success text-xs px-2 py-1 rounded">Active</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Actions -->
-                                    <div>
-                                        <h4 class="font-medium mb-2 text-gray-900">Actions</h4>
-                                        <div class="space-y-2">
-                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
-                                                View Profile
-                                            </button>
-                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
-                                                Edit User
-                                            </button>
-                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
-                                                View Sessions
-                                            </button>
-                                            <button class="btn-destructive w-full py-1 rounded text-sm font-medium hover:bg-red-600 transition-colors">
-                                                Suspend User
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
 
-                        <!-- User 3 -->
-                        <div class="card rounded-lg hover-lift">
-                            <div class="p-6">
-                                <div class="flex items-center justify-between mb-4">
-                                    <div class="flex items-center space-x-4">
-                                        <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-                                            <i data-lucide="user" class="w-6 h-6 text-red-600"></i>
-                                        </div>
-                                        <div>
-                                            <h3 class="text-lg font-semibold text-gray-900">Mike Wilson</h3>
-                                            <p class="text-sm text-gray-600 flex items-center space-x-4">
-                                                <span class="flex items-center">
-                                                    <i data-lucide="mail" class="w-4 h-4 mr-1"></i>
-                                                    mike.wilson@email.com
-                                                </span>
-                                                <span class="flex items-center">
-                                                    <i data-lucide="phone" class="w-4 h-4 mr-1"></i>
-                                                    +1 (555) 456-7890
-                                                </span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center space-x-2">
-                                        <span class="badge-destructive px-2 py-1 rounded-full text-xs font-medium">Suspended</span>
-                                        <span class="badge-secondary px-2 py-1 rounded-full text-xs font-medium">Basic</span>
-                                        <button class="text-gray-400 hover:text-gray-600">
-                                            <i data-lucide="more-horizontal" class="w-5 h-5"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                
-                                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                                    <!-- Activity Stats -->
-                                    <div>
-                                        <h4 class="font-medium mb-2 text-gray-900">Activity Stats</h4>
-                                        <div class="space-y-2">
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Total Sessions</span>
-                                                <span class="font-medium text-sm">12</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Total Spent</span>
-                                                <span class="font-medium text-sm">$320.25</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Last Activity</span>
-                                                <span class="font-medium text-sm">1 week ago</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Account Info -->
-                                    <div>
-                                        <h4 class="font-medium mb-2 text-gray-900">Account Info</h4>
-                                        <div class="space-y-2">
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Join Date</span>
-                                                <span class="font-medium text-sm">2023-02-10</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Subscription</span>
-                                                <span class="badge-secondary text-xs px-2 py-1 rounded">Basic</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Status</span>
-                                                <span class="badge-destructive text-xs px-2 py-1 rounded">Suspended</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Payment Methods -->
-                                    <div>
-                                        <h4 class="font-medium mb-2 text-gray-900">Payment Methods</h4>
-                                        <div class="space-y-2">
-                                            <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
-                                                <div class="flex items-center">
-                                                    <i data-lucide="credit-card" class="w-4 h-4 mr-2"></i>
-                                                    <span class="text-sm">**** 2468</span>
-                                                </div>
-                                                <span class="badge-destructive text-xs px-2 py-1 rounded">Expired</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Actions -->
-                                    <div>
-                                        <h4 class="font-medium mb-2 text-gray-900">Actions</h4>
-                                        <div class="space-y-2">
-                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
-                                                View Profile
-                                            </button>
-                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
-                                                Edit User
-                                            </button>
-                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
-                                                View Sessions
-                                            </button>
-                                            <button class="btn-primary w-full py-1 rounded text-sm font-medium hover:bg-blue-700 transition-colors">
-                                                Activate User
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                        <!-- Pagination -->
+                        <div class="flex items-center justify-between mt-6">
+                            <div class="text-sm text-gray-600" id="pagination-info">
+                                Showing 1-10 of 15,432 users
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button class="px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-50" id="prev-page">Previous</button>
+                                <button class="px-3 py-1 bg-blue-600 text-white rounded-md text-sm" id="current-page">1</button>
+                                <button class="px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-50" id="next-page">Next</button>
                             </div>
                         </div>
                     </div>
@@ -576,6 +726,227 @@
     <script>
         // Initialize Lucide icons
         lucide.createIcons();
+        
+        // Language translations
+        const translations = {
+            en: {
+                'logo-text': 'EV Platform',
+                'logo-subtitle': 'Admin Dashboard',
+                'nav-dashboard': 'Dashboard',
+                'nav-stations': 'Stations',
+                'nav-users': 'Users',
+                'nav-charging': 'Charging Sessions',
+                'nav-payments': 'Payments',
+                'nav-analytics': 'Analytics',
+                'nav-reports': 'Reports',
+                'nav-notifications': 'Notifications',
+                'nav-support': 'Support',
+                'nav-settings': 'Settings',
+                'page-title': 'User Management',
+                'add-user': 'Add User',
+                'filter-users': 'Filter',
+                'stat-total': 'Total Users',
+                'stat-active': 'Active Users',
+                'stat-premium': 'Premium Users',
+                'stat-suspended': 'Suspended',
+                'user-list-title': 'User List',
+                'user-list-subtitle': 'Manage and monitor all platform users',
+                'export-users': 'Export',
+                'add-new-user': 'Add User',
+                'col-user-id': 'User ID',
+                'col-name': 'Name',
+                'col-email': 'Email',
+                'col-phone': 'Phone',
+                'col-status': 'Status',
+                'col-plan': 'Plan',
+                'col-registered': 'Registered',
+                'col-actions': 'Actions',
+                'status-active': 'Active',
+                'status-inactive': 'Inactive',
+                'status-suspended': 'Suspended',
+                'view-profile': 'View',
+                'edit-user': 'Edit',
+                'suspend-user': 'Suspend',
+                'pagination-info': 'Showing 1-10 of 15,432 users',
+                'prev-page': 'Previous',
+                'next-page': 'Next',
+                'filter-all': 'All Status',
+                'filter-active': 'Active',
+                'filter-inactive': 'Inactive',
+                'filter-suspended': 'Suspended',
+                'filter-all-plans': 'All Plans',
+                'filter-basic': 'Basic',
+                'filter-premium': 'Premium'
+            },
+            ar: {
+                'logo-text': 'منصة المركبات الكهربائية',
+                'logo-subtitle': 'لوحة تحكم الإدارة',
+                'nav-dashboard': 'لوحة التحكم',
+                'nav-stations': 'المحطات',
+                'nav-users': 'المستخدمون',
+                'nav-charging': 'جلسات الشحن',
+                'nav-payments': 'المدفوعات',
+                'nav-analytics': 'التحليلات',
+                'nav-reports': 'التقارير',
+                'nav-notifications': 'الإشعارات',
+                'nav-support': 'الدعم',
+                'nav-settings': 'الإعدادات',
+                'page-title': 'إدارة المستخدمين',
+                'add-user': 'إضافة مستخدم',
+                'filter-users': 'تصفية',
+                'stat-total': 'إجمالي المستخدمين',
+                'stat-active': 'المستخدمون النشطون',
+                'stat-premium': 'المستخدمون المميزون',
+                'stat-suspended': 'المعلقون',
+                'user-list-title': 'قائمة المستخدمين',
+                'user-list-subtitle': 'إدارة ومراقبة جميع مستخدمي المنصة',
+                'export-users': 'تصدير',
+                'add-new-user': 'إضافة مستخدم',
+                'col-user-id': 'معرف المستخدم',
+                'col-name': 'الاسم',
+                'col-email': 'البريد الإلكتروني',
+                'col-phone': 'الهاتف',
+                'col-status': 'الحالة',
+                'col-plan': 'الخطة',
+                'col-registered': 'تاريخ التسجيل',
+                'col-actions': 'الإجراءات',
+                'status-active': 'نشط',
+                'status-inactive': 'غير نشط',
+                'status-suspended': 'معلق',
+                'view-profile': 'عرض',
+                'edit-user': 'تعديل',
+                'suspend-user': 'تعليق',
+                'pagination-info': 'عرض 1-10 من 15,432 مستخدم',
+                'prev-page': 'السابق',
+                'next-page': 'التالي',
+                'filter-all': 'جميع الحالات',
+                'filter-active': 'نشط',
+                'filter-inactive': 'غير نشط',
+                'filter-suspended': 'معلق',
+                'filter-all-plans': 'جميع الخطط',
+                'filter-basic': 'أساسي',
+                'filter-premium': 'مميز'
+            },
+            fa: {
+                'logo-text': 'پلتفرم خودروهای برقی',
+                'logo-subtitle': 'داشبورد مدیریت',
+                'nav-dashboard': 'داشبورد',
+                'nav-stations': 'ایستگاه‌ها',
+                'nav-users': 'کاربران',
+                'nav-charging': 'جلسات شارژ',
+                'nav-payments': 'پرداخت‌ها',
+                'nav-analytics': 'تحلیل‌ها',
+                'nav-reports': 'گزارش‌ها',
+                'nav-notifications': 'اطلاعیه‌ها',
+                'nav-support': 'پشتیبانی',
+                'nav-settings': 'تنظیمات',
+                'page-title': 'مدیریت کاربران',
+                'add-user': 'افزودن کاربر',
+                'filter-users': 'فیلتر',
+                'stat-total': 'کل کاربران',
+                'stat-active': 'کاربران فعال',
+                'stat-premium': 'کاربران پریمیوم',
+                'stat-suspended': 'معلق شده',
+                'user-list-title': 'لیست کاربران',
+                'user-list-subtitle': 'مدیریت و نظارت بر تمام کاربران پلتفرم',
+                'export-users': 'صادرات',
+                'add-new-user': 'افزودن کاربر',
+                'col-user-id': 'شناسه کاربر',
+                'col-name': 'نام',
+                'col-email': 'ایمیل',
+                'col-phone': 'تلفن',
+                'col-status': 'وضعیت',
+                'col-plan': 'طرح',
+                'col-registered': 'ثبت‌نام شده',
+                'col-actions': 'اقدامات',
+                'status-active': 'فعال',
+                'status-inactive': 'غیرفعال',
+                'status-suspended': 'معلق',
+                'view-profile': 'مشاهده',
+                'edit-user': 'ویرایش',
+                'suspend-user': 'تعلیق',
+                'pagination-info': 'نمایش 1-10 از 15,432 کاربر',
+                'prev-page': 'قبلی',
+                'next-page': 'بعدی',
+                'filter-all': 'همه وضعیت‌ها',
+                'filter-active': 'فعال',
+                'filter-inactive': 'غیرفعال',
+                'filter-suspended': 'معلق',
+                'filter-all-plans': 'همه طرح‌ها',
+                'filter-basic': 'پایه',
+                'filter-premium': 'پریمیوم'
+            }
+        };
+
+        let currentLanguage = 'en';
+
+        // Load saved language preference
+        function loadLanguagePreference() {
+            const savedLanguage = localStorage.getItem('ev-admin-language');
+            if (savedLanguage && ['en', 'ar', 'fa'].includes(savedLanguage)) {
+                currentLanguage = savedLanguage;
+                applyLanguage(currentLanguage);
+            }
+        }
+
+        // Apply language changes
+        function applyLanguage(language) {
+            currentLanguage = language;
+            
+            // Update document direction and language
+            document.documentElement.dir = ['ar', 'fa'].includes(language) ? 'rtl' : 'ltr';
+            document.documentElement.lang = language;
+            
+            // Update all translatable elements
+            const elements = translations[language];
+            for (const [id, text] of Object.entries(elements)) {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = text;
+                }
+            }
+            
+            // Update language switcher
+            const languageNames = { en: 'English', ar: 'العربية', fa: 'فارسی' };
+            const languageFlags = { en: '🇺🇸', ar: '🇸🇦', fa: '🇮🇷' };
+            
+            document.getElementById('current-language-name').textContent = languageNames[language];
+            document.getElementById('current-language-flag').textContent = languageFlags[language];
+            
+            // Update checkmarks
+            document.querySelectorAll('.language-check').forEach(check => check.classList.add('hidden'));
+            document.getElementById(`check-${language}`).classList.remove('hidden');
+            
+            // Save preference
+            localStorage.setItem('ev-admin-language', language);
+        }
+
+        // Toggle language dropdown
+        function toggleLanguageDropdown() {
+            const dropdown = document.getElementById('language-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Change language
+        function changeLanguage(language) {
+            applyLanguage(language);
+            toggleLanguageDropdown();
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('language-dropdown');
+            const button = event.target.closest('.language-switcher button');
+            
+            if (!button && !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadLanguagePreference();
+        });
     </script>
 </body>
 </html>

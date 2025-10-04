@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,19 +7,34 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <style>
+        :root {
+            --background: 0 0% 100%;
+            --foreground: 222.2 84% 4.9%;
+            --card: 0 0% 100%;
+            --card-foreground: 222.2 84% 4.9%;
+            --primary: 221.2 83.2% 53.3%;
+            --primary-foreground: 210 40% 98%;
+            --secondary: 210 40% 96%;
+            --secondary-foreground: 222.2 84% 4.9%;
+            --muted: 210 40% 96%;
+            --muted-foreground: 215.4 16.3% 46.9%;
+            --border: 214.3 31.8% 91.4%;
+        }
+        
         .card {
-            background-color: white;
-            border: 1px solid #e5e7eb;
+            background-color: hsl(var(--card));
+            color: hsl(var(--card-foreground));
+            border: 1px solid hsl(var(--border));
         }
         
         .btn-primary {
-            background-color: #3b82f6;
-            color: white;
+            background-color: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
         }
         
         .btn-secondary {
-            background-color: #f3f4f6;
-            color: #374151;
+            background-color: hsl(var(--secondary));
+            color: hsl(var(--secondary-foreground));
         }
         
         .hover-lift {
@@ -45,6 +60,310 @@
             background-color: #ef4444;
             color: white;
         }
+
+        /* RTL Support */
+        [dir="rtl"] {
+            direction: rtl;
+        }
+
+        [dir="rtl"] .ml-auto {
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        [dir="rtl"] .mr-auto {
+            margin-right: auto;
+            margin-left: 0;
+        }
+
+        [dir="rtl"] .ml-2 {
+            margin-left: 0.5rem;
+            margin-right: 0;
+        }
+
+        [dir="rtl"] .mr-2 {
+            margin-right: 0.5rem;
+            margin-left: 0;
+        }
+
+        [dir="rtl"] .ml-3 {
+            margin-left: 0.75rem;
+            margin-right: 0;
+        }
+
+        [dir="rtl"] .mr-3 {
+            margin-right: 0.75rem;
+            margin-left: 0;
+        }
+
+        [dir="rtl"] .ml-4 {
+            margin-left: 1rem;
+            margin-right: 0;
+        }
+
+        [dir="rtl"] .mr-4 {
+            margin-right: 1rem;
+            margin-left: 0;
+        }
+
+        [dir="rtl"] .ml-6 {
+            margin-left: 1.5rem;
+            margin-right: 0;
+        }
+
+        [dir="rtl"] .mr-6 {
+            margin-right: 1.5rem;
+            margin-left: 0;
+        }
+
+        [dir="rtl"] .pl-2 {
+            padding-left: 0.5rem;
+            padding-right: 0;
+        }
+
+        [dir="rtl"] .pr-2 {
+            padding-right: 0.5rem;
+            padding-left: 0;
+        }
+
+        [dir="rtl"] .pl-3 {
+            padding-left: 0.75rem;
+            padding-right: 0;
+        }
+
+        [dir="rtl"] .pr-3 {
+            padding-right: 0.75rem;
+            padding-left: 0;
+        }
+
+        [dir="rtl"] .pl-4 {
+            padding-left: 1rem;
+            padding-right: 0;
+        }
+
+        [dir="rtl"] .pr-4 {
+            padding-right: 1rem;
+            padding-left: 0;
+        }
+
+        [dir="rtl"] .pl-6 {
+            padding-left: 1.5rem;
+            padding-right: 0;
+        }
+
+        [dir="rtl"] .pr-6 {
+            padding-right: 1.5rem;
+            padding-left: 0;
+        }
+
+        [dir="rtl"] .left-0 {
+            left: auto;
+            right: 0;
+        }
+
+        [dir="rtl"] .right-0 {
+            right: auto;
+            left: 0;
+        }
+
+        [dir="rtl"] .left-3 {
+            left: auto;
+            right: 0.75rem;
+        }
+
+        [dir="rtl"] .right-3 {
+            right: auto;
+            left: 0.75rem;
+        }
+
+        [dir="rtl"] .left-4 {
+            left: auto;
+            right: 1rem;
+        }
+
+        [dir="rtl"] .right-4 {
+            right: auto;
+            left: 1rem;
+        }
+
+        [dir="rtl"] .text-left {
+            text-align: right;
+        }
+
+        [dir="rtl"] .text-right {
+            text-align: left;
+        }
+
+        [dir="rtl"] .flex-row {
+            flex-direction: row-reverse;
+        }
+
+        [dir="rtl"] .flex-row-reverse {
+            flex-direction: row;
+        }
+
+        [dir="rtl"] .border-l {
+            border-left: none;
+            border-right: 1px solid;
+        }
+
+        [dir="rtl"] .border-r {
+            border-right: none;
+            border-left: 1px solid;
+        }
+
+        [dir="rtl"] .border-l-4 {
+            border-left: none;
+            border-right: 4px solid;
+        }
+
+        [dir="rtl"] .border-r-4 {
+            border-right: none;
+            border-left: 4px solid;
+        }
+
+        [dir="rtl"] .rounded-l {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-top-right-radius: 0.25rem;
+            border-bottom-right-radius: 0.25rem;
+        }
+
+        [dir="rtl"] .rounded-r {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-top-left-radius: 0.25rem;
+            border-bottom-left-radius: 0.25rem;
+        }
+
+        [dir="rtl"] .rounded-l-lg {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-top-right-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+        }
+
+        [dir="rtl"] .rounded-r-lg {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 0.5rem;
+        }
+
+        [dir="rtl"] .space-x-2 > * + * {
+            margin-left: 0;
+            margin-right: 0.5rem;
+        }
+
+        [dir="rtl"] .space-x-3 > * + * {
+            margin-left: 0;
+            margin-right: 0.75rem;
+        }
+
+        [dir="rtl"] .space-x-4 > * + * {
+            margin-left: 0;
+            margin-right: 1rem;
+        }
+
+        [dir="rtl"] .space-x-6 > * + * {
+            margin-left: 0;
+            margin-right: 1.5rem;
+        }
+
+        [dir="rtl"] .space-y-2 > * + * {
+            margin-top: 0.5rem;
+            margin-bottom: 0;
+        }
+
+        [dir="rtl"] .space-y-3 > * + * {
+            margin-top: 0.75rem;
+            margin-bottom: 0;
+        }
+
+        [dir="rtl"] .space-y-4 > * + * {
+            margin-top: 1rem;
+            margin-bottom: 0;
+        }
+
+        [dir="rtl"] .space-y-6 > * + * {
+            margin-top: 1.5rem;
+            margin-bottom: 0;
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            position: relative;
+            display: inline-block;
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            width: 12rem;
+            background-color: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            z-index: 50;
+        }
+
+        [dir="rtl"] .language-dropdown {
+            right: auto;
+            left: 0;
+        }
+
+        .language-option {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.5rem 1rem;
+            text-align: left;
+            font-size: 0.875rem;
+            color: #374151;
+            border: none;
+            background: none;
+            cursor: pointer;
+            transition: background-color 0.15s ease-in-out;
+        }
+
+        [dir="rtl"] .language-option {
+            text-align: right;
+        }
+
+        .language-option:hover {
+            background-color: #f3f4f6;
+        }
+
+        .language-option.active {
+            background-color: #dbeafe;
+            color: #2563eb;
+        }
+
+        .language-flag {
+            font-size: 1.125rem;
+            margin-right: 0.75rem;
+        }
+
+        [dir="rtl"] .language-flag {
+            margin-right: 0;
+            margin-left: 0.75rem;
+        }
+
+        .language-name {
+            font-weight: 500;
+        }
+
+        .language-check {
+            margin-left: auto;
+            color: #2563eb;
+        }
+
+        [dir="rtl"] .language-check {
+            margin-left: 0;
+            margin-right: auto;
+        }
     </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
@@ -58,8 +377,8 @@
                         <i data-lucide="zap" class="w-5 h-5 text-white"></i>
                     </div>
                     <div>
-                        <h1 class="text-lg font-bold text-gray-900">EV Platform</h1>
-                        <p class="text-xs text-gray-500">Admin Dashboard</p>
+                        <h1 class="text-lg font-bold text-gray-900" id="logo-text">EV Platform</h1>
+                        <p class="text-xs text-gray-500" id="logo-subtitle">Admin Dashboard</p>
                     </div>
                 </div>
             </div>
@@ -69,64 +388,64 @@
                 <a href="dashboard.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
-                        <span>Dashboard</span>
+                        <span id="nav-dashboard">Dashboard</span>
                     </div>
                 </a>
                 <a href="stations.html" class="nav-item active flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors bg-blue-600 text-white">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="zap" class="w-5 h-5"></i>
-                        <span>Stations</span>
+                        <span id="nav-stations">Stations</span>
                     </div>
-                    <span class="bg-white text-blue-600 text-xs px-2 py-1 rounded-full">1,247</span>
+                    <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">1,247</span>
                 </a>
                 <a href="users.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="users" class="w-5 h-5"></i>
-                        <span>Users</span>
+                        <span id="nav-users">Users</span>
                     </div>
                     <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">15.4K</span>
                 </a>
                 <a href="charging.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="activity" class="w-5 h-5"></i>
-                        <span>Charging Sessions</span>
+                        <span id="nav-charging">Charging Sessions</span>
                     </div>
                 </a>
                 <a href="payments.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="credit-card" class="w-5 h-5"></i>
-                        <span>Payments</span>
+                        <span id="nav-payments">Payments</span>
                     </div>
                 </a>
                 <a href="analytics.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
-                        <span>Analytics</span>
+                        <span id="nav-analytics">Analytics</span>
                     </div>
                 </a>
                 <a href="reports.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="file-text" class="w-5 h-5"></i>
-                        <span>Reports</span>
+                        <span id="nav-reports">Reports</span>
                     </div>
                 </a>
                 <a href="notifications.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="bell" class="w-5 h-5"></i>
-                        <span>Notifications</span>
+                        <span id="nav-notifications">Notifications</span>
                     </div>
                     <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">3</span>
                 </a>
                 <a href="support.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="help-circle" class="w-5 h-5"></i>
-                        <span>Support</span>
+                        <span id="nav-support">Support</span>
                     </div>
                 </a>
                 <a href="settings.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="settings" class="w-5 h-5"></i>
-                        <span>Settings</span>
+                        <span id="nav-settings">Settings</span>
                     </div>
                 </a>
             </nav>
@@ -150,416 +469,249 @@
             <!-- Top Bar -->
             <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6">
                 <div class="flex items-center space-x-4">
-                    <h2 class="text-xl font-semibold text-gray-900">Station Management</h2>
+                    <h2 class="text-xl font-semibold text-gray-900" id="page-title">Station Management</h2>
                 </div>
 
-                <div class="flex items-center space-x-2">
-                    <button class="btn-secondary px-3 py-1 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
-                        <i data-lucide="download" class="w-4 h-4 mr-2 inline"></i>
-                        Export
-                    </button>
-                    <button class="btn-primary px-3 py-1 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
-                        <i data-lucide="plus" class="w-4 h-4 mr-2 inline"></i>
-                        Add Station
-                    </button>
+                <div class="flex items-center space-x-4">
+                    <!-- Language Switcher -->
+                    <div class="language-switcher">
+                        <button class="btn-secondary px-3 py-1 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors flex items-center space-x-2" onclick="toggleLanguageDropdown()">
+                            <i data-lucide="globe" class="w-4 h-4"></i>
+                            <span id="current-language-flag">🇺🇸</span>
+                            <span id="current-language-name">English</span>
+                        </button>
+                        
+                        <div id="language-dropdown" class="language-dropdown hidden">
+                            <button class="language-option" onclick="changeLanguage('en')">
+                                <span class="language-flag">🇺🇸</span>
+                                <span class="language-name">English</span>
+                                <span class="language-check" id="check-en">✓</span>
+                            </button>
+                            <button class="language-option" onclick="changeLanguage('ar')">
+                                <span class="language-flag">🇸🇦</span>
+                                <span class="language-name">العربية</span>
+                                <span class="language-check hidden" id="check-ar">✓</span>
+                            </button>
+                            <button class="language-option" onclick="changeLanguage('fa')">
+                                <span class="language-flag">🇮🇷</span>
+                                <span class="language-name">فارسی</span>
+                                <span class="language-check hidden" id="check-fa">✓</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Status Indicators -->
+                    <div class="hidden md:flex items-center space-x-4">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                            <span class="text-sm text-gray-600">API Online</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <span class="text-sm text-gray-600">1,247 Stations</span>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="flex items-center space-x-2">
+                        <button class="btn-secondary px-3 py-1 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
+                            <i data-lucide="plus" class="w-4 h-4 mr-2 inline"></i>
+                            <span id="add-station">Add Station</span>
+                        </button>
+                        <button class="btn-secondary px-3 py-1 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
+                            <i data-lucide="filter" class="w-4 h-4 mr-2 inline"></i>
+                            <span id="filter-stations">Filter</span>
+                        </button>
+                    </div>
                 </div>
             </header>
 
             <!-- Page Content -->
             <main class="flex-1 overflow-y-auto bg-gray-50">
                 <div class="p-6">
-                    <!-- Stats Cards -->
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                    <!-- Station Statistics -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
                         <div class="card rounded-lg p-6 hover-lift">
                             <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-sm font-medium text-gray-600">Total Stations</h3>
+                                <h3 class="text-sm font-medium text-gray-600" id="stat-total">Total Stations</h3>
                                 <i data-lucide="zap" class="w-4 h-4 text-gray-400"></i>
                             </div>
                             <div class="text-2xl font-bold text-gray-900 mb-1">1,247</div>
-                            <p class="text-xs text-gray-500">+12 new this month</p>
+                            <p class="text-xs text-gray-500">
+                                <span class="text-green-600 flex items-center">
+                                    <i data-lucide="trending-up" class="w-3 h-3 mr-1"></i>
+                                    +12 new
+                                </span>
+                                this month
+                            </p>
                         </div>
 
                         <div class="card rounded-lg p-6 hover-lift">
                             <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-sm font-medium text-gray-600">Online Stations</h3>
-                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i>
+                                <h3 class="text-sm font-medium text-gray-600" id="stat-online">Online Stations</h3>
+                                <i data-lucide="check-circle" class="w-4 h-4 text-gray-400"></i>
                             </div>
                             <div class="text-2xl font-bold text-gray-900 mb-1">1,201</div>
-                            <p class="text-xs text-gray-500">96.3% uptime</p>
+                            <p class="text-xs text-gray-500">
+                                <span class="text-green-600 flex items-center">
+                                    <i data-lucide="activity" class="w-3 h-3 mr-1"></i>
+                                    96.3% uptime
+                                </span>
+                            </p>
                         </div>
 
                         <div class="card rounded-lg p-6 hover-lift">
                             <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-sm font-medium text-gray-600">Available Connectors</h3>
-                                <i data-lucide="battery" class="w-4 h-4 text-gray-400"></i>
+                                <h3 class="text-sm font-medium text-gray-600" id="stat-maintenance">Maintenance</h3>
+                                <i data-lucide="wrench" class="w-4 h-4 text-gray-400"></i>
                             </div>
-                            <div class="text-2xl font-bold text-gray-900 mb-1">2,847</div>
-                            <p class="text-xs text-gray-500">89 currently occupied</p>
+                            <div class="text-2xl font-bold text-gray-900 mb-1">46</div>
+                            <p class="text-xs text-gray-500">
+                                <span class="text-yellow-600 flex items-center">
+                                    <i data-lucide="clock" class="w-3 h-3 mr-1"></i>
+                                    Scheduled
+                                </span>
+                            </p>
                         </div>
 
                         <div class="card rounded-lg p-6 hover-lift">
                             <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-sm font-medium text-gray-600">Monthly Revenue</h3>
-                                <i data-lucide="dollar-sign" class="w-4 h-4 text-gray-400"></i>
+                                <h3 class="text-sm font-medium text-gray-600" id="stat-offline">Offline</h3>
+                                <i data-lucide="x-circle" class="w-4 h-4 text-gray-400"></i>
                             </div>
-                            <div class="text-2xl font-bold text-gray-900 mb-1">$387,421</div>
-                            <p class="text-xs text-gray-500">+15.2% from last month</p>
+                            <div class="text-2xl font-bold text-gray-900 mb-1">12</div>
+                            <p class="text-xs text-gray-500">
+                                <span class="text-red-600 flex items-center">
+                                    <i data-lucide="alert-triangle" class="w-3 h-3 mr-1"></i>
+                                    Needs attention
+                                </span>
+                            </p>
                         </div>
                     </div>
 
-                    <!-- Filters -->
-                    <div class="card rounded-lg p-6 mb-6">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Station Search & Filters</h3>
-                        <div class="flex flex-col md:flex-row gap-4">
-                            <div class="flex-1">
-                                <div class="relative">
-                                    <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4"></i>
-                                    <input
-                                        type="text"
-                                        placeholder="Search stations by name or location..."
-                                        class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                </div>
+                    <!-- Station List -->
+                    <div class="card rounded-lg p-6 hover-lift">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900" id="station-list-title">Station List</h3>
+                                <p class="text-sm text-gray-600" id="station-list-subtitle">Manage and monitor all charging stations</p>
                             </div>
-                            <div class="flex gap-2">
-                                <select class="px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                    <option value="all">All Status</option>
-                                    <option value="online">Online</option>
-                                    <option value="maintenance">Maintenance</option>
-                                    <option value="offline">Offline</option>
-                                </select>
-                                <button class="btn-secondary px-3 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors">
-                                    <i data-lucide="filter" class="w-4 h-4 mr-2 inline"></i>
-                                    More Filters
+                            <div class="flex items-center space-x-2">
+                                <button class="btn-secondary px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
+                                    <i data-lucide="download" class="w-4 h-4 mr-2 inline"></i>
+                                    <span id="export-stations">Export</span>
+                                </button>
+                                <button class="btn-primary px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
+                                    <i data-lucide="plus" class="w-4 h-4 mr-2 inline"></i>
+                                    <span id="add-new-station">Add Station</span>
                                 </button>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Stations List -->
-                    <div class="space-y-4">
-                        <!-- Station 1 -->
-                        <div class="card rounded-lg hover-lift">
-                            <div class="p-6">
-                                <div class="flex items-center justify-between mb-4">
-                                    <div class="flex items-center space-x-4">
-                                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                                            <i data-lucide="zap" class="w-6 h-6 text-blue-600"></i>
-                                        </div>
-                                        <div>
-                                            <h3 class="text-lg font-semibold text-gray-900">Downtown Plaza Station</h3>
-                                            <p class="text-sm text-gray-600 flex items-center">
-                                                <i data-lucide="map-pin" class="w-4 h-4 mr-1"></i>
-                                                123 Main St, Downtown
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center space-x-2">
-                                        <span class="badge-success px-2 py-1 rounded-full text-xs font-medium">Online</span>
-                                        <button class="text-gray-400 hover:text-gray-600">
-                                            <i data-lucide="more-horizontal" class="w-5 h-5"></i>
-                                        </button>
+                        <!-- Search and Filter -->
+                        <div class="mb-6">
+                            <div class="flex items-center space-x-4">
+                                <div class="flex-1">
+                                    <div class="relative">
+                                        <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"></i>
+                                        <input type="text" placeholder="Search stations..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="search-input">
                                     </div>
                                 </div>
-                                
-                                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                                    <!-- Connectors -->
-                                    <div>
-                                        <h4 class="font-medium mb-2 text-gray-900">Connectors</h4>
-                                        <div class="space-y-2">
-                                            <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
-                                                <div>
-                                                    <span class="font-medium text-sm">Type2</span>
-                                                    <span class="text-xs text-gray-500 ml-2">22kW</span>
-                                                </div>
-                                                <span class="badge-success text-xs px-2 py-1 rounded">Available</span>
-                                            </div>
-                                            <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
-                                                <div>
-                                                    <span class="font-medium text-sm">CCS</span>
-                                                    <span class="text-xs text-gray-500 ml-2">50kW</span>
-                                                </div>
-                                                <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded">Occupied</span>
-                                            </div>
-                                            <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
-                                                <div>
-                                                    <span class="font-medium text-sm">CHAdeMO</span>
-                                                    <span class="text-xs text-gray-500 ml-2">50kW</span>
-                                                </div>
-                                                <span class="badge-warning text-xs px-2 py-1 rounded">Maintenance</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Performance -->
-                                    <div>
-                                        <h4 class="font-medium mb-2 text-gray-900">Performance</h4>
-                                        <div class="space-y-2">
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Revenue</span>
-                                                <span class="font-medium text-sm">$1,250.50</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Sessions</span>
-                                                <span class="font-medium text-sm">45</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Last Activity</span>
-                                                <span class="font-medium text-sm">2 min ago</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Location -->
-                                    <div>
-                                        <h4 class="font-medium mb-2 text-gray-900">Location</h4>
-                                        <div class="space-y-2">
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Latitude</span>
-                                                <span class="font-medium text-sm">37.7749</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Longitude</span>
-                                                <span class="font-medium text-sm">-122.4194</span>
-                                            </div>
-                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
-                                                <i data-lucide="map-pin" class="w-4 h-4 mr-2 inline"></i>
-                                                View on Map
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <!-- Actions -->
-                                    <div>
-                                        <h4 class="font-medium mb-2 text-gray-900">Actions</h4>
-                                        <div class="space-y-2">
-                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
-                                                <i data-lucide="eye" class="w-4 h-4 mr-2 inline"></i>
-                                                View Details
-                                            </button>
-                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
-                                                <i data-lucide="edit" class="w-4 h-4 mr-2 inline"></i>
-                                                Edit Station
-                                            </button>
-                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
-                                                <i data-lucide="settings" class="w-4 h-4 mr-2 inline"></i>
-                                                Configure
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                <select class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="status-filter">
+                                    <option value="" id="filter-all">All Status</option>
+                                    <option value="online" id="filter-online">Online</option>
+                                    <option value="maintenance" id="filter-maintenance">Maintenance</option>
+                                    <option value="offline" id="filter-offline">Offline</option>
+                                </select>
+                                <select class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="connector-filter">
+                                    <option value="" id="filter-all-connectors">All Connectors</option>
+                                    <option value="type1" id="filter-type1">Type 1</option>
+                                    <option value="type2" id="filter-type2">Type 2</option>
+                                    <option value="ccs" id="filter-ccs">CCS</option>
+                                    <option value="chademo" id="filter-chademo">CHAdeMO</option>
+                                </select>
                             </div>
                         </div>
 
-                        <!-- Station 2 -->
-                        <div class="card rounded-lg hover-lift">
-                            <div class="p-6">
-                                <div class="flex items-center justify-between mb-4">
-                                    <div class="flex items-center space-x-4">
-                                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                                            <i data-lucide="zap" class="w-6 h-6 text-blue-600"></i>
-                                        </div>
-                                        <div>
-                                            <h3 class="text-lg font-semibold text-gray-900">Airport Terminal Station</h3>
-                                            <p class="text-sm text-gray-600 flex items-center">
-                                                <i data-lucide="map-pin" class="w-4 h-4 mr-1"></i>
-                                                456 Airport Blvd, Terminal 2
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center space-x-2">
-                                        <span class="badge-success px-2 py-1 rounded-full text-xs font-medium">Online</span>
-                                        <button class="text-gray-400 hover:text-gray-600">
-                                            <i data-lucide="more-horizontal" class="w-5 h-5"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                
-                                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                                    <!-- Connectors -->
-                                    <div>
-                                        <h4 class="font-medium mb-2 text-gray-900">Connectors</h4>
-                                        <div class="space-y-2">
-                                            <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
-                                                <div>
-                                                    <span class="font-medium text-sm">Type2</span>
-                                                    <span class="text-xs text-gray-500 ml-2">22kW</span>
-                                                </div>
-                                                <span class="badge-success text-xs px-2 py-1 rounded">Available</span>
+                        <!-- Station Table -->
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="border-b border-gray-200">
+                                        <th class="text-left py-3 px-4 font-medium text-gray-600" id="col-station-id">Station ID</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-600" id="col-name">Name</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-600" id="col-location">Location</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-600" id="col-connectors">Connectors</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-600" id="col-status">Status</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-600" id="col-usage">Usage</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-600" id="col-actions">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                        <td class="py-3 px-4 text-sm font-medium text-gray-900">CH001</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">Downtown Plaza</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">123 Main St, City</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">4 (Type 2, CCS)</td>
+                                        <td class="py-3 px-4">
+                                            <span class="badge-success px-2 py-1 rounded-full text-xs" id="status-online">Online</span>
+                                        </td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">85%</td>
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center space-x-2">
+                                                <button class="text-blue-600 hover:text-blue-800 text-sm" id="view-details">View</button>
+                                                <button class="text-gray-600 hover:text-gray-800 text-sm" id="edit-station">Edit</button>
+                                                <button class="text-gray-600 hover:text-gray-800 text-sm" id="configure-station">Configure</button>
                                             </div>
-                                            <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
-                                                <div>
-                                                    <span class="font-medium text-sm">CCS</span>
-                                                    <span class="text-xs text-gray-500 ml-2">50kW</span>
-                                                </div>
-                                                <span class="badge-success text-xs px-2 py-1 rounded">Available</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                        <td class="py-3 px-4 text-sm font-medium text-gray-900">CH002</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">Airport Terminal</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">456 Airport Rd</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">6 (Type 2, CCS, CHAdeMO)</td>
+                                        <td class="py-3 px-4">
+                                            <span class="badge-warning px-2 py-1 rounded-full text-xs" id="status-maintenance">Maintenance</span>
+                                        </td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">0%</td>
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center space-x-2">
+                                                <button class="text-blue-600 hover:text-blue-800 text-sm" id="view-details-2">View</button>
+                                                <button class="text-gray-600 hover:text-gray-800 text-sm" id="edit-station-2">Edit</button>
+                                                <button class="text-gray-600 hover:text-gray-800 text-sm" id="configure-station-2">Configure</button>
                                             </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Performance -->
-                                    <div>
-                                        <h4 class="font-medium mb-2 text-gray-900">Performance</h4>
-                                        <div class="space-y-2">
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Revenue</span>
-                                                <span class="font-medium text-sm">$2,100.75</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                        <td class="py-3 px-4 text-sm font-medium text-gray-900">CH003</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">Shopping Mall</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">789 Mall Ave</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">8 (Type 2, CCS)</td>
+                                        <td class="py-3 px-4">
+                                            <span class="badge-success px-2 py-1 rounded-full text-xs" id="status-online-2">Online</span>
+                                        </td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">92%</td>
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center space-x-2">
+                                                <button class="text-blue-600 hover:text-blue-800 text-sm" id="view-details-3">View</button>
+                                                <button class="text-gray-600 hover:text-gray-800 text-sm" id="edit-station-3">Edit</button>
+                                                <button class="text-gray-600 hover:text-gray-800 text-sm" id="configure-station-3">Configure</button>
                                             </div>
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Sessions</span>
-                                                <span class="font-medium text-sm">78</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Last Activity</span>
-                                                <span class="font-medium text-sm">5 min ago</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Location -->
-                                    <div>
-                                        <h4 class="font-medium mb-2 text-gray-900">Location</h4>
-                                        <div class="space-y-2">
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Latitude</span>
-                                                <span class="font-medium text-sm">37.6213</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Longitude</span>
-                                                <span class="font-medium text-sm">-122.3790</span>
-                                            </div>
-                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
-                                                <i data-lucide="map-pin" class="w-4 h-4 mr-2 inline"></i>
-                                                View on Map
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <!-- Actions -->
-                                    <div>
-                                        <h4 class="font-medium mb-2 text-gray-900">Actions</h4>
-                                        <div class="space-y-2">
-                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
-                                                <i data-lucide="eye" class="w-4 h-4 mr-2 inline"></i>
-                                                View Details
-                                            </button>
-                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
-                                                <i data-lucide="edit" class="w-4 h-4 mr-2 inline"></i>
-                                                Edit Station
-                                            </button>
-                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
-                                                <i data-lucide="settings" class="w-4 h-4 mr-2 inline"></i>
-                                                Configure
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
 
-                        <!-- Station 3 -->
-                        <div class="card rounded-lg hover-lift">
-                            <div class="p-6">
-                                <div class="flex items-center justify-between mb-4">
-                                    <div class="flex items-center space-x-4">
-                                        <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-                                            <i data-lucide="zap" class="w-6 h-6 text-yellow-600"></i>
-                                        </div>
-                                        <div>
-                                            <h3 class="text-lg font-semibold text-gray-900">Shopping Mall Station</h3>
-                                            <p class="text-sm text-gray-600 flex items-center">
-                                                <i data-lucide="map-pin" class="w-4 h-4 mr-1"></i>
-                                                789 Commerce St, Mall Entrance
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center space-x-2">
-                                        <span class="badge-warning px-2 py-1 rounded-full text-xs font-medium">Maintenance</span>
-                                        <button class="text-gray-400 hover:text-gray-600">
-                                            <i data-lucide="more-horizontal" class="w-5 h-5"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                
-                                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                                    <!-- Connectors -->
-                                    <div>
-                                        <h4 class="font-medium mb-2 text-gray-900">Connectors</h4>
-                                        <div class="space-y-2">
-                                            <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
-                                                <div>
-                                                    <span class="font-medium text-sm">Type2</span>
-                                                    <span class="text-xs text-gray-500 ml-2">22kW</span>
-                                                </div>
-                                                <span class="badge-warning text-xs px-2 py-1 rounded">Maintenance</span>
-                                            </div>
-                                            <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
-                                                <div>
-                                                    <span class="font-medium text-sm">CCS</span>
-                                                    <span class="text-xs text-gray-500 ml-2">50kW</span>
-                                                </div>
-                                                <span class="badge-warning text-xs px-2 py-1 rounded">Maintenance</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Performance -->
-                                    <div>
-                                        <h4 class="font-medium mb-2 text-gray-900">Performance</h4>
-                                        <div class="space-y-2">
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Revenue</span>
-                                                <span class="font-medium text-sm">$890.25</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Sessions</span>
-                                                <span class="font-medium text-sm">32</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Last Activity</span>
-                                                <span class="font-medium text-sm">1 hour ago</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Location -->
-                                    <div>
-                                        <h4 class="font-medium mb-2 text-gray-900">Location</h4>
-                                        <div class="space-y-2">
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Latitude</span>
-                                                <span class="font-medium text-sm">37.7849</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="text-sm text-gray-600">Longitude</span>
-                                                <span class="font-medium text-sm">-122.4094</span>
-                                            </div>
-                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
-                                                <i data-lucide="map-pin" class="w-4 h-4 mr-2 inline"></i>
-                                                View on Map
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <!-- Actions -->
-                                    <div>
-                                        <h4 class="font-medium mb-2 text-gray-900">Actions</h4>
-                                        <div class="space-y-2">
-                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
-                                                <i data-lucide="eye" class="w-4 h-4 mr-2 inline"></i>
-                                                View Details
-                                            </button>
-                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
-                                                <i data-lucide="edit" class="w-4 h-4 mr-2 inline"></i>
-                                                Edit Station
-                                            </button>
-                                            <button class="btn-secondary w-full py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
-                                                <i data-lucide="settings" class="w-4 h-4 mr-2 inline"></i>
-                                                Configure
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                        <!-- Pagination -->
+                        <div class="flex items-center justify-between mt-6">
+                            <div class="text-sm text-gray-600" id="pagination-info">
+                                Showing 1-10 of 1,247 stations
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button class="px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-50" id="prev-page">Previous</button>
+                                <button class="px-3 py-1 bg-blue-600 text-white rounded-md text-sm" id="current-page">1</button>
+                                <button class="px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-50" id="next-page">Next</button>
                             </div>
                         </div>
                     </div>
@@ -571,6 +723,230 @@
     <script>
         // Initialize Lucide icons
         lucide.createIcons();
+        
+        // Language translations
+        const translations = {
+            en: {
+                'logo-text': 'EV Platform',
+                'logo-subtitle': 'Admin Dashboard',
+                'nav-dashboard': 'Dashboard',
+                'nav-stations': 'Stations',
+                'nav-users': 'Users',
+                'nav-charging': 'Charging Sessions',
+                'nav-payments': 'Payments',
+                'nav-analytics': 'Analytics',
+                'nav-reports': 'Reports',
+                'nav-notifications': 'Notifications',
+                'nav-support': 'Support',
+                'nav-settings': 'Settings',
+                'page-title': 'Station Management',
+                'add-station': 'Add Station',
+                'filter-stations': 'Filter',
+                'stat-total': 'Total Stations',
+                'stat-online': 'Online Stations',
+                'stat-maintenance': 'Maintenance',
+                'stat-offline': 'Offline',
+                'station-list-title': 'Station List',
+                'station-list-subtitle': 'Manage and monitor all charging stations',
+                'export-stations': 'Export',
+                'add-new-station': 'Add Station',
+                'col-station-id': 'Station ID',
+                'col-name': 'Name',
+                'col-location': 'Location',
+                'col-connectors': 'Connectors',
+                'col-status': 'Status',
+                'col-usage': 'Usage',
+                'col-actions': 'Actions',
+                'status-online': 'Online',
+                'status-maintenance': 'Maintenance',
+                'status-offline': 'Offline',
+                'view-details': 'View',
+                'edit-station': 'Edit',
+                'configure-station': 'Configure',
+                'pagination-info': 'Showing 1-10 of 1,247 stations',
+                'prev-page': 'Previous',
+                'next-page': 'Next',
+                'filter-all': 'All Status',
+                'filter-online': 'Online',
+                'filter-maintenance': 'Maintenance',
+                'filter-offline': 'Offline',
+                'filter-all-connectors': 'All Connectors',
+                'filter-type1': 'Type 1',
+                'filter-type2': 'Type 2',
+                'filter-ccs': 'CCS',
+                'filter-chademo': 'CHAdeMO'
+            },
+            ar: {
+                'logo-text': 'منصة المركبات الكهربائية',
+                'logo-subtitle': 'لوحة تحكم الإدارة',
+                'nav-dashboard': 'لوحة التحكم',
+                'nav-stations': 'المحطات',
+                'nav-users': 'المستخدمون',
+                'nav-charging': 'جلسات الشحن',
+                'nav-payments': 'المدفوعات',
+                'nav-analytics': 'التحليلات',
+                'nav-reports': 'التقارير',
+                'nav-notifications': 'الإشعارات',
+                'nav-support': 'الدعم',
+                'nav-settings': 'الإعدادات',
+                'page-title': 'إدارة المحطات',
+                'add-station': 'إضافة محطة',
+                'filter-stations': 'تصفية',
+                'stat-total': 'إجمالي المحطات',
+                'stat-online': 'المحطات المتصلة',
+                'stat-maintenance': 'الصيانة',
+                'stat-offline': 'غير متصل',
+                'station-list-title': 'قائمة المحطات',
+                'station-list-subtitle': 'إدارة ومراقبة جميع محطات الشحن',
+                'export-stations': 'تصدير',
+                'add-new-station': 'إضافة محطة',
+                'col-station-id': 'معرف المحطة',
+                'col-name': 'الاسم',
+                'col-location': 'الموقع',
+                'col-connectors': 'الموصلات',
+                'col-status': 'الحالة',
+                'col-usage': 'الاستخدام',
+                'col-actions': 'الإجراءات',
+                'status-online': 'متصل',
+                'status-maintenance': 'صيانة',
+                'status-offline': 'غير متصل',
+                'view-details': 'عرض',
+                'edit-station': 'تعديل',
+                'configure-station': 'تكوين',
+                'pagination-info': 'عرض 1-10 من 1,247 محطة',
+                'prev-page': 'السابق',
+                'next-page': 'التالي',
+                'filter-all': 'جميع الحالات',
+                'filter-online': 'متصل',
+                'filter-maintenance': 'صيانة',
+                'filter-offline': 'غير متصل',
+                'filter-all-connectors': 'جميع الموصلات',
+                'filter-type1': 'النوع 1',
+                'filter-type2': 'النوع 2',
+                'filter-ccs': 'CCS',
+                'filter-chademo': 'CHAdeMO'
+            },
+            fa: {
+                'logo-text': 'پلتفرم خودروهای برقی',
+                'logo-subtitle': 'داشبورد مدیریت',
+                'nav-dashboard': 'داشبورد',
+                'nav-stations': 'ایستگاه‌ها',
+                'nav-users': 'کاربران',
+                'nav-charging': 'جلسات شارژ',
+                'nav-payments': 'پرداخت‌ها',
+                'nav-analytics': 'تحلیل‌ها',
+                'nav-reports': 'گزارش‌ها',
+                'nav-notifications': 'اطلاعیه‌ها',
+                'nav-support': 'پشتیبانی',
+                'nav-settings': 'تنظیمات',
+                'page-title': 'مدیریت ایستگاه',
+                'add-station': 'افزودن ایستگاه',
+                'filter-stations': 'فیلتر',
+                'stat-total': 'کل ایستگاه‌ها',
+                'stat-online': 'ایستگاه‌های آنلاین',
+                'stat-maintenance': 'نگهداری',
+                'stat-offline': 'آفلاین',
+                'station-list-title': 'لیست ایستگاه‌ها',
+                'station-list-subtitle': 'مدیریت و نظارت بر تمام ایستگاه‌های شارژ',
+                'export-stations': 'صادرات',
+                'add-new-station': 'افزودن ایستگاه',
+                'col-station-id': 'شناسه ایستگاه',
+                'col-name': 'نام',
+                'col-location': 'مکان',
+                'col-connectors': 'اتصالات',
+                'col-status': 'وضعیت',
+                'col-usage': 'استفاده',
+                'col-actions': 'اقدامات',
+                'status-online': 'آنلاین',
+                'status-maintenance': 'نگهداری',
+                'status-offline': 'آفلاین',
+                'view-details': 'مشاهده',
+                'edit-station': 'ویرایش',
+                'configure-station': 'پیکربندی',
+                'pagination-info': 'نمایش 1-10 از 1,247 ایستگاه',
+                'prev-page': 'قبلی',
+                'next-page': 'بعدی',
+                'filter-all': 'همه وضعیت‌ها',
+                'filter-online': 'آنلاین',
+                'filter-maintenance': 'نگهداری',
+                'filter-offline': 'آفلاین',
+                'filter-all-connectors': 'همه اتصالات',
+                'filter-type1': 'نوع 1',
+                'filter-type2': 'نوع 2',
+                'filter-ccs': 'CCS',
+                'filter-chademo': 'CHAdeMO'
+            }
+        };
+
+        let currentLanguage = 'en';
+
+        // Load saved language preference
+        function loadLanguagePreference() {
+            const savedLanguage = localStorage.getItem('ev-admin-language');
+            if (savedLanguage && ['en', 'ar', 'fa'].includes(savedLanguage)) {
+                currentLanguage = savedLanguage;
+                applyLanguage(currentLanguage);
+            }
+        }
+
+        // Apply language changes
+        function applyLanguage(language) {
+            currentLanguage = language;
+            
+            // Update document direction and language
+            document.documentElement.dir = ['ar', 'fa'].includes(language) ? 'rtl' : 'ltr';
+            document.documentElement.lang = language;
+            
+            // Update all translatable elements
+            const elements = translations[language];
+            for (const [id, text] of Object.entries(elements)) {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = text;
+                }
+            }
+            
+            // Update language switcher
+            const languageNames = { en: 'English', ar: 'العربية', fa: 'فارسی' };
+            const languageFlags = { en: '🇺🇸', ar: '🇸🇦', fa: '🇮🇷' };
+            
+            document.getElementById('current-language-name').textContent = languageNames[language];
+            document.getElementById('current-language-flag').textContent = languageFlags[language];
+            
+            // Update checkmarks
+            document.querySelectorAll('.language-check').forEach(check => check.classList.add('hidden'));
+            document.getElementById(`check-${language}`).classList.remove('hidden');
+            
+            // Save preference
+            localStorage.setItem('ev-admin-language', language);
+        }
+
+        // Toggle language dropdown
+        function toggleLanguageDropdown() {
+            const dropdown = document.getElementById('language-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Change language
+        function changeLanguage(language) {
+            applyLanguage(language);
+            toggleLanguageDropdown();
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('language-dropdown');
+            const button = event.target.closest('.language-switcher button');
+            
+            if (!button && !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadLanguagePreference();
+        });
     </script>
 </body>
 </html>
