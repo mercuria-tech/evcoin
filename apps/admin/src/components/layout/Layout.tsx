@@ -1,398 +1,187 @@
 import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import {
-  Box,
-  Drawer,
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  Badge,
-  Avatar,
-  Menu,
-  MenuItem,
-  Divider,
-  List,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Collapse,
-  useTheme,
-  useMediaQuery,
-} from '@mui/material';
-import {
-  Menu as MenuIcon,
-  Notifications as NotificationsIcon,
-  AccountCircle,
-  Settings,
-  Logout,
-  Dashboard,
-  LocationOn,
-  FlashOn,
-  People,
+  LayoutDashboard,
+  Zap,
+  Users,
   CreditCard,
-  Schedule,
-  Description,
-  Support,
-  ExpandLess,
-  ExpandMore,
+  BarChart3,
+  FileText,
+  Bell,
+  Settings,
+  HelpCircle,
+  Menu,
+  X,
+  ChevronDown,
+  Activity,
   TrendingUp,
-  Assessment,
-} from '@mui/icons-material';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
-
-const drawerWidth = 260;
+  AlertTriangle,
+  CheckCircle,
+} from 'lucide-react';
 
 interface LayoutProps {
-  children?: React.ReactNode;
+  children: React.ReactNode;
 }
 
-export default function Layout({ children }: LayoutProps) {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const navigate = useNavigate();
+const navigation = [
+  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+  { name: 'Stations', href: '/stations', icon: Zap, badge: '1,247' },
+  { name: 'Users', href: '/users', icon: Users, badge: '15.4K' },
+  { name: 'Charging Sessions', href: '/charging', icon: Activity },
+  { name: 'Payments', href: '/payments', icon: CreditCard },
+  { name: 'Analytics', href: '/analytics', icon: BarChart3 },
+  { name: 'Reports', href: '/reports', icon: FileText },
+  { name: 'Notifications', href: '/notifications', icon: Bell, badge: '3' },
+  { name: 'Support', href: '/support', icon: HelpCircle },
+  { name: 'Settings', href: '/settings', icon: Settings },
+];
+
+const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
-  const { user, logout } = useAuth();
-
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [userMenuAnchor, setUserMenuAnchor] = useState<null | HTMLElement>(null);
-  const [openSubMenus, setOpenSubMenus] = useState<{[key: string]: boolean}>({
-    stations: false,
-    sessions: false,
-    users: false,
-  });
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-
-  const handleUserMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setUserMenuAnchor(event.currentTarget);
-  };
-
-  const handleUserMenuClose = () => {
-    setUserMenuAnchor(null);
-  };
-
-  const handleLogout = async () => {
-    await logout();
-    handleUserMenuClose();
-  };
-
-  const handleSubMenuToggle = (menuKey: string) => {
-    setOpenSubMenus(prev => ({
-      ...prev,
-      [menuKey]: !prev[menuKey]
-    }));
-  };
-
-  const navigation = [
-    {
-      title: 'Dashboard',
-      icon: <Dashboard />,
-      path: '/dashboard',
-    },
-    {
-      title: 'Analytics',
-      icon: <Assessment />,
-      path: '/analytics',
-    },
-    {
-      title: 'Stations',
-      icon: <LocationOn />,
-      path: '/stations',
-      submenu: [
-        { title: 'All Stations', path: '/stations' },
-        { title: 'Add Station', path: '/stations/create' },
-      ]
-    },
-    {
-      title: 'Connectors',
-      icon: <FlashOn />,
-      path: '/connectors',
-    },
-    {
-      title: 'Sessions',
-      icon: <TrendingUp />,
-      path: '/sessions',
-      submenu: [
-        { title: 'All Sessions', path: '/sessions' },
-        { title: 'Live Monitoring', path: '/sessions/live' },
-      ]
-    },
-    {
-      title: 'Reservations',
-      icon: <Schedule />,
-      path: '/reservations',
-    },
-    {
-      title: 'Users',
-      icon: <People />,
-      path: '/users',
-      submenu: [
-        { title: 'All Users', path: '/users' },
-        { title: 'User Analytics', path: '/users/analytics' },
-      ]
-    },
-    {
-      title: 'Payments',
-      icon: <CreditCard />,
-      path: '/payments',
-    },
-    {
-      title: 'Notifications',
-      icon: <NotificationsIcon />,
-      path: '/notifications',
-    },
-    {
-      title: 'Support',
-      icon: <Support />,
-      path: '/support',
-    },
-  ];
-
-  const drawerContent = (
-    <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      {/* Logo/Brand */}
-      <Box sx={{ p: 2, borderBottom: '1px solid', borderColor: 'divider' }}>
-        <Typography variant="h6" sx={{ fontWeight: 700, color: 'primary.main' }}>
-          EV Charging Platform
-        </Typography>
-        <Typography variant="caption" color="text.secondary">
-          Admin Dashboard
-        </Typography>
-      </Box>
-
-      {/* Navigation */}
-      <Box sx={{ flexGrow: 1, overflow: 'auto' }}>
-        <List sx={{ px: 1 }}>
-          {navigation.map((item) => (
-            <div key={item.title}>
-              <ListItemButton
-                selected={location.pathname === item.path}
-                onClick={() => {
-                  if (item.submenu) {
-                    handleSubMenuToggle(item.title.toLowerCase());
-                  } else {
-                    navigate(item.path);
-                  }
-                }}
-                sx={{
-                  borderRadius: 2,
-                  mb: 0.5,
-                  '&.Mui-selected': {
-                    backgroundColor: 'primary.main',
-                    color: 'primary.contrastText',
-                    '&:hover': {
-                      backgroundColor: 'primary.dark',
-                    },
-                    '& .MuiListItemIcon-root': {
-                      color: 'primary.contrastText',
-                    },
-                  },
-                }}
-              >
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.title} />
-                {item.submenu && (openSubMenus[item.title.toLowerCase()] ? <ExpandLess /> : <ExpandMore />)}
-              </ListItemButton>
-
-              {/* Submenu */}
-              {item.submenu && (
-                <Collapse in={openSubMenus[item.title.toLowerCase()]} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding sx={{ pl: 2 }}>
-                    {item.submenu.map((subItem) => (
-                      <ListItemButton
-                        key={subItem.title}
-                        selected={location.pathname === subItem.path}
-                        onClick={() => navigate(subItem.path)}
-                        sx={{
-                          borderRadius: 2,
-                          mb: 0.5,
-                          '&.Mui-selected': {
-                            backgroundColor: 'primary.light',
-                            color: 'primary.main',
-                            '&:hover': {
-                              backgroundColor: 'primary.light',
-                            },
-                          },
-                        }}
-                      >
-                        <ListItemText 
-                          primary={subItem.title}
-                          sx={{ pl: 1 }}
-                          primaryTypographyProps={{ fontSize: '0.875rem' }}
-                        />
-                      </ListItemButton>
-                    ))}
-                  </List>
-                </Collapse>
-              )}
-            </div>
-          ))}
-        </List>
-      </Box>
-
-      {/* User Info */}
-      <Box sx={{ p: 2, borderTop: '1px solid', borderColor: 'divider' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <Avatar sx={{ width: 32, height: 32, bgcolor: 'primary.main' }}>
-            {user?.email?.charAt(0).toUpperCase()}
-          </Avatar>
-          <Box sx={{ flexGrow: 1, minWidth: 0 }}>
-            <Typography variant="body2" noWrap sx={{ fontWeight: 600 }}>
-              {user?.firstName} {user?.lastName}
-            </Typography>
-            <Typography variant="caption" color="text.secondary" noWrap>
-              {user?.email}
-            </Typography>
-          </Box>
-        </Box>
-      </Box>
-    </Box>
-  );
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      {/* App Bar */}
-      <AppBar
-        position="fixed"
-        sx={{
-          width: { md: `calc(100% - ${drawerWidth}px)` },
-          ml: { md: `${drawerWidth}px` },
-          backgroundColor: 'background.paper',
-          boxShadow: 1,
-          borderBottom: '1px solid',
-          borderBottomColor: 'divider',
-        }}
+    <div className="flex h-screen bg-background">
+      {/* Mobile sidebar overlay */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black bg-opacity-50 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <div
+        className={cn(
+          'fixed inset-y-0 left-0 z-50 w-64 bg-card border-r border-border transform transition-transform duration-200 ease-in-out lg:translate-x-0 lg:static lg:inset-0',
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        )}
       >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { md: 'none' }, color: 'text.primary' }}
-          >
-            <MenuIcon />
-          </IconButton>
-          
-          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, color: 'text.primary' }}>
-            {location.pathname.split('/').pop()?.charAt(0).toUpperCase()}{location.pathname.split('/').pop()?.slice(1) || 'Dashboard'}
-          </Typography>
-
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            {/* Notifications */}
-            <IconButton color="inherit" sx={{ color: 'text.primary' }}>
-              <Badge badgeContent={4} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-
-            {/* Settings */}
-            <IconButton 
-              color="inherit" 
-              onClick={() => navigate('/settings')}
-              sx={{ color: 'text.primary' }}
+        <div className="flex flex-col h-full">
+          {/* Logo */}
+          <div className="flex items-center justify-between h-16 px-6 border-b border-border">
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                <Zap className="w-5 h-5 text-primary-foreground" />
+              </div>
+              <div>
+                <h1 className="text-lg font-bold text-foreground">EV Platform</h1>
+                <p className="text-xs text-muted-foreground">Admin Dashboard</p>
+              </div>
+            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="lg:hidden"
+              onClick={() => setSidebarOpen(false)}
             >
-              <Settings />
-            </IconButton>
+              <X className="w-5 h-5" />
+            </Button>
+          </div>
 
-            {/* User Menu */}
-            <IconButton color="inherit" onClick={handleUserMenuOpen} sx={{ color: 'text.primary' }}>
-              <AccountCircle />
-            </IconButton>
-            <Menu
-              anchorEl={userMenuAnchor}
-              open={Boolean(userMenuAnchor)}
-              onClose={handleUserMenuClose}
-              PaperProps={{
-                sx: { minWidth: 200 }
-              }}
+          {/* Navigation */}
+          <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+            {navigation.map((item) => {
+              const isActive = location.pathname === item.href;
+              return (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={cn(
+                    'flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors',
+                    isActive
+                      ? 'bg-primary text-primary-foreground'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-accent'
+                  )}
+                >
+                  <div className="flex items-center space-x-3">
+                    <item.icon className="w-5 h-5" />
+                    <span>{item.name}</span>
+                  </div>
+                  {item.badge && (
+                    <Badge variant="secondary" className="text-xs">
+                      {item.badge}
+                    </Badge>
+                  )}
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* Footer */}
+          <div className="p-4 border-t border-border">
+            <div className="flex items-center space-x-3 p-3 rounded-lg bg-muted">
+              <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                <span className="text-sm font-medium text-primary-foreground">A</span>
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-foreground">Admin User</p>
+                <p className="text-xs text-muted-foreground">admin@evcharging.com</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main content */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Top bar */}
+        <header className="h-16 bg-card border-b border-border flex items-center justify-between px-6">
+          <div className="flex items-center space-x-4">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="lg:hidden"
+              onClick={() => setSidebarOpen(true)}
             >
-              <MenuItem onClick={() => navigate('/profile')}>
-                <ListItemIcon>
-                  <AccountCircle fontSize="small" />
-                </ListItemIcon>
-                <ListItemText>Profile</ListItemText>
-              </MenuItem>
-              <MenuItem onClick={() => navigate('/settings')}>
-                <ListItemIcon>
-                  <Settings fontSize="small" />
-                </ListItemIcon>
-                <ListItemText>Settings</ListItemText>
-              </MenuItem>
-              <Divider />
-              <MenuItem onClick={handleLogout}>
-                <ListItemIcon>
-                  <Logout fontSize="small" />
-                </ListItemIcon>
-                <ListItemText>Logout</ListItemText>
-              </MenuItem>
-            </Menu>
-          </Box>
-        </Toolbar>
-      </AppBar>
+              <Menu className="w-5 h-5" />
+            </Button>
+            <div className="hidden lg:block">
+              <h2 className="text-xl font-semibold text-foreground">
+                {navigation.find(item => item.href === location.pathname)?.name || 'Dashboard'}
+              </h2>
+            </div>
+          </div>
 
-      {/* Drawer */}
-      <Box
-        component="nav"
-        sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
-      >
-        {/* Mobile drawer */}
-        <Drawer
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: 'block', md: 'none' },
-            '& .MuiDrawer-paper': { 
-              boxSizing: 'border-box', 
-              width: drawerWidth,
-              backgroundColor: 'background.paper',
-              borderRight: '1px solid',
-              borderRightColor: 'divider',
-            },
-          }}
-        >
-          {drawerContent}
-        </Drawer>
+          <div className="flex items-center space-x-4">
+            {/* Status indicators */}
+            <div className="hidden md:flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                <span className="text-sm text-muted-foreground">API Online</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <span className="text-sm text-muted-foreground">1,247 Stations</span>
+              </div>
+            </div>
 
-        {/* Desktop drawer */}
-        <Drawer
-          variant="permanent"
-          sx={{
-            display: { xs: 'none', md: 'block' },
-            '& .MuiDrawer-paper': { 
-              boxSizing: 'border-box', 
-              width: drawerWidth,
-              backgroundColor: 'background.paper',
-              borderRight: '1px solid',
-              borderRightColor: 'divider',
-            },
-          }}
-          open
-        >
-          {drawerContent}
-        </Drawer>
-      </Box>
+            {/* Quick actions */}
+            <div className="flex items-center space-x-2">
+              <Button variant="outline" size="sm">
+                <TrendingUp className="w-4 h-4 mr-2" />
+                Analytics
+              </Button>
+              <Button variant="outline" size="sm">
+                <AlertTriangle className="w-4 h-4 mr-2" />
+                Alerts
+              </Button>
+            </div>
+          </div>
+        </header>
 
-      {/* Main Content */}
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          width: { md: `calc(100% - ${drawerWidth}px)` },
-          minHeight: '100vh',
-          backgroundColor: 'background.default',
-        }}
-      >
-        <Toolbar /> {/* Spacer for app bar */}
-        {children || <Outlet />}
-      </Box>
-    </Box>
+        {/* Page content */}
+        <main className="flex-1 overflow-y-auto bg-muted/30">
+          <div className="p-6">
+            {children}
+          </div>
+        </main>
+      </div>
+    </div>
   );
-}
+};
+
+export default Layout;

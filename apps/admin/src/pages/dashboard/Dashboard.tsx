@@ -1,381 +1,297 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
-  Grid,
-  Paper,
-  Typography,
-  Box,
-  Card,
-  CardContent,
-  CardHeader,
-  IconButton,
-  Chip,
-  LinearProgress,
-  Avatar,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Divider,
-  Button,
-} from '@mui/material';
-import {
+  Zap,
+  Users,
+  CreditCard,
   TrendingUp,
   TrendingDown,
-  FlashOn,
-  CreditCard,
-  Schedule,
-  People,
-  LocationOn,
-  MoreVert,
-  Refresh,
-  FilterList,
-} from '@mui/icons-material';
-import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-import { useQuery } from '@tanstack/react-query';
+  Activity,
+  AlertTriangle,
+  CheckCircle,
+  Clock,
+  MapPin,
+  Battery,
+  DollarSign,
+  BarChart3,
+  PieChart,
+  Calendar,
+  Download,
+  RefreshCw,
+} from 'lucide-react';
+import {
+  LineChart,
+  Line,
+  AreaChart,
+  Area,
+  BarChart,
+  Bar,
+  PieChart as RechartsPieChart,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
 
-// Mock data - in real app, this would come from API
-const mockStats = {
-  totalRevenue: 28450.75,
-  revenueGrowth: 12.5,
-  activeSessions: 156,
-  sessionGrowth: 8.2,
-  totalUsers: 8542,
-  userGrowth: 15.3,
-  stationsOnline: 48,
-  stationsTotal: 52,
-};
-
-const mockRevenueData = [
-  { month: 'Jan', revenue: 22500, sessions: 1420 },
-  { month: 'Feb', revenue: 25100, sessions: 1580 },
-  { month: 'Mar', revenue: 26800, sessions: 1720 },
-  { month: 'Apr', revenue: 27650, sessions: 1850 },
-  { month: 'May', revenue: 28450, sessions: 1920 },
-  { month: 'Jun', revenue: 29800, sessions: 2100 },
+const revenueData = [
+  { month: 'Jan', revenue: 45000, sessions: 1200 },
+  { month: 'Feb', revenue: 52000, sessions: 1400 },
+  { month: 'Mar', revenue: 48000, sessions: 1300 },
+  { month: 'Apr', revenue: 61000, sessions: 1600 },
+  { month: 'May', revenue: 55000, sessions: 1500 },
+  { month: 'Jun', revenue: 67000, sessions: 1800 },
 ];
 
-const mockConnectorData = [
-  { name: 'Type 2', value: 180, color: '#007AFF' },
-  { name: 'CCS', value: 120, color: '#34C759' },
-  { name: 'CHAdeMO', value: 60, color: '#FF9500' },
-  { name: 'Tesla', value: 40, color: '#8E44AD' },
+const stationData = [
+  { name: 'Online', value: 1201, color: '#10b981' },
+  { name: 'Maintenance', value: 46, color: '#f59e0b' },
+  { name: 'Offline', value: 12, color: '#ef4444' },
 ];
 
-const mockRecentSessions = [
-  { id: 1, user: 'John Doe', station: 'Downtown Plaza', duration: '45 min', energy: 32.5, cost: 18.75, status: 'completed' },
-  { id: 2, user: 'Sarah Wilson', station: 'Shopping Mall', duration: '23 min', energy: 15.2, cost: 9.84, status: 'charging' },
-  { id: 3, user: 'Mike Johnson', station: 'Office Building', duration: '67 min', energy: 48.3, cost: 27.19, status: 'completed' },
-  { id: 4, user: 'Lisa Chen', station: 'Airport Terminal', duration: '31 min', energy: 22.1, cost: 12.55, status: 'charging' },
+const sessionData = [
+  { time: '00:00', sessions: 45 },
+  { time: '04:00', sessions: 32 },
+  { time: '08:00', sessions: 89 },
+  { time: '12:00', sessions: 156 },
+  { time: '16:00', sessions: 203 },
+  { time: '20:00', sessions: 178 },
 ];
 
-const mockTopStations = [
-  { name: 'Downtown Plaza', sessions: 234, revenue: 18500, utilization: 78 },
-  { name: 'Shopping Mall', sessions: 156, revenue: 12300, utilization: 65 },
-  { name: 'Office Building', sessions: 189, revenue: 15200, utilization: 82 },
-  { name: 'Airport Terminal', sessions: 145, revenue: 11800, utilization: 71 },
-];
-
-export default function Dashboard() {
-  const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d'>('30d');
-  const [lastUpdated, setLastUpdated] = useState(new Date());
-
-  const refreshData = () => {
-    setLastUpdated(new Date());
-    // In real app, this would refetch all queries
-  };
-
+const Dashboard: React.FC = () => {
   return (
-    <Box sx={{ flexGrow: 1, p: 3 }}>
+    <div className="space-y-6">
       {/* Header */}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h4" component="h1" sx={{ fontWeight: 700 }}>
-          Dashboard
-        </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <Button
-            variant="outlined"
-            startIcon={<FilterList />}
-            onClick={() => setTimeRange(timeRange === '7d' ? '30d' : '90d')}
-          >
-            {timeRange === '7d' ? 'Last 7 days' : timeRange === '30d' ? 'Last 30 days' : 'Last 90 days'}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-foreground">Dashboard Overview</h1>
+          <p className="text-muted-foreground">Real-time insights into your EV charging platform</p>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Button variant="outline" size="sm">
+            <RefreshCw className="w-4 h-4 mr-2" />
+            Refresh
           </Button>
-          <IconButton onClick={refreshData} color="primary">
-            <Refresh />
-          </IconButton>
-          <Typography variant="body2" color="text.secondary">
-            Last updated: {lastUpdated.toLocaleTimeString()}
-          </Typography>
-        </Box>
-      </Box>
+          <Button variant="outline" size="sm">
+            <Download className="w-4 h-4 mr-2" />
+            Export
+          </Button>
+        </div>
+      </div>
 
       {/* Key Metrics */}
-      <Grid container spacing={3} sx={{ mb: 3 }}>
-        <Grid item xs={12} sm={6} md={3}>
-          <Card>
-            <CardContent>
-              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Box>
-                  <Typography color="text.secondary" gutterBottom variant="body2">
-                    Total Revenue
-                  </Typography>
-                  <Typography variant="h4" component="div">
-                    ${mockStats.totalRevenue.toLocaleString()}
-                  </Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                    <TrendingUp color="success" sx={{ fontSize: 16, mr: 0.5 }} />
-                    <Typography variant="body2" color="success.main">
-                      +{mockStats.revenueGrowth}%
-                    </Typography>
-                  </Box>
-                </Box>
-                <Avatar sx={{ bgcolor: 'primary.main' }}>
-                  <CreditCard />
-                </Avatar>
-            </Box>
-          </CardContent>
-        </Card>
-      </Grid>
-
-      <Grid item xs={12} sm={6} md={3}>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+            <DollarSign className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
           <CardContent>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <Box>
-                <Typography color="text.secondary" gutterBottom variant="body2">
-                  Active Sessions
-                </Typography>
-                <Typography variant="h4" component="div">
-                  {mockStats.activeSessions}
-                </Typography>
-                <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                  <TrendingUp color="success" sx={{ fontSize: 16, mr: 0.5 }} />
-                  <Typography variant="body2" color="success.main">
-                    +{mockStats.sessionGrowth}%
-                  </Typography>
-                </Box>
-              </Box>
-              <Avatar sx={{ bgcolor: 'secondary.main' }}>
-                <FlashOn />
-              </Avatar>
-            </Box>
+            <div className="text-2xl font-bold">$387,421</div>
+            <p className="text-xs text-muted-foreground">
+              <span className="text-green-600 flex items-center">
+                <TrendingUp className="w-3 h-3 mr-1" />
+                +12.5%
+              </span>
+              from last month
+            </p>
           </CardContent>
         </Card>
-      </Grid>
 
-      <Grid item xs={12} sm={6} md={3}>
         <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Active Sessions</CardTitle>
+            <Activity className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
           <CardContent>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <Box>
-                <Typography color="text.secondary" gutterBottom variant="body2">
-                  Total Users
-                </Typography>
-                <Typography variant="h4" component="div">
-                  {mockStats.totalUsers.toLocaleString()}
-                </Typography>
-                <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                  <TrendingUp color="success" sx={{ fontSize: 16, mr: 0.5 }} />
-                  <Typography variant="body2" color="success.main">
-                    +{mockStats.userGrowth}%
-                  </Typography>
-                </Box>
-              </Box>
-              <Avatar sx={{ bgcolor: 'success.main' }}>
-                <People />
-              </Avatar>
-            </Box>
+            <div className="text-2xl font-bold">89</div>
+            <p className="text-xs text-muted-foreground">
+              <span className="text-green-600 flex items-center">
+                <TrendingUp className="w-3 h-3 mr-1" />
+                +8.2%
+              </span>
+              from yesterday
+            </p>
           </CardContent>
         </Card>
-      </Grid>
 
-      <Grid item xs={12} sm={6} md={3}>
         <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Stations</CardTitle>
+            <Zap className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
           <CardContent>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <Box>
-                <Typography color="text.secondary" gutterBottom variant="body2">
-                  Station Availability
-                </Typography>
-                <Typography variant="h4" component="div">
-                  {mockStats.stationsOnline}/{mockStats.stationsTotal}
-                </Typography>
-                <Box sx={{ mt: 1 }}>
-                  <LinearProgress
-                    variant="determinate"
-                    value={(mockStats.stationsOnline / mockStats.stationsTotal) * 100}
-                    sx={{ borderRadius: 1, height: 6 }}
-                  />
-                  <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5 }}>
-                    {(mockStats.stationsOnline / mockStats.stationsTotal) * 100}% online
-                  </Typography>
-                </Box>
-              </Box>
-              <Avatar sx={{ bgcolor: 'warning.main' }}>
-                <LocationOn />
-              </Avatar>
-            </Box>
+            <div className="text-2xl font-bold">1,247</div>
+            <p className="text-xs text-muted-foreground">
+              <span className="text-green-600 flex items-center">
+                <CheckCircle className="w-3 h-3 mr-1" />
+                96.3% online
+              </span>
+            </p>
           </CardContent>
         </Card>
-      </Grid>
-    </Grid>
 
-    {/* Charts Row */}
-    <Grid container spacing={3} sx={{ mb: 3 }}>
-      {/* Revenue Trend */}
-      <Grid item xs={12} md={8}>
         <Card>
-          <CardHeader
-            title="Revenue Trend"
-            action={
-              <IconButton>
-                <MoreVert />
-              </IconButton>
-            }
-          />
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Users</CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">15,432</div>
+            <p className="text-xs text-muted-foreground">
+              <span className="text-green-600 flex items-center">
+                <TrendingUp className="w-3 h-3 mr-1" />
+                +127 new
+              </span>
+              this week
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Charts Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Revenue Chart */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Revenue Trend</CardTitle>
+            <CardDescription>Monthly revenue and session count</CardDescription>
+          </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
-              <AreaChart data={mockRevenueData}>
+              <AreaChart data={revenueData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="month" />
                 <YAxis />
-                <Tooltip formatter={(value) => [`$${value.toLocaleString()}`, 'Revenue']} />
-                <Area type="monotone" dataKey="revenue" stroke="#007AFF" fill="#007AFF" fillOpacity={0.3} />
+                <Tooltip />
+                <Area
+                  type="monotone"
+                  dataKey="revenue"
+                  stroke="#3b82f6"
+                  fill="#3b82f6"
+                  fillOpacity={0.2}
+                />
               </AreaChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
-      </Grid>
 
-      {/* Connector Distribution */}
-      <Grid item xs={12} md={4}>
-        <Card sx={{ height: '100%' }}>
-          <CardHeader title="Connector Types" />
-          <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <ResponsiveContainer width="100%" height={200}>
-              <PieChart>
+        {/* Station Status */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Station Status</CardTitle>
+            <CardDescription>Current station distribution</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={300}>
+              <RechartsPieChart>
                 <Pie
-                  data={mockConnectorData}
+                  data={stationData}
                   cx="50%"
                   cy="50%"
-                  outerRadius={80}
+                  innerRadius={60}
+                  outerRadius={100}
+                  paddingAngle={5}
                   dataKey="value"
-                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                 >
-                  {mockConnectorData.map((entry, index) => (
+                  {stationData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
                 <Tooltip />
-              </PieChart>
+                <Legend />
+              </RechartsPieChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
-      </Grid>
-    </Grid>
+      </div>
 
-    {/* Tables Row */}
-    <Grid container spacing={3}>
-      {/* Recent Sessions */}
-      <Grid item xs={12} md={6}>
+      {/* Activity Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Session Activity */}
         <Card>
-          <CardHeader
-            title="Recent Sessions"
-            action={
-              <Button size="small" color="primary">
-                View All
-              </Button>
-            }
-          />
-          <CardContent sx={{ p: 0 }}>
-            <List>
-              {mockRecentSessions.map((session, index) => (
-                <React.Fragment key={session.id}>
-                  <ListItem>
-                    <ListItemAvatar>
-                      <Avatar sx={{ bgcolor: session.status === 'charging' ? 'secondary.main' : 'success.main' }}>
-                        <FlashOn />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <Typography variant="subtitle1">{session.user}</Typography>
-                          <Chip
-                            label={session.status}
-                            color={session.status === 'charging' ? 'secondary' : 'success'}
-                            size="small"
-                          />
-                        </Box>
-                      }
-                      secondary={
-                        <Box>
-                          <Typography variant="body2" color="text.secondary">
-                            {session.station} • {session.duration} • {session.energy} kWh
-                          </Typography>
-                          <Typography variant="body2" color="primary.main" sx={{ fontWeight: 600 }}>
-                            ${session.cost}
-                          </Typography>
-                        </Box>
-                      }
-                    />
-                  </ListItem>
-                  {index < mockRecentSessions.length - 1 && <Divider />}
-                </React.Fragment>
-              ))}
-            </List>
+          <CardHeader>
+            <CardTitle>Session Activity</CardTitle>
+            <CardDescription>Charging sessions throughout the day</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={sessionData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="time" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="sessions" fill="#10b981" />
+              </BarChart>
+            </ResponsiveContainer>
           </CardContent>
         </Card>
-      </Grid>
 
-      {/* Top Performing Stations */}
-      <Grid item xs={12} md={6}>
+        {/* Recent Activity */}
         <Card>
-          <CardHeader
-            title="Top Stations"
-            action={
-              <Button size="small" color="primary">
-                View All
-              </Button>
-            }
-          />
-          <CardContent sx={{ p: 0 }}>
-            <List>
-              {mockTopStations.map((station, index) => (
-                <React.Fragment key={station.name}>
-                  <ListItem>
-                    <ListItemAvatar>
-                      <Avatar sx={{ bgcolor: 'primary.main' }}>
-                        <LocationOn />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <Typography variant="subtitle1">{station.name}</Typography>
-                          <Typography variant="body2" color="primary.main" sx={{ fontWeight: 600 }}>
-                            {station.utilization}%
-                          </Typography>
-                        </Box>
-                      }
-                      secondary={
-                        <Box>
-                          <Typography variant="body2" color="text.secondary">
-                            {station.sessions} sessions
-                          </Typography>
-                          <Typography variant="body2" color="success.main" sx={{ fontWeight: 600 }}>
-                            ${station.revenue.toLocaleString()}
-                          </Typography>
-                        </Box>
-                      }
-                    />
-                  </ListItem>
-                  {index < mockTopStations.length - 1 && <Divider />}
-                </React.Fragment>
+          <CardHeader>
+            <CardTitle>Recent Activity</CardTitle>
+            <CardDescription>Latest platform events</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {[
+                { time: '2 min ago', event: 'New charging session started', location: 'Downtown Plaza', status: 'success' },
+                { time: '5 min ago', event: 'Station maintenance completed', location: 'Airport Terminal', status: 'info' },
+                { time: '12 min ago', event: 'Payment processed', location: 'Shopping Mall', status: 'success' },
+                { time: '18 min ago', event: 'Station went offline', location: 'Highway Rest Stop', status: 'warning' },
+                { time: '25 min ago', event: 'New user registered', location: 'Mobile App', status: 'info' },
+              ].map((activity, index) => (
+                <div key={index} className="flex items-center space-x-3 p-3 rounded-lg bg-muted/50">
+                  <div className={`w-2 h-2 rounded-full ${
+                    activity.status === 'success' ? 'bg-green-500' :
+                    activity.status === 'warning' ? 'bg-yellow-500' : 'bg-blue-500'
+                  }`} />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-foreground">{activity.event}</p>
+                    <p className="text-xs text-muted-foreground">{activity.location}</p>
+                  </div>
+                  <span className="text-xs text-muted-foreground">{activity.time}</span>
+                </div>
               ))}
-            </List>
+            </div>
           </CardContent>
         </Card>
-      </Grid>
-    </Grid>
-  </Box>
-);
+      </div>
+
+      {/* Quick Actions */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Quick Actions</CardTitle>
+          <CardDescription>Common administrative tasks</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <Button variant="outline" className="h-20 flex-col space-y-2">
+              <Zap className="w-6 h-6" />
+              <span>Add Station</span>
+            </Button>
+            <Button variant="outline" className="h-20 flex-col space-y-2">
+              <Users className="w-6 h-6" />
+              <span>Manage Users</span>
+            </Button>
+            <Button variant="outline" className="h-20 flex-col space-y-2">
+              <BarChart3 className="w-6 h-6" />
+              <span>View Reports</span>
+            </Button>
+            <Button variant="outline" className="h-20 flex-col space-y-2">
+              <Settings className="w-6 h-6" />
+              <span>Platform Settings</span>
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+export default Dashboard;
