@@ -4,542 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EV Charging Platform - Dashboard</title>
-        // Comprehensive translations
-        const comprehensiveTranslations = {
-            en: {
-                "page-title": "Dashboard",
-                "dashboard": "Dashboard",
-                "stations": "Stations",
-                "users": "Users",
-                "charging_sessions": "Charging Sessions",
-                "payments": "Payments",
-                "analytics": "Analytics",
-                "reports": "Reports",
-                "notifications": "Notifications",
-                "support": "Support",
-                "settings": "Settings",
-                "search": "Search",
-                "filter": "Filter",
-                "export": "Export",
-                "add_new": "Add New",
-                "edit": "Edit",
-                "delete": "Delete",
-                "view_details": "View Details",
-                "save": "Save",
-                "cancel": "Cancel",
-                "loading": "Loading",
-                "no_data": "No data available",
-                "active": "Active",
-                "inactive": "Inactive",
-                "pending": "Pending",
-                "completed": "Completed",
-                "cancelled": "Cancelled",
-                "failed": "Failed",
-                "total": "Total",
-                "average": "Average",
-                "status": "Status",
-                "actions": "Actions",
-                "refresh": "Refresh",
-                "download": "Download",
-                "print": "Print",
-                "language": "Language",
-                "english": "English",
-                "arabic": "Arabic",
-                "farsi": "Farsi"
-            },
-            ar: {
-                "page-title": "Dashboard",
-                "dashboard": "لوحة القيادة",
-                "stations": "المحطات",
-                "users": "المستخدمون",
-                "charging_sessions": "جلسات الشحن",
-                "payments": "المدفوعات",
-                "analytics": "التحليلات",
-                "reports": "التقارير",
-                "notifications": "الإشعارات",
-                "support": "الدعم",
-                "settings": "الإعدادات",
-                "search": "بحث",
-                "filter": "تصفية",
-                "export": "تصدير",
-                "add_new": "إضافة جديد",
-                "edit": "تعديل",
-                "delete": "حذف",
-                "view_details": "عرض التفاصيل",
-                "save": "حفظ",
-                "cancel": "إلغاء",
-                "loading": "جاري التحميل",
-                "no_data": "لا توجد بيانات متاحة",
-                "active": "نشط",
-                "inactive": "غير نشط",
-                "pending": "معلق",
-                "completed": "مكتمل",
-                "cancelled": "ملغى",
-                "failed": "فشل",
-                "total": "المجموع",
-                "average": "المتوسط",
-                "status": "الحالة",
-                "actions": "الإجراءات",
-                "refresh": "تحديث",
-                "download": "تحميل",
-                "print": "طباعة",
-                "language": "اللغة",
-                "english": "الإنجليزية",
-                "arabic": "العربية",
-                "farsi": "الفارسية"
-            },
-            fa: {
-                "page-title": "Dashboard",
-                "dashboard": "داشبورد",
-                "stations": "ایستگاه‌ها",
-                "users": "کاربران",
-                "charging_sessions": "جلسات شارژ",
-                "payments": "پرداخت‌ها",
-                "analytics": "تحلیل‌ها",
-                "reports": "گزارش‌ها",
-                "notifications": "اعلان‌ها",
-                "support": "پشتیبانی",
-                "settings": "تنظیمات",
-                "search": "جستجو",
-                "filter": "فیلتر",
-                "export": "خروجی",
-                "add_new": "افزودن جدید",
-                "edit": "ویرایش",
-                "delete": "حذف",
-                "view_details": "مشاهده جزئیات",
-                "save": "ذخیره",
-                "cancel": "لغو",
-                "loading": "در حال بارگذاری",
-                "no_data": "داده‌ای موجود نیست",
-                "active": "فعال",
-                "inactive": "غیرفعال",
-                "pending": "در انتظار",
-                "completed": "تکمیل شده",
-                "cancelled": "لغو شده",
-                "failed": "ناموفق",
-                "total": "کل",
-                "average": "میانگین",
-                "status": "وضعیت",
-                "actions": "عملیات",
-                "refresh": "تازه‌سازی",
-                "download": "دانلود",
-                "print": "چاپ",
-                "language": "زبان",
-                "english": "انگلیسی",
-                "arabic": "عربی",
-                "farsi": "فارسی"
-            }
-        };
-
-        // Enhanced translation function
-        function applyComprehensiveTranslations(language) {
-            currentLanguage = language;
-            
-            // Update document direction and language
-            document.documentElement.dir = ["ar", "fa"].includes(language) ? "rtl" : "ltr";
-            document.documentElement.lang = language;
-            
-            // Update all translatable elements
-            const elements = comprehensiveTranslations[language];
-            for (const [id, text] of Object.entries(elements)) {
-                const element = document.getElementById(id);
-                if (element) {
-                    element.textContent = text;
-                }
-                
-                // Also update elements with data-i18n attribute
-                const i18nElements = document.querySelectorAll(`[data-i18n="${id}"]`);
-                i18nElements.forEach(el => {
-                    el.textContent = text;
-                });
-            }
-            
-            // Update language switcher
-            const languageNames = { en: "English", ar: "العربية", fa: "فارسی" };
-            const languageFlags = { en: "🇺🇸", ar: "🇸🇦", fa: "🇮🇷" };
-            
-            if (document.getElementById("current-language-name")) {
-                document.getElementById("current-language-name").textContent = languageNames[language];
-            }
-            if (document.getElementById("current-language-flag")) {
-                document.getElementById("current-language-flag").textContent = languageFlags[language];
-            }
-            
-            // Update checkmarks
-            document.querySelectorAll(".language-check").forEach(check => check.classList.add("hidden"));
-            const checkElement = document.getElementById(`check-${language}`);
-            if (checkElement) {
-                checkElement.classList.remove("hidden");
-            }
-            
-            // Save preference
-            localStorage.setItem("ev-admin-language", language);
-        }
-
-        // Override the existing applyLanguage function
-        if (typeof applyLanguage !== "undefined") {
-            applyLanguage = applyComprehensiveTranslations;
-        } else {
-            window.applyLanguage = applyComprehensiveTranslations;
-        }
     <script src="https://cdn.tailwindcss.com"></script>
-        // Comprehensive translations
-        const comprehensiveTranslations = {
-            en: {
-                "page-title": "Dashboard",
-                "dashboard": "Dashboard",
-                "stations": "Stations",
-                "users": "Users",
-                "charging_sessions": "Charging Sessions",
-                "payments": "Payments",
-                "analytics": "Analytics",
-                "reports": "Reports",
-                "notifications": "Notifications",
-                "support": "Support",
-                "settings": "Settings",
-                "search": "Search",
-                "filter": "Filter",
-                "export": "Export",
-                "add_new": "Add New",
-                "edit": "Edit",
-                "delete": "Delete",
-                "view_details": "View Details",
-                "save": "Save",
-                "cancel": "Cancel",
-                "loading": "Loading",
-                "no_data": "No data available",
-                "active": "Active",
-                "inactive": "Inactive",
-                "pending": "Pending",
-                "completed": "Completed",
-                "cancelled": "Cancelled",
-                "failed": "Failed",
-                "total": "Total",
-                "average": "Average",
-                "status": "Status",
-                "actions": "Actions",
-                "refresh": "Refresh",
-                "download": "Download",
-                "print": "Print",
-                "language": "Language",
-                "english": "English",
-                "arabic": "Arabic",
-                "farsi": "Farsi"
-            },
-            ar: {
-                "page-title": "Dashboard",
-                "dashboard": "لوحة القيادة",
-                "stations": "المحطات",
-                "users": "المستخدمون",
-                "charging_sessions": "جلسات الشحن",
-                "payments": "المدفوعات",
-                "analytics": "التحليلات",
-                "reports": "التقارير",
-                "notifications": "الإشعارات",
-                "support": "الدعم",
-                "settings": "الإعدادات",
-                "search": "بحث",
-                "filter": "تصفية",
-                "export": "تصدير",
-                "add_new": "إضافة جديد",
-                "edit": "تعديل",
-                "delete": "حذف",
-                "view_details": "عرض التفاصيل",
-                "save": "حفظ",
-                "cancel": "إلغاء",
-                "loading": "جاري التحميل",
-                "no_data": "لا توجد بيانات متاحة",
-                "active": "نشط",
-                "inactive": "غير نشط",
-                "pending": "معلق",
-                "completed": "مكتمل",
-                "cancelled": "ملغى",
-                "failed": "فشل",
-                "total": "المجموع",
-                "average": "المتوسط",
-                "status": "الحالة",
-                "actions": "الإجراءات",
-                "refresh": "تحديث",
-                "download": "تحميل",
-                "print": "طباعة",
-                "language": "اللغة",
-                "english": "الإنجليزية",
-                "arabic": "العربية",
-                "farsi": "الفارسية"
-            },
-            fa: {
-                "page-title": "Dashboard",
-                "dashboard": "داشبورد",
-                "stations": "ایستگاه‌ها",
-                "users": "کاربران",
-                "charging_sessions": "جلسات شارژ",
-                "payments": "پرداخت‌ها",
-                "analytics": "تحلیل‌ها",
-                "reports": "گزارش‌ها",
-                "notifications": "اعلان‌ها",
-                "support": "پشتیبانی",
-                "settings": "تنظیمات",
-                "search": "جستجو",
-                "filter": "فیلتر",
-                "export": "خروجی",
-                "add_new": "افزودن جدید",
-                "edit": "ویرایش",
-                "delete": "حذف",
-                "view_details": "مشاهده جزئیات",
-                "save": "ذخیره",
-                "cancel": "لغو",
-                "loading": "در حال بارگذاری",
-                "no_data": "داده‌ای موجود نیست",
-                "active": "فعال",
-                "inactive": "غیرفعال",
-                "pending": "در انتظار",
-                "completed": "تکمیل شده",
-                "cancelled": "لغو شده",
-                "failed": "ناموفق",
-                "total": "کل",
-                "average": "میانگین",
-                "status": "وضعیت",
-                "actions": "عملیات",
-                "refresh": "تازه‌سازی",
-                "download": "دانلود",
-                "print": "چاپ",
-                "language": "زبان",
-                "english": "انگلیسی",
-                "arabic": "عربی",
-                "farsi": "فارسی"
-            }
-        };
-
-        // Enhanced translation function
-        function applyComprehensiveTranslations(language) {
-            currentLanguage = language;
-            
-            // Update document direction and language
-            document.documentElement.dir = ["ar", "fa"].includes(language) ? "rtl" : "ltr";
-            document.documentElement.lang = language;
-            
-            // Update all translatable elements
-            const elements = comprehensiveTranslations[language];
-            for (const [id, text] of Object.entries(elements)) {
-                const element = document.getElementById(id);
-                if (element) {
-                    element.textContent = text;
-                }
-                
-                // Also update elements with data-i18n attribute
-                const i18nElements = document.querySelectorAll(`[data-i18n="${id}"]`);
-                i18nElements.forEach(el => {
-                    el.textContent = text;
-                });
-            }
-            
-            // Update language switcher
-            const languageNames = { en: "English", ar: "العربية", fa: "فارسی" };
-            const languageFlags = { en: "🇺🇸", ar: "🇸🇦", fa: "🇮🇷" };
-            
-            if (document.getElementById("current-language-name")) {
-                document.getElementById("current-language-name").textContent = languageNames[language];
-            }
-            if (document.getElementById("current-language-flag")) {
-                document.getElementById("current-language-flag").textContent = languageFlags[language];
-            }
-            
-            // Update checkmarks
-            document.querySelectorAll(".language-check").forEach(check => check.classList.add("hidden"));
-            const checkElement = document.getElementById(`check-${language}`);
-            if (checkElement) {
-                checkElement.classList.remove("hidden");
-            }
-            
-            // Save preference
-            localStorage.setItem("ev-admin-language", language);
-        }
-
-        // Override the existing applyLanguage function
-        if (typeof applyLanguage !== "undefined") {
-            applyLanguage = applyComprehensiveTranslations;
-        } else {
-            window.applyLanguage = applyComprehensiveTranslations;
-        }
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-        // Comprehensive translations
-        const comprehensiveTranslations = {
-            en: {
-                "page-title": "Dashboard",
-                "dashboard": "Dashboard",
-                "stations": "Stations",
-                "users": "Users",
-                "charging_sessions": "Charging Sessions",
-                "payments": "Payments",
-                "analytics": "Analytics",
-                "reports": "Reports",
-                "notifications": "Notifications",
-                "support": "Support",
-                "settings": "Settings",
-                "search": "Search",
-                "filter": "Filter",
-                "export": "Export",
-                "add_new": "Add New",
-                "edit": "Edit",
-                "delete": "Delete",
-                "view_details": "View Details",
-                "save": "Save",
-                "cancel": "Cancel",
-                "loading": "Loading",
-                "no_data": "No data available",
-                "active": "Active",
-                "inactive": "Inactive",
-                "pending": "Pending",
-                "completed": "Completed",
-                "cancelled": "Cancelled",
-                "failed": "Failed",
-                "total": "Total",
-                "average": "Average",
-                "status": "Status",
-                "actions": "Actions",
-                "refresh": "Refresh",
-                "download": "Download",
-                "print": "Print",
-                "language": "Language",
-                "english": "English",
-                "arabic": "Arabic",
-                "farsi": "Farsi"
-            },
-            ar: {
-                "page-title": "Dashboard",
-                "dashboard": "لوحة القيادة",
-                "stations": "المحطات",
-                "users": "المستخدمون",
-                "charging_sessions": "جلسات الشحن",
-                "payments": "المدفوعات",
-                "analytics": "التحليلات",
-                "reports": "التقارير",
-                "notifications": "الإشعارات",
-                "support": "الدعم",
-                "settings": "الإعدادات",
-                "search": "بحث",
-                "filter": "تصفية",
-                "export": "تصدير",
-                "add_new": "إضافة جديد",
-                "edit": "تعديل",
-                "delete": "حذف",
-                "view_details": "عرض التفاصيل",
-                "save": "حفظ",
-                "cancel": "إلغاء",
-                "loading": "جاري التحميل",
-                "no_data": "لا توجد بيانات متاحة",
-                "active": "نشط",
-                "inactive": "غير نشط",
-                "pending": "معلق",
-                "completed": "مكتمل",
-                "cancelled": "ملغى",
-                "failed": "فشل",
-                "total": "المجموع",
-                "average": "المتوسط",
-                "status": "الحالة",
-                "actions": "الإجراءات",
-                "refresh": "تحديث",
-                "download": "تحميل",
-                "print": "طباعة",
-                "language": "اللغة",
-                "english": "الإنجليزية",
-                "arabic": "العربية",
-                "farsi": "الفارسية"
-            },
-            fa: {
-                "page-title": "Dashboard",
-                "dashboard": "داشبورد",
-                "stations": "ایستگاه‌ها",
-                "users": "کاربران",
-                "charging_sessions": "جلسات شارژ",
-                "payments": "پرداخت‌ها",
-                "analytics": "تحلیل‌ها",
-                "reports": "گزارش‌ها",
-                "notifications": "اعلان‌ها",
-                "support": "پشتیبانی",
-                "settings": "تنظیمات",
-                "search": "جستجو",
-                "filter": "فیلتر",
-                "export": "خروجی",
-                "add_new": "افزودن جدید",
-                "edit": "ویرایش",
-                "delete": "حذف",
-                "view_details": "مشاهده جزئیات",
-                "save": "ذخیره",
-                "cancel": "لغو",
-                "loading": "در حال بارگذاری",
-                "no_data": "داده‌ای موجود نیست",
-                "active": "فعال",
-                "inactive": "غیرفعال",
-                "pending": "در انتظار",
-                "completed": "تکمیل شده",
-                "cancelled": "لغو شده",
-                "failed": "ناموفق",
-                "total": "کل",
-                "average": "میانگین",
-                "status": "وضعیت",
-                "actions": "عملیات",
-                "refresh": "تازه‌سازی",
-                "download": "دانلود",
-                "print": "چاپ",
-                "language": "زبان",
-                "english": "انگلیسی",
-                "arabic": "عربی",
-                "farsi": "فارسی"
-            }
-        };
-
-        // Enhanced translation function
-        function applyComprehensiveTranslations(language) {
-            currentLanguage = language;
-            
-            // Update document direction and language
-            document.documentElement.dir = ["ar", "fa"].includes(language) ? "rtl" : "ltr";
-            document.documentElement.lang = language;
-            
-            // Update all translatable elements
-            const elements = comprehensiveTranslations[language];
-            for (const [id, text] of Object.entries(elements)) {
-                const element = document.getElementById(id);
-                if (element) {
-                    element.textContent = text;
-                }
-                
-                // Also update elements with data-i18n attribute
-                const i18nElements = document.querySelectorAll(`[data-i18n="${id}"]`);
-                i18nElements.forEach(el => {
-                    el.textContent = text;
-                });
-            }
-            
-            // Update language switcher
-            const languageNames = { en: "English", ar: "العربية", fa: "فارسی" };
-            const languageFlags = { en: "🇺🇸", ar: "🇸🇦", fa: "🇮🇷" };
-            
-            if (document.getElementById("current-language-name")) {
-                document.getElementById("current-language-name").textContent = languageNames[language];
-            }
-            if (document.getElementById("current-language-flag")) {
-                document.getElementById("current-language-flag").textContent = languageFlags[language];
-            }
-            
-            // Update checkmarks
-            document.querySelectorAll(".language-check").forEach(check => check.classList.add("hidden"));
-            const checkElement = document.getElementById(`check-${language}`);
-            if (checkElement) {
-                checkElement.classList.remove("hidden");
-            }
-            
-            // Save preference
-            localStorage.setItem("ev-admin-language", language);
-        }
-
-        // Override the existing applyLanguage function
-        if (typeof applyLanguage !== "undefined") {
-            applyLanguage = applyComprehensiveTranslations;
-        } else {
-            window.applyLanguage = applyComprehensiveTranslations;
-        }
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
@@ -891,97 +357,75 @@
         <!-- Sidebar -->
         <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
             <!-- Logo -->
-            <div class="flex items-center justify-between h-16 px-6 border-b border-gray-200">
-                <div class="flex items-center space-x-2">
-                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                        <i data-lucide="zap" class="w-5 h-5 text-white"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-lg font-bold text-gray-900" id="logo-text">EV Platform</h1>
-                        <p class="text-xs text-gray-500" id="logo-subtitle">Admin Dashboard</p>
-                    </div>
-                </div>
+            <div class="p-6 border-b border-gray-200">
+                <h1 class="text-xl font-bold text-gray-900">EV Charging Platform</h1>
             </div>
-
+            
             <!-- Navigation -->
-            <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
-                <a href="dashboard.html" class="nav-item active flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors bg-blue-600 text-white">
-                    <div class="flex items-center space-x-3">
-                        <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
-                        <span id="nav-dashboard">Dashboard</span>
-                    </div>
-                </a>
-                <a href="stations.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
-                    <div class="flex items-center space-x-3">
-                        <i data-lucide="zap" class="w-5 h-5"></i>
-                        <span id="nav-stations">Stations</span>
-                    </div>
-                    <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">1,247</span>
-                </a>
-                <a href="users.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
-                    <div class="flex items-center space-x-3">
-                        <i data-lucide="users" class="w-5 h-5"></i>
-                        <span id="nav-users">Users</span>
-                    </div>
-                    <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">15.4K</span>
-                </a>
-                <a href="charging.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
-                    <div class="flex items-center space-x-3">
-                        <i data-lucide="activity" class="w-5 h-5"></i>
-                        <span id="nav-charging">Charging Sessions</span>
-                    </div>
-                </a>
-                <a href="payments.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
-                    <div class="flex items-center space-x-3">
-                        <i data-lucide="credit-card" class="w-5 h-5"></i>
-                        <span id="nav-payments">Payments</span>
-                    </div>
-                </a>
-                <a href="analytics.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
-                    <div class="flex items-center space-x-3">
-                        <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
-                        <span id="nav-analytics">Analytics</span>
-                    </div>
-                </a>
-                <a href="reports.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
-                    <div class="flex items-center space-x-3">
-                        <i data-lucide="file-text" class="w-5 h-5"></i>
-                        <span id="nav-reports">Reports</span>
-                    </div>
-                </a>
-                <a href="notifications.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
-                    <div class="flex items-center space-x-3">
-                        <i data-lucide="bell" class="w-5 h-5"></i>
-                        <span id="nav-notifications">Notifications</span>
-                    </div>
-                    <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">3</span>
-                </a>
-                <a href="support.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
-                    <div class="flex items-center space-x-3">
-                        <i data-lucide="help-circle" class="w-5 h-5"></i>
-                        <span id="nav-support">Support</span>
-                    </div>
-                </a>
-                <a href="settings.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
-                    <div class="flex items-center space-x-3">
-                        <i data-lucide="settings" class="w-5 h-5"></i>
-                        <span id="nav-settings">Settings</span>
-                    </div>
-                </a>
+            <nav class="flex-1 p-4">
+                <ul class="space-y-2">
+                    <li>
+                        <a href="dashboard.html" class="flex items-center px-3 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-md">
+                            <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="stations.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md">
+                            <i data-lucide="zap" class="w-5 h-5 mr-3"></i>
+                            Stations
+                        </a>
+                    </li>
+                    <li>
+                        <a href="users.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md">
+                            <i data-lucide="users" class="w-5 h-5 mr-3"></i>
+                            Users
+                        </a>
+                    </li>
+                    <li>
+                        <a href="charging.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md">
+                            <i data-lucide="battery-charging" class="w-5 h-5 mr-3"></i>
+                            Charging Sessions
+                        </a>
+                    </li>
+                    <li>
+                        <a href="payments.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md">
+                            <i data-lucide="credit-card" class="w-5 h-5 mr-3"></i>
+                            Payments
+                        </a>
+                    </li>
+                    <li>
+                        <a href="analytics.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md">
+                            <i data-lucide="bar-chart-3" class="w-5 h-5 mr-3"></i>
+                            Analytics
+                        </a>
+                    </li>
+                    <li>
+                        <a href="reports.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md">
+                            <i data-lucide="file-text" class="w-5 h-5 mr-3"></i>
+                            Reports
+                        </a>
+                    </li>
+                    <li>
+                        <a href="notifications.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md">
+                            <i data-lucide="bell" class="w-5 h-5 mr-3"></i>
+                            Notifications
+                        </a>
+                    </li>
+                    <li>
+                        <a href="support.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md">
+                            <i data-lucide="help-circle" class="w-5 h-5 mr-3"></i>
+                            Support
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md">
+                            <i data-lucide="settings" class="w-5 h-5 mr-3"></i>
+                            Settings
+                        </a>
+                    </li>
+                </ul>
             </nav>
-
-            <!-- User Profile -->
-            <div class="p-4 border-t border-gray-200">
-                <div class="flex items-center space-x-3 p-3 rounded-lg bg-gray-50">
-                    <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                        <span class="text-sm font-medium text-white">A</span>
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <p class="text-sm font-medium text-gray-900">Admin User</p>
-                        <p class="text-xs text-gray-500">admin@evcharging.com</p>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- Main Content -->
@@ -989,7 +433,7 @@
             <!-- Top Bar -->
             <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6">
                 <div class="flex items-center space-x-4">
-                    <h2 class="text-xl font-semibold text-gray-900" id="page-title">Dashboard Overview</h2>
+                    <h2 class="text-xl font-semibold text-gray-900" id="page-title">Dashboard</h2>
                 </div>
 
                 <div class="flex items-center space-x-4">
@@ -1020,256 +464,153 @@
                         </div>
                     </div>
 
-                    <!-- Status Indicators -->
-                    <div class="hidden md:flex items-center space-x-4">
-                        <div class="flex items-center space-x-2">
-                            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-                            <span class="text-sm text-gray-600">API Online</span>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                            <span class="text-sm text-gray-600">1,247 Stations</span>
-                        </div>
-                    </div>
-
                     <!-- Quick Actions -->
                     <div class="flex items-center space-x-2">
                         <button class="btn-secondary px-3 py-1 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
-                            <i data-lucide="trending-up" class="w-4 h-4 mr-2 inline"></i>
-                            Analytics
+                            <i data-lucide="refresh-cw" class="w-4 h-4 mr-2 inline"></i>
+                            Refresh
                         </button>
-                        <button class="btn-secondary px-3 py-1 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
-                            <i data-lucide="alert-triangle" class="w-4 h-4 mr-2 inline"></i>
-                            Alerts
+                        <button class="btn-primary px-3 py-1 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
+                            <i data-lucide="plus" class="w-4 h-4 mr-2 inline"></i>
+                            Add New
                         </button>
                     </div>
                 </div>
             </header>
 
-            <!-- Page Content -->
-            <main class="flex-1 overflow-y-auto bg-gray-50">
-                <div class="p-6">
-                    <!-- Key Metrics -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-                        <div class="card rounded-lg p-6 hover-lift">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-sm font-medium text-gray-600" id="metric-revenue">Total Revenue</h3>
-                                <i data-lucide="dollar-sign" class="w-4 h-4 text-gray-400"></i>
-                            </div>
-                            <div class="text-2xl font-bold text-gray-900 mb-1">$387,421</div>
-                            <p class="text-xs text-gray-500">
-                                <span class="text-green-600 flex items-center">
-                                    <i data-lucide="trending-up" class="w-3 h-3 mr-1"></i>
-                                    +12.5%
-                                </span>
-                                from last month
-                            </p>
-                        </div>
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-y-auto p-6">
+                <!-- Welcome Section -->
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Welcome to EV Charging Platform</h1>
+                    <p class="text-gray-600">Monitor and manage your electric vehicle charging network</p>
+                </div>
 
-                        <div class="card rounded-lg p-6 hover-lift">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-sm font-medium text-gray-600" id="metric-sessions">Active Sessions</h3>
-                                <i data-lucide="activity" class="w-4 h-4 text-gray-400"></i>
-                            </div>
-                            <div class="text-2xl font-bold text-gray-900 mb-1">89</div>
-                            <p class="text-xs text-gray-500">
-                                <span class="text-green-600 flex items-center">
-                                    <i data-lucide="trending-up" class="w-3 h-3 mr-1"></i>
-                                    +8.2%
-                                </span>
-                                from yesterday
-                            </p>
-                        </div>
-
-                        <div class="card rounded-lg p-6 hover-lift">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-sm font-medium text-gray-600" id="metric-stations">Total Stations</h3>
-                                <i data-lucide="zap" class="w-4 h-4 text-gray-400"></i>
-                            </div>
-                            <div class="text-2xl font-bold text-gray-900 mb-1">1,247</div>
-                            <p class="text-xs text-gray-500">
-                                <span class="text-green-600 flex items-center">
-                                    <i data-lucide="check-circle" class="w-3 h-3 mr-1"></i>
-                                    96.3% online
-                                </span>
-                            </p>
-                        </div>
-
-                        <div class="card rounded-lg p-6 hover-lift">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-sm font-medium text-gray-600" id="metric-users">Total Users</h3>
-                                <i data-lucide="users" class="w-4 h-4 text-gray-400"></i>
-                            </div>
-                            <div class="text-2xl font-bold text-gray-900 mb-1">15,432</div>
-                            <p class="text-xs text-gray-500">
-                                <span class="text-green-600 flex items-center">
-                                    <i data-lucide="trending-up" class="w-3 h-3 mr-1"></i>
-                                    +127 new
-                                </span>
-                                this week
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Charts Row -->
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                        <!-- Revenue Chart -->
-                        <div class="card rounded-lg p-6 hover-lift">
-                            <div class="mb-4">
-                                <h3 class="text-lg font-semibold text-gray-900" id="chart-revenue-title">Revenue Trend</h3>
-                                <p class="text-sm text-gray-600">Monthly revenue and session count</p>
-                            </div>
-                            <div class="h-80">
-                                <canvas id="revenueChart"></canvas>
-                            </div>
-                        </div>
-
-                        <!-- Station Status -->
-                        <div class="card rounded-lg p-6 hover-lift">
-                            <div class="mb-4">
-                                <h3 class="text-lg font-semibold text-gray-900" id="chart-station-title">Station Status</h3>
-                                <p class="text-sm text-gray-600">Current station distribution</p>
-                            </div>
-                            <div class="h-80">
-                                <canvas id="stationChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Advanced Features -->
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-                        <!-- Real-time Activity -->
-                        <div class="card rounded-lg p-6 hover-lift">
-                            <div class="mb-4">
-                                <h3 class="text-lg font-semibold text-gray-900" id="activity-title">Real-time Activity</h3>
-                                <p class="text-sm text-gray-600">Live platform events</p>
-                            </div>
-                            <div class="space-y-3">
-                                <div class="flex items-center space-x-3 p-3 rounded-lg bg-green-50 border border-green-200">
-                                    <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-                                    <div class="flex-1 min-w-0">
-                                        <p class="text-sm font-medium text-gray-900">New charging session started</p>
-                                        <p class="text-xs text-gray-600">Downtown Plaza Station</p>
-                                    </div>
-                                    <span class="text-xs text-gray-500">2 min ago</span>
-                                </div>
-                                <div class="flex items-center space-x-3 p-3 rounded-lg bg-blue-50 border border-blue-200">
-                                    <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                                    <div class="flex-1 min-w-0">
-                                        <p class="text-sm font-medium text-gray-900">Station maintenance completed</p>
-                                        <p class="text-xs text-gray-600">Airport Terminal</p>
-                                    </div>
-                                    <span class="text-xs text-gray-500">5 min ago</span>
-                                </div>
-                                <div class="flex items-center space-x-3 p-3 rounded-lg bg-green-50 border border-green-200">
-                                    <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-                                    <div class="flex-1 min-w-0">
-                                        <p class="text-sm font-medium text-gray-900">Payment processed</p>
-                                        <p class="text-xs text-gray-600">Shopping Mall Station</p>
-                                    </div>
-                                    <span class="text-xs text-gray-500">12 min ago</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Quick Actions -->
-                        <div class="card rounded-lg p-6 hover-lift">
-                            <div class="mb-4">
-                                <h3 class="text-lg font-semibold text-gray-900" id="actions-title">Quick Actions</h3>
-                                <p class="text-sm text-gray-600">Common administrative tasks</p>
-                            </div>
-                            <div class="grid grid-cols-2 gap-3">
-                                <a href="stations.html" class="btn-secondary p-4 rounded-lg text-center hover:bg-gray-200 transition-colors">
-                                    <i data-lucide="zap" class="w-6 h-6 mx-auto mb-2"></i>
-                                    <span class="text-sm font-medium">Add Station</span>
-                                </a>
-                                <a href="users.html" class="btn-secondary p-4 rounded-lg text-center hover:bg-gray-200 transition-colors">
-                                    <i data-lucide="users" class="w-6 h-6 mx-auto mb-2"></i>
-                                    <span class="text-sm font-medium">Manage Users</span>
-                                </a>
-                                <a href="reports.html" class="btn-secondary p-4 rounded-lg text-center hover:bg-gray-200 transition-colors">
-                                    <i data-lucide="bar-chart-3" class="w-6 h-6 mx-auto mb-2"></i>
-                                    <span class="text-sm font-medium">View Reports</span>
-                                </a>
-                                <a href="settings.html" class="btn-secondary p-4 rounded-lg text-center hover:bg-gray-200 transition-colors">
-                                    <i data-lucide="settings" class="w-6 h-6 mx-auto mb-2"></i>
-                                    <span class="text-sm font-medium">Platform Settings</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- System Health -->
-                        <div class="card rounded-lg p-6 hover-lift">
-                            <div class="mb-4">
-                                <h3 class="text-lg font-semibold text-gray-900" id="health-title">System Health</h3>
-                                <p class="text-sm text-gray-600">Platform status monitoring</p>
-                            </div>
-                            <div class="space-y-4">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-sm text-gray-600">API Gateway</span>
-                                    <div class="flex items-center space-x-2">
-                                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-                                        <span class="text-sm font-medium text-green-600">Healthy</span>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <span class="text-sm text-gray-600">Database</span>
-                                    <div class="flex items-center space-x-2">
-                                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-                                        <span class="text-sm font-medium text-green-600">Connected</span>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <span class="text-sm text-gray-600">Payment Gateway</span>
-                                    <div class="flex items-center space-x-2">
-                                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-                                        <span class="text-sm font-medium text-green-600">Operational</span>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <span class="text-sm text-gray-600">Notification Service</span>
-                                    <div class="flex items-center space-x-2">
-                                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-                                        <span class="text-sm font-medium text-green-600">Active</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- API Status -->
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <!-- Total Stations -->
                     <div class="card rounded-lg p-6 hover-lift">
-                        <div class="mb-4">
-                            <h3 class="text-lg font-semibold text-gray-900" id="api-title">API Status & Endpoints</h3>
-                            <p class="text-sm text-gray-600">Your EV Charging Platform API is live and operational</p>
-                        </div>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                            <div class="bg-gray-50 rounded-lg p-4 border-l-4 border-blue-500">
-                                <strong class="text-gray-900">Production API:</strong>
-                                <p class="text-sm text-gray-600 mt-1">https://ev-charging-platform-production.mks-alghafil.workers.dev</p>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Total Stations</p>
+                                <p class="text-2xl font-bold text-gray-900" id="total-stations">156</p>
                             </div>
-                            <div class="bg-gray-50 rounded-lg p-4 border-l-4 border-green-500">
-                                <strong class="text-gray-900">Health Check:</strong>
-                                <p class="text-sm text-gray-600 mt-1">GET /api/v1/health</p>
+                            <div class="p-3 bg-blue-100 rounded-full">
+                                <i data-lucide="zap" class="w-6 h-6 text-blue-600"></i>
                             </div>
                         </div>
+                        <div class="mt-4 flex items-center text-sm text-green-600">
+                            <i data-lucide="trending-up" class="w-4 h-4 mr-1"></i>
+                            <span>+12% from last month</span>
+                        </div>
+                    </div>
+
+                    <!-- Active Sessions -->
+                    <div class="card rounded-lg p-6 hover-lift">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Active Sessions</p>
+                                <p class="text-2xl font-bold text-gray-900" id="active-sessions">23</p>
+                            </div>
+                            <div class="p-3 bg-green-100 rounded-full">
+                                <i data-lucide="battery-charging" class="w-6 h-6 text-green-600"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center text-sm text-green-600">
+                            <i data-lucide="trending-up" class="w-4 h-4 mr-1"></i>
+                            <span>+8% from last hour</span>
+                        </div>
+                    </div>
+
+                    <!-- Total Users -->
+                    <div class="card rounded-lg p-6 hover-lift">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Total Users</p>
+                                <p class="text-2xl font-bold text-gray-900" id="total-users">2,847</p>
+                            </div>
+                            <div class="p-3 bg-purple-100 rounded-full">
+                                <i data-lucide="users" class="w-6 h-6 text-purple-600"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center text-sm text-green-600">
+                            <i data-lucide="trending-up" class="w-4 h-4 mr-1"></i>
+                            <span>+15% from last month</span>
+                        </div>
+                    </div>
+
+                    <!-- Revenue -->
+                    <div class="card rounded-lg p-6 hover-lift">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Monthly Revenue</p>
+                                <p class="text-2xl font-bold text-gray-900" id="monthly-revenue">$45,230</p>
+                            </div>
+                            <div class="p-3 bg-yellow-100 rounded-full">
+                                <i data-lucide="dollar-sign" class="w-6 h-6 text-yellow-600"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center text-sm text-green-600">
+                            <i data-lucide="trending-up" class="w-4 h-4 mr-1"></i>
+                            <span>+22% from last month</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <!-- Revenue Chart -->
+                    <div class="card rounded-lg p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Revenue Trend</h3>
+                        <div class="h-64">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Usage Chart -->
+                    <div class="card rounded-lg p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Station Usage</h3>
+                        <div class="h-64">
+                            <canvas id="usageChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="card rounded-lg p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-4 p-3 bg-gray-50 rounded-lg">
+                            <div class="p-2 bg-green-100 rounded-full">
+                                <i data-lucide="battery-charging" class="w-4 h-4 text-green-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium text-gray-900">New charging session started</p>
+                                <p class="text-xs text-gray-500">Station #001 - User: John Doe</p>
+                            </div>
+                            <span class="text-xs text-gray-500">2 minutes ago</span>
+                        </div>
                         
-                        <div class="flex flex-wrap gap-2">
-                            <a href="https://ev-charging-platform-production.mks-alghafil.workers.dev/api/v1/health" 
-                               target="_blank" 
-                               class="btn-primary px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
-                                Test API Health
-                            </a>
-                            <a href="https://ev-charging-platform-production.mks-alghafil.workers.dev/api/v1/stations" 
-                               target="_blank" 
-                               class="btn-secondary px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
-                                View Stations
-                            </a>
-                            <button class="btn-secondary px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
-                                <i data-lucide="download" class="w-4 h-4 mr-2 inline"></i>
-                                Export Data
-                            </button>
+                        <div class="flex items-center space-x-4 p-3 bg-gray-50 rounded-lg">
+                            <div class="p-2 bg-blue-100 rounded-full">
+                                <i data-lucide="user-plus" class="w-4 h-4 text-blue-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium text-gray-900">New user registered</p>
+                                <p class="text-xs text-gray-500">Sarah Wilson joined the platform</p>
+                            </div>
+                            <span class="text-xs text-gray-500">15 minutes ago</span>
+                        </div>
+                        
+                        <div class="flex items-center space-x-4 p-3 bg-gray-50 rounded-lg">
+                            <div class="p-2 bg-yellow-100 rounded-full">
+                                <i data-lucide="alert-triangle" class="w-4 h-4 text-yellow-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium text-gray-900">Station maintenance required</p>
+                                <p class="text-xs text-gray-500">Station #045 - Connector 2 offline</p>
+                            </div>
+                            <span class="text-xs text-gray-500">1 hour ago</span>
                         </div>
                     </div>
                 </div>
@@ -1284,79 +625,127 @@
         // Language translations
         const translations = {
             en: {
-                'logo-text': 'EV Platform',
-                'logo-subtitle': 'Admin Dashboard',
-                'nav-dashboard': 'Dashboard',
-                'nav-stations': 'Stations',
-                'nav-users': 'Users',
-                'nav-charging': 'Charging Sessions',
-                'nav-payments': 'Payments',
-                'nav-analytics': 'Analytics',
-                'nav-reports': 'Reports',
-                'nav-notifications': 'Notifications',
-                'nav-support': 'Support',
-                'nav-settings': 'Settings',
-                'page-title': 'Dashboard Overview',
-                'metric-revenue': 'Total Revenue',
-                'metric-sessions': 'Active Sessions',
-                'metric-stations': 'Total Stations',
-                'metric-users': 'Total Users',
-                'chart-revenue-title': 'Revenue Trend',
-                'chart-station-title': 'Station Status',
-                'activity-title': 'Real-time Activity',
-                'actions-title': 'Quick Actions',
-                'health-title': 'System Health',
-                'api-title': 'API Status & Endpoints'
+                'page-title': 'Dashboard',
+                'dashboard': 'Dashboard',
+                'stations': 'Stations',
+                'users': 'Users',
+                'charging_sessions': 'Charging Sessions',
+                'payments': 'Payments',
+                'analytics': 'Analytics',
+                'reports': 'Reports',
+                'notifications': 'Notifications',
+                'support': 'Support',
+                'settings': 'Settings',
+                'search': 'Search',
+                'filter': 'Filter',
+                'export': 'Export',
+                'add_new': 'Add New',
+                'edit': 'Edit',
+                'delete': 'Delete',
+                'view_details': 'View Details',
+                'save': 'Save',
+                'cancel': 'Cancel',
+                'loading': 'Loading',
+                'no_data': 'No data available',
+                'active': 'Active',
+                'inactive': 'Inactive',
+                'pending': 'Pending',
+                'completed': 'Completed',
+                'cancelled': 'Cancelled',
+                'failed': 'Failed',
+                'total': 'Total',
+                'average': 'Average',
+                'status': 'Status',
+                'actions': 'Actions',
+                'refresh': 'Refresh',
+                'download': 'Download',
+                'print': 'Print',
+                'language': 'Language',
+                'english': 'English',
+                'arabic': 'Arabic',
+                'farsi': 'Farsi'
             },
             ar: {
-                'logo-text': 'منصة المركبات الكهربائية',
-                'logo-subtitle': 'لوحة تحكم الإدارة',
-                'nav-dashboard': 'لوحة التحكم',
-                'nav-stations': 'المحطات',
-                'nav-users': 'المستخدمون',
-                'nav-charging': 'جلسات الشحن',
-                'nav-payments': 'المدفوعات',
-                'nav-analytics': 'التحليلات',
-                'nav-reports': 'التقارير',
-                'nav-notifications': 'الإشعارات',
-                'nav-support': 'الدعم',
-                'nav-settings': 'الإعدادات',
-                'page-title': 'نظرة عامة على لوحة التحكم',
-                'metric-revenue': 'إجمالي الإيرادات',
-                'metric-sessions': 'الجلسات النشطة',
-                'metric-stations': 'إجمالي المحطات',
-                'metric-users': 'إجمالي المستخدمين',
-                'chart-revenue-title': 'اتجاه الإيرادات',
-                'chart-station-title': 'حالة المحطة',
-                'activity-title': 'النشاط في الوقت الفعلي',
-                'actions-title': 'الإجراءات السريعة',
-                'health-title': 'صحة النظام',
-                'api-title': 'حالة وواجهات برمجة التطبيقات'
+                'page-title': 'لوحة التحكم',
+                'dashboard': 'لوحة التحكم',
+                'stations': 'المحطات',
+                'users': 'المستخدمون',
+                'charging_sessions': 'جلسات الشحن',
+                'payments': 'المدفوعات',
+                'analytics': 'التحليلات',
+                'reports': 'التقارير',
+                'notifications': 'الإشعارات',
+                'support': 'الدعم',
+                'settings': 'الإعدادات',
+                'search': 'بحث',
+                'filter': 'تصفية',
+                'export': 'تصدير',
+                'add_new': 'إضافة جديد',
+                'edit': 'تعديل',
+                'delete': 'حذف',
+                'view_details': 'عرض التفاصيل',
+                'save': 'حفظ',
+                'cancel': 'إلغاء',
+                'loading': 'جاري التحميل',
+                'no_data': 'لا توجد بيانات متاحة',
+                'active': 'نشط',
+                'inactive': 'غير نشط',
+                'pending': 'معلق',
+                'completed': 'مكتمل',
+                'cancelled': 'ملغى',
+                'failed': 'فشل',
+                'total': 'المجموع',
+                'average': 'المتوسط',
+                'status': 'الحالة',
+                'actions': 'الإجراءات',
+                'refresh': 'تحديث',
+                'download': 'تحميل',
+                'print': 'طباعة',
+                'language': 'اللغة',
+                'english': 'الإنجليزية',
+                'arabic': 'العربية',
+                'farsi': 'الفارسية'
             },
             fa: {
-                'logo-text': 'پلتفرم خودروهای برقی',
-                'logo-subtitle': 'داشبورد مدیریت',
-                'nav-dashboard': 'داشبورد',
-                'nav-stations': 'ایستگاه‌ها',
-                'nav-users': 'کاربران',
-                'nav-charging': 'جلسات شارژ',
-                'nav-payments': 'پرداخت‌ها',
-                'nav-analytics': 'تحلیل‌ها',
-                'nav-reports': 'گزارش‌ها',
-                'nav-notifications': 'اطلاعیه‌ها',
-                'nav-support': 'پشتیبانی',
-                'nav-settings': 'تنظیمات',
-                'page-title': 'نمای کلی داشبورد',
-                'metric-revenue': 'کل درآمد',
-                'metric-sessions': 'جلسات فعال',
-                'metric-stations': 'کل ایستگاه‌ها',
-                'metric-users': 'کل کاربران',
-                'chart-revenue-title': 'روند درآمد',
-                'chart-station-title': 'وضعیت ایستگاه',
-                'activity-title': 'فعالیت زمان واقعی',
-                'actions-title': 'اقدامات سریع',
-                'health-title': 'سلامت سیستم',
-                'api-title': 'وضعیت و نقاط پایانی API'
+                'page-title': 'پنل کنترل',
+                'dashboard': 'پنل کنترل',
+                'stations': 'ایستگاه‌ها',
+                'users': 'کاربران',
+                'charging_sessions': 'جلسات شارژ',
+                'payments': 'پرداخت‌ها',
+                'analytics': 'تحلیل‌ها',
+                'reports': 'گزارش‌ها',
+                'notifications': 'اعلان‌ها',
+                'support': 'پشتیبانی',
+                'settings': 'تنظیمات',
+                'search': 'جستجو',
+                'filter': 'فیلتر',
+                'export': 'خروجی',
+                'add_new': 'افزودن جدید',
+                'edit': 'ویرایش',
+                'delete': 'حذف',
+                'view_details': 'مشاهده جزئیات',
+                'save': 'ذخیره',
+                'cancel': 'لغو',
+                'loading': 'در حال بارگذاری',
+                'no_data': 'داده‌ای موجود نیست',
+                'active': 'فعال',
+                'inactive': 'غیرفعال',
+                'pending': 'در انتظار',
+                'completed': 'تکمیل شده',
+                'cancelled': 'لغو شده',
+                'failed': 'ناموفق',
+                'total': 'کل',
+                'average': 'میانگین',
+                'status': 'وضعیت',
+                'actions': 'عملیات',
+                'refresh': 'تازه‌سازی',
+                'download': 'دانلود',
+                'print': 'چاپ',
+                'language': 'زبان',
+                'english': 'انگلیسی',
+                'arabic': 'عربی',
+                'farsi': 'فارسی'
             }
         };
 
@@ -1424,10 +813,9 @@
                 dropdown.classList.add('hidden');
             }
         });
-
+        
         // Initialize charts
         document.addEventListener('DOMContentLoaded', function() {
-            // Load language preference
             loadLanguagePreference();
             
             // Revenue Chart
@@ -1437,12 +825,11 @@
                 data: {
                     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
                     datasets: [{
-                        label: 'Revenue ($)',
-                        data: [45000, 52000, 48000, 61000, 55000, 67000],
-                        borderColor: '#3b82f6',
+                        label: 'Revenue',
+                        data: [12000, 19000, 15000, 25000, 22000, 30000],
+                        borderColor: 'rgb(59, 130, 246)',
                         backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                        tension: 0.4,
-                        fill: true
+                        tension: 0.4
                     }]
                 },
                 options: {
@@ -1466,16 +853,19 @@
                 }
             });
 
-            // Station Status Chart
-            const stationCtx = document.getElementById('stationChart').getContext('2d');
-            new Chart(stationCtx, {
+            // Usage Chart
+            const usageCtx = document.getElementById('usageChart').getContext('2d');
+            new Chart(usageCtx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Online', 'Maintenance', 'Offline'],
+                    labels: ['Available', 'In Use', 'Maintenance'],
                     datasets: [{
-                        data: [1201, 46, 12],
-                        backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
-                        borderWidth: 0
+                        data: [120, 23, 13],
+                        backgroundColor: [
+                            'rgb(34, 197, 94)',
+                            'rgb(59, 130, 246)',
+                            'rgb(245, 158, 11)'
+                        ]
                     }]
                 },
                 options: {
@@ -1488,194 +878,17 @@
                     }
                 }
             });
-        });
-        
-        // Simulate real-time updates
-        setInterval(() => {
-            const activeSessions = Math.floor(Math.random() * 20) + 80;
-            const sessionsElement = document.querySelector('.text-2xl.font-bold');
-            if (sessionsElement) {
-                sessionsElement.textContent = activeSessions;
-            }
-        }, 5000);
-        // Comprehensive translations
-        const comprehensiveTranslations = {
-            en: {
-                "page-title": "Dashboard",
-                "dashboard": "Dashboard",
-                "stations": "Stations",
-                "users": "Users",
-                "charging_sessions": "Charging Sessions",
-                "payments": "Payments",
-                "analytics": "Analytics",
-                "reports": "Reports",
-                "notifications": "Notifications",
-                "support": "Support",
-                "settings": "Settings",
-                "search": "Search",
-                "filter": "Filter",
-                "export": "Export",
-                "add_new": "Add New",
-                "edit": "Edit",
-                "delete": "Delete",
-                "view_details": "View Details",
-                "save": "Save",
-                "cancel": "Cancel",
-                "loading": "Loading",
-                "no_data": "No data available",
-                "active": "Active",
-                "inactive": "Inactive",
-                "pending": "Pending",
-                "completed": "Completed",
-                "cancelled": "Cancelled",
-                "failed": "Failed",
-                "total": "Total",
-                "average": "Average",
-                "status": "Status",
-                "actions": "Actions",
-                "refresh": "Refresh",
-                "download": "Download",
-                "print": "Print",
-                "language": "Language",
-                "english": "English",
-                "arabic": "Arabic",
-                "farsi": "Farsi"
-            },
-            ar: {
-                "page-title": "Dashboard",
-                "dashboard": "لوحة القيادة",
-                "stations": "المحطات",
-                "users": "المستخدمون",
-                "charging_sessions": "جلسات الشحن",
-                "payments": "المدفوعات",
-                "analytics": "التحليلات",
-                "reports": "التقارير",
-                "notifications": "الإشعارات",
-                "support": "الدعم",
-                "settings": "الإعدادات",
-                "search": "بحث",
-                "filter": "تصفية",
-                "export": "تصدير",
-                "add_new": "إضافة جديد",
-                "edit": "تعديل",
-                "delete": "حذف",
-                "view_details": "عرض التفاصيل",
-                "save": "حفظ",
-                "cancel": "إلغاء",
-                "loading": "جاري التحميل",
-                "no_data": "لا توجد بيانات متاحة",
-                "active": "نشط",
-                "inactive": "غير نشط",
-                "pending": "معلق",
-                "completed": "مكتمل",
-                "cancelled": "ملغى",
-                "failed": "فشل",
-                "total": "المجموع",
-                "average": "المتوسط",
-                "status": "الحالة",
-                "actions": "الإجراءات",
-                "refresh": "تحديث",
-                "download": "تحميل",
-                "print": "طباعة",
-                "language": "اللغة",
-                "english": "الإنجليزية",
-                "arabic": "العربية",
-                "farsi": "الفارسية"
-            },
-            fa: {
-                "page-title": "Dashboard",
-                "dashboard": "داشبورد",
-                "stations": "ایستگاه‌ها",
-                "users": "کاربران",
-                "charging_sessions": "جلسات شارژ",
-                "payments": "پرداخت‌ها",
-                "analytics": "تحلیل‌ها",
-                "reports": "گزارش‌ها",
-                "notifications": "اعلان‌ها",
-                "support": "پشتیبانی",
-                "settings": "تنظیمات",
-                "search": "جستجو",
-                "filter": "فیلتر",
-                "export": "خروجی",
-                "add_new": "افزودن جدید",
-                "edit": "ویرایش",
-                "delete": "حذف",
-                "view_details": "مشاهده جزئیات",
-                "save": "ذخیره",
-                "cancel": "لغو",
-                "loading": "در حال بارگذاری",
-                "no_data": "داده‌ای موجود نیست",
-                "active": "فعال",
-                "inactive": "غیرفعال",
-                "pending": "در انتظار",
-                "completed": "تکمیل شده",
-                "cancelled": "لغو شده",
-                "failed": "ناموفق",
-                "total": "کل",
-                "average": "میانگین",
-                "status": "وضعیت",
-                "actions": "عملیات",
-                "refresh": "تازه‌سازی",
-                "download": "دانلود",
-                "print": "چاپ",
-                "language": "زبان",
-                "english": "انگلیسی",
-                "arabic": "عربی",
-                "farsi": "فارسی"
-            }
-        };
 
-        // Enhanced translation function
-        function applyComprehensiveTranslations(language) {
-            currentLanguage = language;
-            
-            // Update document direction and language
-            document.documentElement.dir = ["ar", "fa"].includes(language) ? "rtl" : "ltr";
-            document.documentElement.lang = language;
-            
-            // Update all translatable elements
-            const elements = comprehensiveTranslations[language];
-            for (const [id, text] of Object.entries(elements)) {
-                const element = document.getElementById(id);
-                if (element) {
-                    element.textContent = text;
+            // Simulate real-time updates
+            setInterval(function() {
+                const activeSessionsElement = document.getElementById('active-sessions');
+                if (activeSessionsElement) {
+                    const currentSessions = parseInt(activeSessionsElement.textContent);
+                    const newSessions = currentSessions + Math.floor(Math.random() * 3) - 1;
+                    activeSessionsElement.textContent = Math.max(0, newSessions);
                 }
-                
-                // Also update elements with data-i18n attribute
-                const i18nElements = document.querySelectorAll(`[data-i18n="${id}"]`);
-                i18nElements.forEach(el => {
-                    el.textContent = text;
-                });
-            }
-            
-            // Update language switcher
-            const languageNames = { en: "English", ar: "العربية", fa: "فارسی" };
-            const languageFlags = { en: "🇺🇸", ar: "🇸🇦", fa: "🇮🇷" };
-            
-            if (document.getElementById("current-language-name")) {
-                document.getElementById("current-language-name").textContent = languageNames[language];
-            }
-            if (document.getElementById("current-language-flag")) {
-                document.getElementById("current-language-flag").textContent = languageFlags[language];
-            }
-            
-            // Update checkmarks
-            document.querySelectorAll(".language-check").forEach(check => check.classList.add("hidden"));
-            const checkElement = document.getElementById(`check-${language}`);
-            if (checkElement) {
-                checkElement.classList.remove("hidden");
-            }
-            
-            // Save preference
-            localStorage.setItem("ev-admin-language", language);
-        }
-
-        // Override the existing applyLanguage function
-        if (typeof applyLanguage !== "undefined") {
-            applyLanguage = applyComprehensiveTranslations;
-        } else {
-            window.applyLanguage = applyComprehensiveTranslations;
-        }
+            }, 5000);
+        });
     </script>
 </body>
 </html>
