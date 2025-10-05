@@ -228,3 +228,4 @@ update_page_translations "apps/admin/dist/settings.html" "Settings"
 
 echo "All pages updated with comprehensive translation support!"
 echo "Next step: Deploy and test the translations"
+

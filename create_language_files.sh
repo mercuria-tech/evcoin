@@ -300,3 +300,4 @@ echo "- apps/admin/dist/locales/ar.json (Arabic)"
 echo "- apps/admin/dist/locales/fa.json (Farsi)"
 echo ""
 echo "Next step: Update all HTML pages to use these comprehensive translations"
+
