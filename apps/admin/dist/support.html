@@ -358,6 +358,7 @@
 
 
 
+
     <div class="flex h-screen">
         <!-- Sidebar -->
         <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
@@ -486,7 +487,7 @@
                                 <i data-lucide="ticket" class="w-4 h-4 text-gray-400"></i>
                             </div>
                             <div class="text-2xl font-bold text-gray-900 mb-1">23</div>
-                            <p class="text-xs text-gray-500">Require attention</p>
+                            <p class="text-sm text-gray-500" data-i18n="require_attention">Require attention</p>
                         </div>
 
                         <div class="card rounded-lg p-6 hover-lift">
@@ -585,9 +586,7 @@
                                         <span class="text-sm text-gray-600">Category: Technical</span>
                                     </div>
                                     <div class="flex items-center space-x-2">
-                                        <button class="btn-primary px-3 py-1 rounded text-sm font-medium hover:bg-blue-700 transition-colors">
-                                            View Details
-                                        </button>
+                                        <button class="btn-primary px-3 py-1 rounded text-sm font-medium hover:bg-blue-700 transition-colors"><span data-i18n="view_details">View Details</span></button>
                                         <button class="btn-secondary px-3 py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
                                             Assign
                                         </button>
@@ -613,9 +612,7 @@
                                         <span class="text-sm text-gray-600">Category: Account</span>
                                     </div>
                                     <div class="flex items-center space-x-2">
-                                        <button class="btn-primary px-3 py-1 rounded text-sm font-medium hover:bg-blue-700 transition-colors">
-                                            View Details
-                                        </button>
+                                        <button class="btn-primary px-3 py-1 rounded text-sm font-medium hover:bg-blue-700 transition-colors"><span data-i18n="view_details">View Details</span></button>
                                         <button class="btn-secondary px-3 py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
                                             Assign
                                         </button>
@@ -641,9 +638,7 @@
                                         <span class="text-sm text-gray-600">Category: General</span>
                                     </div>
                                     <div class="flex items-center space-x-2">
-                                        <button class="btn-primary px-3 py-1 rounded text-sm font-medium hover:bg-blue-700 transition-colors">
-                                            View Details
-                                        </button>
+                                        <button class="btn-primary px-3 py-1 rounded text-sm font-medium hover:bg-blue-700 transition-colors"><span data-i18n="view_details">View Details</span></button>
                                         <button class="btn-secondary px-3 py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
                                             Assign
                                         </button>
@@ -669,9 +664,7 @@
                                         <span class="text-sm text-gray-600">Category: Account</span>
                                     </div>
                                     <div class="flex items-center space-x-2">
-                                        <button class="btn-primary px-3 py-1 rounded text-sm font-medium hover:bg-blue-700 transition-colors">
-                                            View Details
-                                        </button>
+                                        <button class="btn-primary px-3 py-1 rounded text-sm font-medium hover:bg-blue-700 transition-colors"><span data-i18n="view_details">View Details</span></button>
                                         <button class="btn-secondary px-3 py-1 rounded text-sm font-medium hover:bg-gray-200 transition-colors">
                                             Close
                                         </button>
@@ -2098,6 +2091,392 @@
                 "search_notifications": "جستجوی اعلان‌ها",
                 "search_tickets": "جستجوی تیکت‌ها",
                 "tickets": "تیکت‌ها"
+        }
+};
+        
+        let currentLanguage = 'en';
+
+        // Load saved language preference
+        function loadLanguagePreference() {
+            const savedLanguage = localStorage.getItem('ev-admin-language');
+            if (savedLanguage && ['en', 'ar', 'fa'].includes(savedLanguage)) {
+                currentLanguage = savedLanguage;
+                applyLanguage(currentLanguage);
+            }
+        }
+
+        // Apply language changes - COMPREHENSIVE FUNCTION
+        function applyLanguage(language) {
+            console.log('=== APPLYING LANGUAGE ===', language);
+            currentLanguage = language;
+            
+            // Update document direction and language
+            document.documentElement.dir = ['ar', 'fa'].includes(language) ? 'rtl' : 'ltr';
+            document.documentElement.lang = language;
+            
+            // Get translations for current language
+            const langData = translations[language];
+            if (!langData) {
+                console.error('No translations found for language:', language);
+                return;
+            }
+            
+            console.log('Translation data loaded:', Object.keys(langData).length, 'keys');
+            
+            // Update ALL elements with data-i18n attributes
+            const elements = document.querySelectorAll('[data-i18n]');
+            console.log('Found', elements.length, 'elements to translate');
+            
+            elements.forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (langData[key]) {
+                    const oldText = element.textContent;
+                    element.textContent = langData[key];
+                    console.log('✓ Translated:', key, 'from "' + oldText + '" to "' + langData[key] + '"');
+                } else {
+                    console.warn('✗ No translation found for key:', key);
+                }
+            });
+            
+            // Update input placeholders
+            const placeholders = document.querySelectorAll('[data-i18n-placeholder]');
+            placeholders.forEach(element => {
+                const key = element.getAttribute('data-i18n-placeholder');
+                if (langData[key]) {
+                    element.placeholder = langData[key];
+                }
+            });
+            
+            // Update language switcher
+            const languageNames = { en: 'English', ar: 'العربية', fa: 'فارسی' };
+            const languageFlags = { en: '🇺🇸', ar: '🇸🇦', fa: '🇮🇷' };
+            
+            const nameElement = document.getElementById('current-language-name');
+            const flagElement = document.getElementById('current-language-flag');
+            
+            if (nameElement) {
+                nameElement.textContent = languageNames[language];
+            }
+            if (flagElement) {
+                flagElement.textContent = languageFlags[language];
+            }
+            
+            // Update checkmarks
+            document.querySelectorAll('.language-check').forEach(check => check.classList.add('hidden'));
+            const checkElement = document.getElementById(`check-${language}`);
+            if (checkElement) {
+                checkElement.classList.remove('hidden');
+            }
+            
+            // Save preference
+            localStorage.setItem('ev-admin-language', language);
+            
+            console.log('=== LANGUAGE APPLIED SUCCESSFULLY ===', language);
+        }
+
+        // Toggle language dropdown
+        function toggleLanguageDropdown() {
+            const dropdown = document.getElementById('language-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Change language
+        function changeLanguage(language) {
+            console.log('=== CHANGING LANGUAGE ===', language);
+            applyLanguage(language);
+            toggleLanguageDropdown();
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('language-dropdown');
+            const button = event.target.closest('.language-switcher button');
+            
+            if (!button && !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('=== DOM LOADED - INITIALIZING LANGUAGE SYSTEM ===');
+            loadLanguagePreference();
+        });
+    </script>
+
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // COMPREHENSIVE TRANSLATIONS - ALL LANGUAGES AND ALL ELEMENTS
+        const translations = {
+        "en": {
+                "page-title": "Support",
+                "admin_dashboard": "Admin Dashboard",
+                "dashboard": "Dashboard",
+                "stations": "Stations",
+                "users": "Users",
+                "charging_sessions": "Charging Sessions",
+                "payments": "Payments",
+                "analytics": "Analytics",
+                "reports": "Reports",
+                "notifications": "Notifications",
+                "support": "Support",
+                "settings": "Settings",
+                "search": "Search",
+                "filter": "Filter",
+                "export": "Export",
+                "add_notification": "Add Notification",
+                "send_notification": "Send Notification",
+                "add_ticket": "Add Ticket",
+                "resolve_ticket": "Resolve Ticket",
+                "close_ticket": "Close Ticket",
+                "assign_ticket": "Assign Ticket",
+                "escalate_ticket": "Escalate Ticket",
+                "save_settings": "Save Settings",
+                "reset_settings": "Reset Settings",
+                "export_settings": "Export Settings",
+                "import_settings": "Import Settings",
+                "backup_settings": "Backup Settings",
+                "restore_settings": "Restore Settings",
+                "edit": "Edit",
+                "delete": "Delete",
+                "view_details": "View Details",
+                "mark_as_read": "Mark as Read",
+                "mark_all_read": "Mark All Read",
+                "configure": "Configure",
+                "view": "View",
+                "save": "Save",
+                "cancel": "Cancel",
+                "loading": "Loading",
+                "no_data": "No data available",
+                "active": "Active",
+                "inactive": "Inactive",
+                "online": "Online",
+                "offline": "Offline",
+                "maintenance": "Maintenance",
+                "pending": "Pending",
+                "completed": "Completed",
+                "cancelled": "Cancelled",
+                "failed": "Failed",
+                "total": "Total",
+                "average": "Average",
+                "status": "Status",
+                "actions": "Actions",
+                "refresh": "Refresh",
+                "download": "Download",
+                "print": "Print",
+                "next": "Next",
+                "previous": "Previous",
+                "showing": "Showing",
+                "of": "of",
+                "language": "Language",
+                "english": "English",
+                "arabic": "Arabic",
+                "farsi": "Farsi",
+                "notification_id": "Notification ID",
+                "ticket_id": "Ticket ID",
+                "created_at": "Created At",
+                "updated_at": "Updated At",
+                "resolved_at": "Resolved At",
+                "unread_notifications": "Unread Notifications",
+                "system_alerts": "System Alerts",
+                "user_notifications": "User Notifications",
+                "open_tickets": "Open Tickets",
+                "resolved_tickets": "Resolved Tickets",
+                "general_settings": "General Settings",
+                "system_settings": "System Settings",
+                "user_settings": "User Settings",
+                "security_settings": "Security settings",
+                "station_connectivity_issue": "Station ST-005 is experiencing connectivity issues. Immediate attention required.",
+                "user_session_completed": "User John Doe has completed a charging session.",
+                "maintenance_scheduled": "System maintenance scheduled for tonight at 2 AM.",
+                "require_attention": "Require attention",
+                "critical_issues": "Critical issues",
+                "user_related_alerts": "User-related alerts",
+                "scheduled_maintenance": "Scheduled maintenance",
+                "general_configuration": "General configuration",
+                "system_configuration": "System configuration",
+                "user_preferences": "User preferences"
+        },
+        "ar": {
+                "page-title": "Support",
+                "admin_dashboard": "لوحة التحكم الإدارية",
+                "dashboard": "لوحة التحكم",
+                "stations": "المحطات",
+                "users": "المستخدمون",
+                "charging_sessions": "جلسات الشحن",
+                "payments": "المدفوعات",
+                "analytics": "التحليلات",
+                "reports": "التقارير",
+                "notifications": "الإشعارات",
+                "support": "الدعم",
+                "settings": "الإعدادات",
+                "search": "بحث",
+                "filter": "تصفية",
+                "export": "تصدير",
+                "add_notification": "إضافة إشعار",
+                "send_notification": "إرسال إشعار",
+                "add_ticket": "إضافة تذكرة",
+                "resolve_ticket": "حل التذكرة",
+                "close_ticket": "إغلاق التذكرة",
+                "assign_ticket": "تعيين التذكرة",
+                "escalate_ticket": "تصعيد التذكرة",
+                "save_settings": "حفظ الإعدادات",
+                "reset_settings": "إعادة تعيين الإعدادات",
+                "export_settings": "تصدير الإعدادات",
+                "import_settings": "استيراد الإعدادات",
+                "backup_settings": "نسخ احتياطي للإعدادات",
+                "restore_settings": "استعادة الإعدادات",
+                "edit": "تعديل",
+                "delete": "حذف",
+                "view_details": "عرض التفاصيل",
+                "mark_as_read": "تعيين كمقروء",
+                "mark_all_read": "تعيين الكل كمقروء",
+                "configure": "تكوين",
+                "view": "عرض",
+                "save": "حفظ",
+                "cancel": "إلغاء",
+                "loading": "جاري التحميل",
+                "no_data": "لا توجد بيانات متاحة",
+                "active": "نشط",
+                "inactive": "غير نشط",
+                "online": "متصل",
+                "offline": "غير متصل",
+                "maintenance": "صيانة",
+                "pending": "معلق",
+                "completed": "مكتمل",
+                "cancelled": "ملغى",
+                "failed": "فشل",
+                "total": "المجموع",
+                "average": "المتوسط",
+                "status": "الحالة",
+                "actions": "الإجراءات",
+                "refresh": "تحديث",
+                "download": "تحميل",
+                "print": "طباعة",
+                "next": "التالي",
+                "previous": "السابق",
+                "showing": "عرض",
+                "of": "من",
+                "language": "اللغة",
+                "english": "الإنجليزية",
+                "arabic": "العربية",
+                "farsi": "الفارسية",
+                "notification_id": "معرف الإشعار",
+                "ticket_id": "معرف التذكرة",
+                "created_at": "تاريخ الإنشاء",
+                "updated_at": "تاريخ التحديث",
+                "resolved_at": "تاريخ الحل",
+                "unread_notifications": "الإشعارات غير المقروءة",
+                "system_alerts": "تنبيهات النظام",
+                "user_notifications": "إشعارات المستخدم",
+                "open_tickets": "التذاكر المفتوحة",
+                "resolved_tickets": "التذاكر المحلولة",
+                "general_settings": "الإعدادات العامة",
+                "system_settings": "إعدادات النظام",
+                "user_settings": "إعدادات المستخدم",
+                "security_settings": "إعدادات الأمان",
+                "station_connectivity_issue": "محطة ST-005 تواجه مشاكل في الاتصال. يتطلب انتباه فوري.",
+                "user_session_completed": "المستخدم جون دو أكمل جلسة شحن.",
+                "maintenance_scheduled": "صيانة النظام مجدولة لليلة في الساعة 2 صباحاً.",
+                "require_attention": "يتطلب انتباه",
+                "critical_issues": "قضايا حرجة",
+                "user_related_alerts": "تنبيهات متعلقة بالمستخدم",
+                "scheduled_maintenance": "صيانة مجدولة",
+                "general_configuration": "التكوين العام",
+                "system_configuration": "تكوين النظام",
+                "user_preferences": "تفضيلات المستخدم"
+        },
+        "fa": {
+                "page-title": "Support",
+                "admin_dashboard": "پنل مدیریت",
+                "dashboard": "پنل کنترل",
+                "stations": "ایستگاه‌ها",
+                "users": "کاربران",
+                "charging_sessions": "جلسات شارژ",
+                "payments": "پرداخت‌ها",
+                "analytics": "تحلیل‌ها",
+                "reports": "گزارش‌ها",
+                "notifications": "اعلان‌ها",
+                "support": "پشتیبانی",
+                "settings": "تنظیمات",
+                "search": "جستجو",
+                "filter": "فیلتر",
+                "export": "خروجی",
+                "add_notification": "افزودن اعلان",
+                "send_notification": "ارسال اعلان",
+                "add_ticket": "افزودن تیکت",
+                "resolve_ticket": "حل تیکت",
+                "close_ticket": "بستن تیکت",
+                "assign_ticket": "واگذاری تیکت",
+                "escalate_ticket": "ارتقای تیکت",
+                "save_settings": "ذخیره تنظیمات",
+                "reset_settings": "بازنشانی تنظیمات",
+                "export_settings": "خروجی تنظیمات",
+                "import_settings": "ورودی تنظیمات",
+                "backup_settings": "پشتیبان تنظیمات",
+                "restore_settings": "بازیابی تنظیمات",
+                "edit": "ویرایش",
+                "delete": "حذف",
+                "view_details": "مشاهده جزئیات",
+                "mark_as_read": "علامت‌گذاری به عنوان خوانده شده",
+                "mark_all_read": "علامت‌گذاری همه به عنوان خوانده شده",
+                "configure": "پیکربندی",
+                "view": "مشاهده",
+                "save": "ذخیره",
+                "cancel": "لغو",
+                "loading": "در حال بارگذاری",
+                "no_data": "داده‌ای موجود نیست",
+                "active": "فعال",
+                "inactive": "غیرفعال",
+                "online": "آنلاین",
+                "offline": "آفلاین",
+                "maintenance": "نگهداری",
+                "pending": "در انتظار",
+                "completed": "تکمیل شده",
+                "cancelled": "لغو شده",
+                "failed": "ناموفق",
+                "total": "کل",
+                "average": "میانگین",
+                "status": "وضعیت",
+                "actions": "عملیات",
+                "refresh": "تازه‌سازی",
+                "download": "دانلود",
+                "print": "چاپ",
+                "next": "بعدی",
+                "previous": "قبلی",
+                "showing": "نمایش",
+                "of": "از",
+                "language": "زبان",
+                "english": "انگلیسی",
+                "arabic": "عربی",
+                "farsi": "فارسی",
+                "notification_id": "شناسه اعلان",
+                "ticket_id": "شناسه تیکت",
+                "created_at": "تاریخ ایجاد",
+                "updated_at": "تاریخ بروزرسانی",
+                "resolved_at": "تاریخ حل",
+                "unread_notifications": "اعلان‌های خوانده نشده",
+                "system_alerts": "هشدارهای سیستم",
+                "user_notifications": "اعلان‌های کاربر",
+                "open_tickets": "تیکت‌های باز",
+                "resolved_tickets": "تیکت‌های حل شده",
+                "general_settings": "تنظیمات عمومی",
+                "system_settings": "تنظیمات سیستم",
+                "user_settings": "تنظیمات کاربر",
+                "security_settings": "تنظیمات امنیتی",
+                "station_connectivity_issue": "ایستگاه ST-005 با مشکلات اتصال مواجه است. نیاز به توجه فوری دارد.",
+                "user_session_completed": "کاربر جان دو جلسه شارژ را تکمیل کرده است.",
+                "maintenance_scheduled": "نگهداری سیستم برای امشب ساعت 2 صبح برنامه‌ریزی شده است.",
+                "require_attention": "نیاز به توجه",
+                "critical_issues": "مسائل بحرانی",
+                "user_related_alerts": "هشدارهای مربوط به کاربر",
+                "scheduled_maintenance": "نگهداری برنامه‌ریزی شده",
+                "general_configuration": "پیکربندی عمومی",
+                "system_configuration": "پیکربندی سیستم",
+                "user_preferences": "ترجیحات کاربر"
         }
 };
         
