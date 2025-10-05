@@ -357,6 +357,7 @@
 
 
 
+
     <div class="flex h-screen">
         <!-- Sidebar -->
         <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
@@ -368,7 +369,7 @@
                     </div>
                     <div>
                         <h1 class="text-lg font-bold text-gray-900">EV Platform</h1>
-                        <p class="text-xs text-gray-500">Admin Dashboard</p>
+                        <p class="text-xs text-gray-500" data-i18n="admin_dashboard">Admin Dashboard</p>
                     </div>
                 </div>
             </div>
@@ -378,64 +379,64 @@
                 <a href="dashboard.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
-                        <span>Dashboard</span>
+                        <span data-i18n="dashboard">Dashboard</span>
                     </div>
                 </a>
                 <a href="stations.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="zap" class="w-5 h-5"></i>
-                        <span>Stations</span>
+                        <span data-i18n="stations">Stations</span>
                     </div>
                     <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">1,247</span>
                 </a>
                 <a href="users.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="users" class="w-5 h-5"></i>
-                        <span>Users</span>
+                        <span data-i18n="users">Users</span>
                     </div>
                     <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">15.4K</span>
                 </a>
                 <a href="charging.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="activity" class="w-5 h-5"></i>
-                        <span>Charging Sessions</span>
+                        <span data-i18n="charging_sessions">Charging Sessions</span>
                     </div>
                 </a>
                 <a href="payments.html" class="nav-item active flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors bg-blue-600 text-white">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="credit-card" class="w-5 h-5"></i>
-                        <span>Payments</span>
+                        <span data-i18n="payments">Payments</span>
                     </div>
                 </a>
                 <a href="analytics.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
-                        <span>Analytics</span>
+                        <span data-i18n="analytics">Analytics</span>
                     </div>
                 </a>
                 <a href="reports.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="file-text" class="w-5 h-5"></i>
-                        <span>Reports</span>
+                        <span data-i18n="reports">Reports</span>
                     </div>
                 </a>
                 <a href="notifications.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="bell" class="w-5 h-5"></i>
-                        <span>Notifications</span>
+                        <span data-i18n="notifications">Notifications</span>
                     </div>
                     <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">3</span>
                 </a>
                 <a href="support.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="help-circle" class="w-5 h-5"></i>
-                        <span>Support</span>
+                        <span data-i18n="support">Support</span>
                     </div>
                 </a>
                 <a href="settings.html" class="nav-item flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 hover:bg-gray-100">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="settings" class="w-5 h-5"></i>
-                        <span>Settings</span>
+                        <span data-i18n="settings">Settings</span>
                     </div>
                 </a>
             </nav>
@@ -519,7 +520,7 @@
 
                         <div class="card rounded-lg p-6 hover-lift">
                             <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-sm font-medium text-gray-600">Today's Revenue</h3>
+                                <h3 class="text-lg font-semibold text-gray-900" data-i18n="todays_revenue">Today's Revenue</h3>
                                 <i data-lucide="trending-up" class="w-4 h-4 text-gray-400"></i>
                             </div>
                             <div class="text-2xl font-bold text-gray-900 mb-1">$12,847</div>
@@ -528,7 +529,7 @@
 
                         <div class="card rounded-lg p-6 hover-lift">
                             <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-sm font-medium text-gray-600">Successful Payments</h3>
+                                <h3 class="text-lg font-semibold text-gray-900" data-i18n="successful_payments">Successful Payments</h3>
                                 <i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i>
                             </div>
                             <div class="text-2xl font-bold text-gray-900 mb-1">98.7%</div>
@@ -537,7 +538,7 @@
 
                         <div class="card rounded-lg p-6 hover-lift">
                             <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-sm font-medium text-gray-600">Pending Refunds</h3>
+                                <h3 class="text-lg font-semibold text-gray-900" data-i18n="pending_refunds">Pending Refunds</h3>
                                 <i data-lucide="clock" class="w-4 h-4 text-gray-400"></i>
                             </div>
                             <div class="text-2xl font-bold text-gray-900 mb-1">23</div>
@@ -578,17 +579,17 @@
 
                     <!-- Recent Transactions -->
                     <div class="card rounded-lg p-6">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Transactions</h3>
+                        <h3 class="text-lg font-semibold text-gray-900" data-i18n="recent_transactions">Recent Transactions</h3>
                         <div class="overflow-x-auto">
                             <table class="w-full text-sm">
                                 <thead>
                                     <tr class="border-b border-gray-200">
                                         <th class="text-left py-3 px-4 font-medium text-gray-600" data-i18n="transaction_id">Transaction ID</th>
-                                        <th class="text-left py-3 px-4 font-medium text-gray-600">User</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-600" data-i18n="user">User</th>
                                         <th class="text-left py-3 px-4 font-medium text-gray-600" data-i18n="amount">Amount</th>
                                         <th class="text-left py-3 px-4 font-medium text-gray-600">Method</th>
                                         <th class="text-left py-3 px-4 font-medium text-gray-600"><span data-i18n="status">Status</span></th>
-                                        <th class="text-left py-3 px-4 font-medium text-gray-600">Date</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-600" data-i18n="date">Date</th>
                                         <th class="text-left py-3 px-4 font-medium text-gray-600"><span data-i18n="actions">Actions</span></th>
                                     </tr>
                                 </thead>
@@ -604,7 +605,7 @@
                                             </div>
                                         </td>
                                         <td class="py-3 px-4">
-                                            <span class="badge-success text-xs px-2 py-1 rounded"><span data-i18n="completed"><span data-i18n="completed">Completed</span></span></span>
+                                            <span class="badge-success text-xs px-2 py-1 rounded"><span data-i18n="completed">Completed</span></span>
                                         </td>
                                         <td class="py-3 px-4">2024-01-15 14:30</td>
                                         <td class="py-3 px-4">
@@ -624,7 +625,7 @@
                                             </div>
                                         </td>
                                         <td class="py-3 px-4">
-                                            <span class="badge-success text-xs px-2 py-1 rounded"><span data-i18n="completed"><span data-i18n="completed">Completed</span></span></span>
+                                            <span class="badge-success text-xs px-2 py-1 rounded"><span data-i18n="completed">Completed</span></span>
                                         </td>
                                         <td class="py-3 px-4">2024-01-15 13:45</td>
                                         <td class="py-3 px-4">
@@ -644,7 +645,7 @@
                                             </div>
                                         </td>
                                         <td class="py-3 px-4">
-                                            <span class="badge-warning text-xs px-2 py-1 rounded"><span data-i18n="pending"><span data-i18n="pending">Pending</span></span></span>
+                                            <span class="badge-warning text-xs px-2 py-1 rounded"><span data-i18n="pending">Pending</span></span>
                                         </td>
                                         <td class="py-3 px-4">2024-01-15 12:20</td>
                                         <td class="py-3 px-4">
@@ -664,7 +665,7 @@
                                             </div>
                                         </td>
                                         <td class="py-3 px-4">
-                                            <span class="badge-success text-xs px-2 py-1 rounded"><span data-i18n="completed"><span data-i18n="completed">Completed</span></span></span>
+                                            <span class="badge-success text-xs px-2 py-1 rounded"><span data-i18n="completed">Completed</span></span>
                                         </td>
                                         <td class="py-3 px-4">2024-01-15 11:15</td>
                                         <td class="py-3 px-4">
@@ -1789,6 +1790,395 @@
                 "search_users": "جستجوی کاربران",
                 "search_sessions": "جستجوی جلسات",
                 "search_payments": "جستجوی پرداخت‌ها"
+        }
+};
+        
+        let currentLanguage = 'en';
+
+        // Load saved language preference
+        function loadLanguagePreference() {
+            const savedLanguage = localStorage.getItem('ev-admin-language');
+            if (savedLanguage && ['en', 'ar', 'fa'].includes(savedLanguage)) {
+                currentLanguage = savedLanguage;
+                applyLanguage(currentLanguage);
+            }
+        }
+
+        // Apply language changes - COMPREHENSIVE FUNCTION
+        function applyLanguage(language) {
+            console.log('=== APPLYING LANGUAGE ===', language);
+            currentLanguage = language;
+            
+            // Update document direction and language
+            document.documentElement.dir = ['ar', 'fa'].includes(language) ? 'rtl' : 'ltr';
+            document.documentElement.lang = language;
+            
+            // Get translations for current language
+            const langData = translations[language];
+            if (!langData) {
+                console.error('No translations found for language:', language);
+                return;
+            }
+            
+            console.log('Translation data loaded:', Object.keys(langData).length, 'keys');
+            
+            // Update ALL elements with data-i18n attributes
+            const elements = document.querySelectorAll('[data-i18n]');
+            console.log('Found', elements.length, 'elements to translate');
+            
+            elements.forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (langData[key]) {
+                    const oldText = element.textContent;
+                    element.textContent = langData[key];
+                    console.log('✓ Translated:', key, 'from "' + oldText + '" to "' + langData[key] + '"');
+                } else {
+                    console.warn('✗ No translation found for key:', key);
+                }
+            });
+            
+            // Update input placeholders
+            const placeholders = document.querySelectorAll('[data-i18n-placeholder]');
+            placeholders.forEach(element => {
+                const key = element.getAttribute('data-i18n-placeholder');
+                if (langData[key]) {
+                    element.placeholder = langData[key];
+                }
+            });
+            
+            // Update language switcher
+            const languageNames = { en: 'English', ar: 'العربية', fa: 'فارسی' };
+            const languageFlags = { en: '🇺🇸', ar: '🇸🇦', fa: '🇮🇷' };
+            
+            const nameElement = document.getElementById('current-language-name');
+            const flagElement = document.getElementById('current-language-flag');
+            
+            if (nameElement) {
+                nameElement.textContent = languageNames[language];
+            }
+            if (flagElement) {
+                flagElement.textContent = languageFlags[language];
+            }
+            
+            // Update checkmarks
+            document.querySelectorAll('.language-check').forEach(check => check.classList.add('hidden'));
+            const checkElement = document.getElementById(`check-${language}`);
+            if (checkElement) {
+                checkElement.classList.remove('hidden');
+            }
+            
+            // Save preference
+            localStorage.setItem('ev-admin-language', language);
+            
+            console.log('=== LANGUAGE APPLIED SUCCESSFULLY ===', language);
+        }
+
+        // Toggle language dropdown
+        function toggleLanguageDropdown() {
+            const dropdown = document.getElementById('language-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Change language
+        function changeLanguage(language) {
+            console.log('=== CHANGING LANGUAGE ===', language);
+            applyLanguage(language);
+            toggleLanguageDropdown();
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('language-dropdown');
+            const button = event.target.closest('.language-switcher button');
+            
+            if (!button && !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('=== DOM LOADED - INITIALIZING LANGUAGE SYSTEM ===');
+            loadLanguagePreference();
+        });
+    </script>
+
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // COMPREHENSIVE TRANSLATIONS - ALL LANGUAGES AND ALL ELEMENTS
+        const translations = {
+        "en": {
+                "page-title": "Payments",
+                "admin_dashboard": "Admin Dashboard",
+                "dashboard": "Dashboard",
+                "stations": "Stations",
+                "users": "Users",
+                "charging_sessions": "Charging Sessions",
+                "payments": "payments",
+                "analytics": "Analytics",
+                "reports": "Reports",
+                "notifications": "notifications",
+                "support": "Support",
+                "settings": "Settings",
+                "search": "Search",
+                "filter": "Filter",
+                "export": "Export",
+                "add_payment": "Add Payment",
+                "add_notification": "Add Notification",
+                "add_ticket": "Add Ticket",
+                "generate_report": "Generate Report",
+                "schedule_report": "Schedule Report",
+                "edit": "Edit",
+                "delete": "Delete",
+                "view_details": "View Details",
+                "configure": "Configure",
+                "view": "View",
+                "save": "Save",
+                "cancel": "Cancel",
+                "loading": "Loading",
+                "no_data": "No data available",
+                "active": "Active",
+                "inactive": "Inactive",
+                "online": "Online",
+                "offline": "Offline",
+                "maintenance": "Maintenance",
+                "pending": "Pending",
+                "completed": "Completed",
+                "cancelled": "Cancelled",
+                "failed": "Failed",
+                "total": "Total",
+                "average": "Average",
+                "status": "Status",
+                "actions": "Actions",
+                "refresh": "Refresh",
+                "download": "Download",
+                "print": "Print",
+                "next": "Next",
+                "previous": "Previous",
+                "showing": "Showing",
+                "of": "of",
+                "language": "Language",
+                "english": "English",
+                "arabic": "Arabic",
+                "farsi": "Farsi",
+                "transaction_id": "Transaction ID",
+                "amount": "Amount",
+                "payment_method": "Payment Method",
+                "created_at": "Created At",
+                "user": "User",
+                "session": "Session",
+                "date": "Date",
+                "time": "Time",
+                "type": "Type",
+                "message": "Message",
+                "recipient": "Recipient",
+                "priority": "Priority",
+                "subject": "Subject",
+                "description": "Description",
+                "category": "Category",
+                "assigned_to": "Assigned To",
+                "pending_refunds": "Pending Refunds",
+                "successful_payments": "Successful Payments",
+                "todays_revenue": "Today's Revenue",
+                "total_revenue": "Total Revenue",
+                "payment_methods": "Payment Methods",
+                "recent_transactions": "Recent Transactions",
+                "unread_notifications": "Unread Notifications",
+                "system_alerts": "System Alerts",
+                "user_notifications": "User Notifications",
+                "open_tickets": "Open Tickets",
+                "resolved_tickets": "Resolved Tickets",
+                "general_settings": "General Settings",
+                "system_settings": "System Settings",
+                "user_settings": "User Settings",
+                "security_settings": "Security Settings",
+                "search_payments": "Search payments",
+                "search_notifications": "Search notifications",
+                "search_tickets": "Search tickets",
+                "tickets": "tickets"
+        },
+        "ar": {
+                "page-title": "Payments",
+                "admin_dashboard": "لوحة التحكم الإدارية",
+                "dashboard": "لوحة التحكم",
+                "stations": "المحطات",
+                "users": "المستخدمون",
+                "charging_sessions": "جلسات الشحن",
+                "payments": "مدفوعات",
+                "analytics": "التحليلات",
+                "reports": "التقارير",
+                "notifications": "إشعارات",
+                "support": "الدعم",
+                "settings": "الإعدادات",
+                "search": "بحث",
+                "filter": "تصفية",
+                "export": "تصدير",
+                "add_payment": "إضافة دفعة",
+                "add_notification": "إضافة إشعار",
+                "add_ticket": "إضافة تذكرة",
+                "generate_report": "إنشاء تقرير",
+                "schedule_report": "جدولة تقرير",
+                "edit": "تعديل",
+                "delete": "حذف",
+                "view_details": "عرض التفاصيل",
+                "configure": "تكوين",
+                "view": "عرض",
+                "save": "حفظ",
+                "cancel": "إلغاء",
+                "loading": "جاري التحميل",
+                "no_data": "لا توجد بيانات متاحة",
+                "active": "نشط",
+                "inactive": "غير نشط",
+                "online": "متصل",
+                "offline": "غير متصل",
+                "maintenance": "صيانة",
+                "pending": "معلق",
+                "completed": "مكتمل",
+                "cancelled": "ملغى",
+                "failed": "فشل",
+                "total": "المجموع",
+                "average": "المتوسط",
+                "status": "الحالة",
+                "actions": "الإجراءات",
+                "refresh": "تحديث",
+                "download": "تحميل",
+                "print": "طباعة",
+                "next": "التالي",
+                "previous": "السابق",
+                "showing": "عرض",
+                "of": "من",
+                "language": "اللغة",
+                "english": "الإنجليزية",
+                "arabic": "العربية",
+                "farsi": "الفارسية",
+                "transaction_id": "معرف المعاملة",
+                "amount": "المبلغ",
+                "payment_method": "طريقة الدفع",
+                "created_at": "تاريخ الإنشاء",
+                "user": "المستخدم",
+                "session": "الجلسة",
+                "date": "التاريخ",
+                "time": "الوقت",
+                "type": "النوع",
+                "message": "الرسالة",
+                "recipient": "المستقبل",
+                "priority": "الأولوية",
+                "subject": "الموضوع",
+                "description": "الوصف",
+                "category": "الفئة",
+                "assigned_to": "مُعيّن لـ",
+                "pending_refunds": "المبالغ المستردة المعلقة",
+                "successful_payments": "المدفوعات الناجحة",
+                "todays_revenue": "إيرادات اليوم",
+                "total_revenue": "إجمالي الإيرادات",
+                "payment_methods": "طرق الدفع",
+                "recent_transactions": "المعاملات الأخيرة",
+                "unread_notifications": "الإشعارات غير المقروءة",
+                "system_alerts": "تنبيهات النظام",
+                "user_notifications": "إشعارات المستخدم",
+                "open_tickets": "التذاكر المفتوحة",
+                "resolved_tickets": "التذاكر المحلولة",
+                "general_settings": "الإعدادات العامة",
+                "system_settings": "إعدادات النظام",
+                "user_settings": "إعدادات المستخدم",
+                "security_settings": "إعدادات الأمان",
+                "search_payments": "البحث عن المدفوعات",
+                "search_notifications": "البحث عن الإشعارات",
+                "search_tickets": "البحث عن التذاكر",
+                "tickets": "تذاكر"
+        },
+        "fa": {
+                "page-title": "Payments",
+                "admin_dashboard": "پنل مدیریت",
+                "dashboard": "پنل کنترل",
+                "stations": "ایستگاه‌ها",
+                "users": "کاربران",
+                "charging_sessions": "جلسات شارژ",
+                "payments": "پرداخت‌ها",
+                "analytics": "تحلیل‌ها",
+                "reports": "گزارش‌ها",
+                "notifications": "اعلان‌ها",
+                "support": "پشتیبانی",
+                "settings": "تنظیمات",
+                "search": "جستجو",
+                "filter": "فیلتر",
+                "export": "خروجی",
+                "add_payment": "افزودن پرداخت",
+                "add_notification": "افزودن اعلان",
+                "add_ticket": "افزودن تیکت",
+                "generate_report": "ایجاد گزارش",
+                "schedule_report": "زمان‌بندی گزارش",
+                "edit": "ویرایش",
+                "delete": "حذف",
+                "view_details": "مشاهده جزئیات",
+                "configure": "پیکربندی",
+                "view": "مشاهده",
+                "save": "ذخیره",
+                "cancel": "لغو",
+                "loading": "در حال بارگذاری",
+                "no_data": "داده‌ای موجود نیست",
+                "active": "فعال",
+                "inactive": "غیرفعال",
+                "online": "آنلاین",
+                "offline": "آفلاین",
+                "maintenance": "نگهداری",
+                "pending": "در انتظار",
+                "completed": "تکمیل شده",
+                "cancelled": "لغو شده",
+                "failed": "ناموفق",
+                "total": "کل",
+                "average": "میانگین",
+                "status": "وضعیت",
+                "actions": "عملیات",
+                "refresh": "تازه‌سازی",
+                "download": "دانلود",
+                "print": "چاپ",
+                "next": "بعدی",
+                "previous": "قبلی",
+                "showing": "نمایش",
+                "of": "از",
+                "language": "زبان",
+                "english": "انگلیسی",
+                "arabic": "عربی",
+                "farsi": "فارسی",
+                "transaction_id": "شناسه تراکنش",
+                "amount": "مبلغ",
+                "payment_method": "روش پرداخت",
+                "created_at": "تاریخ ایجاد",
+                "user": "کاربر",
+                "session": "جلسه",
+                "date": "تاریخ",
+                "time": "زمان",
+                "type": "نوع",
+                "message": "پیام",
+                "recipient": "گیرنده",
+                "priority": "اولویت",
+                "subject": "موضوع",
+                "description": "توضیحات",
+                "category": "دسته‌بندی",
+                "assigned_to": "واگذار شده به",
+                "pending_refunds": "بازپرداخت‌های در انتظار",
+                "successful_payments": "پرداخت‌های موفق",
+                "todays_revenue": "درآمد امروز",
+                "total_revenue": "کل درآمد",
+                "payment_methods": "روش‌های پرداخت",
+                "recent_transactions": "تراکنش‌های اخیر",
+                "unread_notifications": "اعلان‌های خوانده نشده",
+                "system_alerts": "هشدارهای سیستم",
+                "user_notifications": "اعلان‌های کاربر",
+                "open_tickets": "تیکت‌های باز",
+                "resolved_tickets": "تیکت‌های حل شده",
+                "general_settings": "تنظیمات عمومی",
+                "system_settings": "تنظیمات سیستم",
+                "user_settings": "تنظیمات کاربر",
+                "security_settings": "تنظیمات امنیتی",
+                "search_payments": "جستجوی پرداخت‌ها",
+                "search_notifications": "جستجوی اعلان‌ها",
+                "search_tickets": "جستجوی تیکت‌ها",
+                "tickets": "تیکت‌ها"
         }
 };
         
