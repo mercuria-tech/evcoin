@@ -355,6 +355,7 @@
 <body class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
 
 
+
     <div class="flex h-screen">
         <!-- Sidebar -->
         <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
@@ -1156,6 +1157,389 @@
         }
 
         // Apply language changes - THIS IS THE WORKING FUNCTION
+        function applyLanguage(language) {
+            console.log('=== APPLYING LANGUAGE ===', language);
+            currentLanguage = language;
+            
+            // Update document direction and language
+            document.documentElement.dir = ['ar', 'fa'].includes(language) ? 'rtl' : 'ltr';
+            document.documentElement.lang = language;
+            
+            // Get translations for current language
+            const langData = translations[language];
+            if (!langData) {
+                console.error('No translations found for language:', language);
+                return;
+            }
+            
+            console.log('Translation data loaded:', Object.keys(langData).length, 'keys');
+            
+            // Update ALL elements with data-i18n attributes
+            const elements = document.querySelectorAll('[data-i18n]');
+            console.log('Found', elements.length, 'elements to translate');
+            
+            elements.forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (langData[key]) {
+                    const oldText = element.textContent;
+                    element.textContent = langData[key];
+                    console.log('✓ Translated:', key, 'from "' + oldText + '" to "' + langData[key] + '"');
+                } else {
+                    console.warn('✗ No translation found for key:', key);
+                }
+            });
+            
+            // Update input placeholders
+            const placeholders = document.querySelectorAll('[data-i18n-placeholder]');
+            placeholders.forEach(element => {
+                const key = element.getAttribute('data-i18n-placeholder');
+                if (langData[key]) {
+                    element.placeholder = langData[key];
+                }
+            });
+            
+            // Update language switcher
+            const languageNames = { en: 'English', ar: 'العربية', fa: 'فارسی' };
+            const languageFlags = { en: '🇺🇸', ar: '🇸🇦', fa: '🇮🇷' };
+            
+            const nameElement = document.getElementById('current-language-name');
+            const flagElement = document.getElementById('current-language-flag');
+            
+            if (nameElement) {
+                nameElement.textContent = languageNames[language];
+            }
+            if (flagElement) {
+                flagElement.textContent = languageFlags[language];
+            }
+            
+            // Update checkmarks
+            document.querySelectorAll('.language-check').forEach(check => check.classList.add('hidden'));
+            const checkElement = document.getElementById(`check-${language}`);
+            if (checkElement) {
+                checkElement.classList.remove('hidden');
+            }
+            
+            // Save preference
+            localStorage.setItem('ev-admin-language', language);
+            
+            console.log('=== LANGUAGE APPLIED SUCCESSFULLY ===', language);
+        }
+
+        // Toggle language dropdown
+        function toggleLanguageDropdown() {
+            const dropdown = document.getElementById('language-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Change language
+        function changeLanguage(language) {
+            console.log('=== CHANGING LANGUAGE ===', language);
+            applyLanguage(language);
+            toggleLanguageDropdown();
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('language-dropdown');
+            const button = event.target.closest('.language-switcher button');
+            
+            if (!button && !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('=== DOM LOADED - INITIALIZING LANGUAGE SYSTEM ===');
+            loadLanguagePreference();
+        });
+    </script>
+
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // COMPREHENSIVE TRANSLATIONS - ALL LANGUAGES AND ALL ELEMENTS
+        const translations = {
+        "en": {
+                "page-title": "Dashboard",
+                "admin_dashboard": "Admin Dashboard",
+                "dashboard": "Dashboard",
+                "stations": "Stations",
+                "users": "Users",
+                "charging_sessions": "Charging Sessions",
+                "payments": "Payments",
+                "analytics": "Analytics",
+                "reports": "Reports",
+                "notifications": "Notifications",
+                "support": "Support",
+                "settings": "Settings",
+                "search": "Search",
+                "filter": "Filter",
+                "export": "Export",
+                "add_new": "Add New",
+                "add_station": "Add Station",
+                "add_user": "Add User",
+                "add_session": "Add Session",
+                "add_payment": "Add Payment",
+                "add_notification": "Add Notification",
+                "add_ticket": "Add Ticket",
+                "edit": "Edit",
+                "delete": "Delete",
+                "view_details": "View Details",
+                "configure": "Configure",
+                "view": "View",
+                "save": "Save",
+                "cancel": "Cancel",
+                "loading": "Loading",
+                "no_data": "No data available",
+                "active": "Active",
+                "inactive": "Inactive",
+                "online": "Online",
+                "offline": "Offline",
+                "maintenance": "Maintenance",
+                "pending": "Pending",
+                "completed": "Completed",
+                "cancelled": "Cancelled",
+                "failed": "Failed",
+                "total": "Total",
+                "average": "Average",
+                "status": "Status",
+                "actions": "Actions",
+                "refresh": "Refresh",
+                "download": "Download",
+                "print": "Print",
+                "next": "Next",
+                "previous": "Previous",
+                "showing": "Showing",
+                "of": "of",
+                "language": "Language",
+                "english": "English",
+                "arabic": "Arabic",
+                "farsi": "Farsi",
+                "station_id": "Station ID",
+                "name": "Name",
+                "location": "Location",
+                "connectors": "Connectors",
+                "usage": "Usage",
+                "user_id": "User ID",
+                "email": "Email",
+                "phone": "Phone",
+                "session_id": "Session ID",
+                "start_time": "Start Time",
+                "end_time": "End Time",
+                "duration": "Duration",
+                "energy": "Energy",
+                "cost": "Cost",
+                "transaction_id": "Transaction ID",
+                "amount": "Amount",
+                "payment_method": "Payment Method",
+                "created_at": "Created At",
+                "total_stations": "Total Stations",
+                "active_stations": "Active Stations",
+                "offline_stations": "Offline Stations",
+                "total_users": "Total Users",
+                "active_users": "Active Users",
+                "total_sessions": "Total Sessions",
+                "active_sessions": "Active Sessions",
+                "total_revenue": "Total Revenue",
+                "monthly_revenue": "Monthly Revenue",
+                "search_station": "Search station",
+                "search_users": "Search users",
+                "search_sessions": "Search sessions",
+                "search_payments": "Search payments"
+        },
+        "ar": {
+                "page-title": "Dashboard",
+                "admin_dashboard": "لوحة التحكم الإدارية",
+                "dashboard": "لوحة التحكم",
+                "stations": "المحطات",
+                "users": "المستخدمون",
+                "charging_sessions": "جلسات الشحن",
+                "payments": "المدفوعات",
+                "analytics": "التحليلات",
+                "reports": "التقارير",
+                "notifications": "الإشعارات",
+                "support": "الدعم",
+                "settings": "الإعدادات",
+                "search": "بحث",
+                "filter": "تصفية",
+                "export": "تصدير",
+                "add_new": "إضافة جديد",
+                "add_station": "إضافة محطة",
+                "add_user": "إضافة مستخدم",
+                "add_session": "إضافة جلسة",
+                "add_payment": "إضافة دفعة",
+                "add_notification": "إضافة إشعار",
+                "add_ticket": "إضافة تذكرة",
+                "edit": "تعديل",
+                "delete": "حذف",
+                "view_details": "عرض التفاصيل",
+                "configure": "تكوين",
+                "view": "عرض",
+                "save": "حفظ",
+                "cancel": "إلغاء",
+                "loading": "جاري التحميل",
+                "no_data": "لا توجد بيانات متاحة",
+                "active": "نشط",
+                "inactive": "غير نشط",
+                "online": "متصل",
+                "offline": "غير متصل",
+                "maintenance": "صيانة",
+                "pending": "معلق",
+                "completed": "مكتمل",
+                "cancelled": "ملغى",
+                "failed": "فشل",
+                "total": "المجموع",
+                "average": "المتوسط",
+                "status": "الحالة",
+                "actions": "الإجراءات",
+                "refresh": "تحديث",
+                "download": "تحميل",
+                "print": "طباعة",
+                "next": "التالي",
+                "previous": "السابق",
+                "showing": "عرض",
+                "of": "من",
+                "language": "اللغة",
+                "english": "الإنجليزية",
+                "arabic": "العربية",
+                "farsi": "الفارسية",
+                "station_id": "معرف المحطة",
+                "name": "الاسم",
+                "location": "الموقع",
+                "connectors": "الموصلات",
+                "usage": "الاستخدام",
+                "user_id": "معرف المستخدم",
+                "email": "البريد الإلكتروني",
+                "phone": "الهاتف",
+                "session_id": "معرف الجلسة",
+                "start_time": "وقت البدء",
+                "end_time": "وقت الانتهاء",
+                "duration": "المدة",
+                "energy": "الطاقة",
+                "cost": "التكلفة",
+                "transaction_id": "معرف المعاملة",
+                "amount": "المبلغ",
+                "payment_method": "طريقة الدفع",
+                "created_at": "تاريخ الإنشاء",
+                "total_stations": "إجمالي المحطات",
+                "active_stations": "المحطات النشطة",
+                "offline_stations": "المحطات غير المتصلة",
+                "total_users": "إجمالي المستخدمين",
+                "active_users": "المستخدمون النشطون",
+                "total_sessions": "إجمالي الجلسات",
+                "active_sessions": "الجلسات النشطة",
+                "total_revenue": "إجمالي الإيرادات",
+                "monthly_revenue": "الإيرادات الشهرية",
+                "search_station": "البحث عن المحطة",
+                "search_users": "البحث عن المستخدمين",
+                "search_sessions": "البحث عن الجلسات",
+                "search_payments": "البحث عن المدفوعات"
+        },
+        "fa": {
+                "page-title": "Dashboard",
+                "admin_dashboard": "پنل مدیریت",
+                "dashboard": "پنل کنترل",
+                "stations": "ایستگاه‌ها",
+                "users": "کاربران",
+                "charging_sessions": "جلسات شارژ",
+                "payments": "پرداخت‌ها",
+                "analytics": "تحلیل‌ها",
+                "reports": "گزارش‌ها",
+                "notifications": "اعلان‌ها",
+                "support": "پشتیبانی",
+                "settings": "تنظیمات",
+                "search": "جستجو",
+                "filter": "فیلتر",
+                "export": "خروجی",
+                "add_new": "افزودن جدید",
+                "add_station": "افزودن ایستگاه",
+                "add_user": "افزودن کاربر",
+                "add_session": "افزودن جلسه",
+                "add_payment": "افزودن پرداخت",
+                "add_notification": "افزودن اعلان",
+                "add_ticket": "افزودن تیکت",
+                "edit": "ویرایش",
+                "delete": "حذف",
+                "view_details": "مشاهده جزئیات",
+                "configure": "پیکربندی",
+                "view": "مشاهده",
+                "save": "ذخیره",
+                "cancel": "لغو",
+                "loading": "در حال بارگذاری",
+                "no_data": "داده‌ای موجود نیست",
+                "active": "فعال",
+                "inactive": "غیرفعال",
+                "online": "آنلاین",
+                "offline": "آفلاین",
+                "maintenance": "نگهداری",
+                "pending": "در انتظار",
+                "completed": "تکمیل شده",
+                "cancelled": "لغو شده",
+                "failed": "ناموفق",
+                "total": "کل",
+                "average": "میانگین",
+                "status": "وضعیت",
+                "actions": "عملیات",
+                "refresh": "تازه‌سازی",
+                "download": "دانلود",
+                "print": "چاپ",
+                "next": "بعدی",
+                "previous": "قبلی",
+                "showing": "نمایش",
+                "of": "از",
+                "language": "زبان",
+                "english": "انگلیسی",
+                "arabic": "عربی",
+                "farsi": "فارسی",
+                "station_id": "شناسه ایستگاه",
+                "name": "نام",
+                "location": "موقعیت",
+                "connectors": "کانکتورها",
+                "usage": "استفاده",
+                "user_id": "شناسه کاربر",
+                "email": "ایمیل",
+                "phone": "تلفن",
+                "session_id": "شناسه جلسه",
+                "start_time": "زمان شروع",
+                "end_time": "زمان پایان",
+                "duration": "مدت",
+                "energy": "انرژی",
+                "cost": "هزینه",
+                "transaction_id": "شناسه تراکنش",
+                "amount": "مبلغ",
+                "payment_method": "روش پرداخت",
+                "created_at": "تاریخ ایجاد",
+                "total_stations": "کل ایستگاه‌ها",
+                "active_stations": "ایستگاه‌های فعال",
+                "offline_stations": "ایستگاه‌های آفلاین",
+                "total_users": "کل کاربران",
+                "active_users": "کاربران فعال",
+                "total_sessions": "کل جلسات",
+                "active_sessions": "جلسات فعال",
+                "total_revenue": "کل درآمد",
+                "monthly_revenue": "درآمد ماهانه",
+                "search_station": "جستجوی ایستگاه",
+                "search_users": "جستجوی کاربران",
+                "search_sessions": "جستجوی جلسات",
+                "search_payments": "جستجوی پرداخت‌ها"
+        }
+};
+        
+        let currentLanguage = 'en';
+
+        // Load saved language preference
+        function loadLanguagePreference() {
+            const savedLanguage = localStorage.getItem('ev-admin-language');
+            if (savedLanguage && ['en', 'ar', 'fa'].includes(savedLanguage)) {
+                currentLanguage = savedLanguage;
+                applyLanguage(currentLanguage);
+            }
+        }
+
+        // Apply language changes - COMPREHENSIVE FUNCTION
         function applyLanguage(language) {
             console.log('=== APPLYING LANGUAGE ===', language);
             currentLanguage = language;
