@@ -354,6 +354,7 @@
 </head>
 <body class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
 
+
     <div class="flex h-screen">
         <!-- Sidebar -->
         <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
@@ -1239,6 +1240,125 @@
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             loadLanguagePreference();
+        });
+    </script>
+
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Load language files
+        let translations = {};
+        
+        async function loadTranslations(language) {
+            try {
+                const response = await fetch(`/locales/${language}.json`);
+                const data = await response.json();
+                translations[language] = data;
+                return data;
+            } catch (error) {
+                console.error('Error loading translations:', error);
+                return {};
+            }
+        }
+        
+        let currentLanguage = 'en';
+
+        // Load saved language preference
+        async function loadLanguagePreference() {
+            const savedLanguage = localStorage.getItem('ev-admin-language');
+            if (savedLanguage && ['en', 'ar', 'fa'].includes(savedLanguage)) {
+                currentLanguage = savedLanguage;
+                await applyLanguage(currentLanguage);
+            }
+        }
+
+        // Apply language changes
+        async function applyLanguage(language) {
+            currentLanguage = language;
+            
+            // Load translations if not already loaded
+            if (!translations[language]) {
+                await loadTranslations(language);
+            }
+            
+            // Update document direction and language
+            document.documentElement.dir = ['ar', 'fa'].includes(language) ? 'rtl' : 'ltr';
+            document.documentElement.lang = language;
+            
+            // Update all translatable elements
+            const langData = translations[language];
+            if (langData) {
+                // Update common elements
+                if (langData.common) {
+                    for (const [key, value] of Object.entries(langData.common)) {
+                        const element = document.getElementById(key);
+                        if (element) {
+                            element.textContent = value;
+                        }
+                    }
+                }
+                
+                // Update page-specific elements
+                const pageKey = 'analytics';
+                if (langData[pageKey]) {
+                    for (const [key, value] of Object.entries(langData[pageKey])) {
+                        const element = document.getElementById(key);
+                        if (element) {
+                            element.textContent = value;
+                        }
+                    }
+                }
+            }
+            
+            // Update language switcher
+            const languageNames = { en: 'English', ar: 'العربية', fa: 'فارسی' };
+            const languageFlags = { en: '🇺🇸', ar: '🇸🇦', fa: '🇮🇷' };
+            
+            if (document.getElementById('current-language-name')) {
+                document.getElementById('current-language-name').textContent = languageNames[language];
+            }
+            if (document.getElementById('current-language-flag')) {
+                document.getElementById('current-language-flag').textContent = languageFlags[language];
+            }
+            
+            // Update checkmarks
+            document.querySelectorAll('.language-check').forEach(check => check.classList.add('hidden'));
+            const checkElement = document.getElementById(`check-${language}`);
+            if (checkElement) {
+                checkElement.classList.remove('hidden');
+            }
+            
+            // Save preference
+            localStorage.setItem('ev-admin-language', language);
+        }
+
+        // Toggle language dropdown
+        function toggleLanguageDropdown() {
+            const dropdown = document.getElementById('language-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Change language
+        async function changeLanguage(language) {
+            await applyLanguage(language);
+            toggleLanguageDropdown();
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('language-dropdown');
+            const button = event.target.closest('.language-switcher button');
+            
+            if (!button && !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async function() {
+            await loadLanguagePreference();
         });
     </script>
 </body>
