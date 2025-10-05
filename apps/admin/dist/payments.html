@@ -355,6 +355,7 @@
 <body class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
 
 
+
     <div class="flex h-screen">
         <!-- Sidebar -->
         <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
@@ -457,7 +458,7 @@
             <!-- Top Bar -->
             <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6">
                 <div class="flex items-center space-x-4">
-                    <h2 class="text-xl font-semibold text-gray-900" id="page-title">Payment Management</h2>
+                    <h2 class="text-xl font-semibold text-gray-900" id="page-title" data-i18n="page-title">Payment Management</h2>
                 </div>
 
                 <div class="flex items-center space-x-4">
@@ -585,9 +586,9 @@
                                         <th class="text-left py-3 px-4 font-medium text-gray-600">User</th>
                                         <th class="text-left py-3 px-4 font-medium text-gray-600">Amount</th>
                                         <th class="text-left py-3 px-4 font-medium text-gray-600">Method</th>
-                                        <th class="text-left py-3 px-4 font-medium text-gray-600">Status</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-600"><span data-i18n="status">Status</span></th>
                                         <th class="text-left py-3 px-4 font-medium text-gray-600">Date</th>
-                                        <th class="text-left py-3 px-4 font-medium text-gray-600">Actions</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-600"><span data-i18n="actions">Actions</span></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -602,7 +603,7 @@
                                             </div>
                                         </td>
                                         <td class="py-3 px-4">
-                                            <span class="badge-success text-xs px-2 py-1 rounded">Completed</span>
+                                            <span class="badge-success text-xs px-2 py-1 rounded"><span data-i18n="completed">Completed</span></span>
                                         </td>
                                         <td class="py-3 px-4">2024-01-15 14:30</td>
                                         <td class="py-3 px-4">
@@ -622,7 +623,7 @@
                                             </div>
                                         </td>
                                         <td class="py-3 px-4">
-                                            <span class="badge-success text-xs px-2 py-1 rounded">Completed</span>
+                                            <span class="badge-success text-xs px-2 py-1 rounded"><span data-i18n="completed">Completed</span></span>
                                         </td>
                                         <td class="py-3 px-4">2024-01-15 13:45</td>
                                         <td class="py-3 px-4">
@@ -642,7 +643,7 @@
                                             </div>
                                         </td>
                                         <td class="py-3 px-4">
-                                            <span class="badge-warning text-xs px-2 py-1 rounded">Pending</span>
+                                            <span class="badge-warning text-xs px-2 py-1 rounded"><span data-i18n="pending">Pending</span></span>
                                         </td>
                                         <td class="py-3 px-4">2024-01-15 12:20</td>
                                         <td class="py-3 px-4">
@@ -662,7 +663,7 @@
                                             </div>
                                         </td>
                                         <td class="py-3 px-4">
-                                            <span class="badge-success text-xs px-2 py-1 rounded">Completed</span>
+                                            <span class="badge-success text-xs px-2 py-1 rounded"><span data-i18n="completed">Completed</span></span>
                                         </td>
                                         <td class="py-3 px-4">2024-01-15 11:15</td>
                                         <td class="py-3 px-4">
@@ -1272,6 +1273,248 @@
         // Initialize
         document.addEventListener('DOMContentLoaded', async function() {
             await loadLanguagePreference();
+        });
+    </script>
+
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // WORKING TRANSLATIONS - COMPLETE AND INLINE
+        const translations = {
+        "en": {
+                "page-title": "Payments",
+                "dashboard": "Dashboard",
+                "stations": "Stations",
+                "users": "Users",
+                "charging_sessions": "Charging Sessions",
+                "payments": "Payments",
+                "analytics": "Analytics",
+                "reports": "Reports",
+                "notifications": "Notifications",
+                "support": "Support",
+                "settings": "Settings",
+                "search": "Search",
+                "filter": "Filter",
+                "export": "Export",
+                "add_new": "Add New",
+                "edit": "Edit",
+                "delete": "Delete",
+                "view_details": "View Details",
+                "save": "Save",
+                "cancel": "Cancel",
+                "loading": "Loading",
+                "no_data": "No data available",
+                "active": "Active",
+                "inactive": "Inactive",
+                "pending": "Pending",
+                "completed": "Completed",
+                "cancelled": "Cancelled",
+                "failed": "Failed",
+                "total": "Total",
+                "average": "Average",
+                "status": "Status",
+                "actions": "Actions",
+                "refresh": "Refresh",
+                "download": "Download",
+                "print": "Print",
+                "language": "Language",
+                "english": "English",
+                "arabic": "Arabic",
+                "farsi": "Farsi"
+        },
+        "ar": {
+                "page-title": "Payments",
+                "dashboard": "لوحة التحكم",
+                "stations": "المحطات",
+                "users": "المستخدمون",
+                "charging_sessions": "جلسات الشحن",
+                "payments": "المدفوعات",
+                "analytics": "التحليلات",
+                "reports": "التقارير",
+                "notifications": "الإشعارات",
+                "support": "الدعم",
+                "settings": "الإعدادات",
+                "search": "بحث",
+                "filter": "تصفية",
+                "export": "تصدير",
+                "add_new": "إضافة جديد",
+                "edit": "تعديل",
+                "delete": "حذف",
+                "view_details": "عرض التفاصيل",
+                "save": "حفظ",
+                "cancel": "إلغاء",
+                "loading": "جاري التحميل",
+                "no_data": "لا توجد بيانات متاحة",
+                "active": "نشط",
+                "inactive": "غير نشط",
+                "pending": "معلق",
+                "completed": "مكتمل",
+                "cancelled": "ملغى",
+                "failed": "فشل",
+                "total": "المجموع",
+                "average": "المتوسط",
+                "status": "الحالة",
+                "actions": "الإجراءات",
+                "refresh": "تحديث",
+                "download": "تحميل",
+                "print": "طباعة",
+                "language": "اللغة",
+                "english": "الإنجليزية",
+                "arabic": "العربية",
+                "farsi": "الفارسية"
+        },
+        "fa": {
+                "page-title": "Payments",
+                "dashboard": "پنل کنترل",
+                "stations": "ایستگاه‌ها",
+                "users": "کاربران",
+                "charging_sessions": "جلسات شارژ",
+                "payments": "پرداخت‌ها",
+                "analytics": "تحلیل‌ها",
+                "reports": "گزارش‌ها",
+                "notifications": "اعلان‌ها",
+                "support": "پشتیبانی",
+                "settings": "تنظیمات",
+                "search": "جستجو",
+                "filter": "فیلتر",
+                "export": "خروجی",
+                "add_new": "افزودن جدید",
+                "edit": "ویرایش",
+                "delete": "حذف",
+                "view_details": "مشاهده جزئیات",
+                "save": "ذخیره",
+                "cancel": "لغو",
+                "loading": "در حال بارگذاری",
+                "no_data": "داده‌ای موجود نیست",
+                "active": "فعال",
+                "inactive": "غیرفعال",
+                "pending": "در انتظار",
+                "completed": "تکمیل شده",
+                "cancelled": "لغو شده",
+                "failed": "ناموفق",
+                "total": "کل",
+                "average": "میانگین",
+                "status": "وضعیت",
+                "actions": "عملیات",
+                "refresh": "تازه‌سازی",
+                "download": "دانلود",
+                "print": "چاپ",
+                "language": "زبان",
+                "english": "انگلیسی",
+                "arabic": "عربی",
+                "farsi": "فارسی"
+        }
+};
+        
+        let currentLanguage = 'en';
+
+        // Load saved language preference
+        function loadLanguagePreference() {
+            const savedLanguage = localStorage.getItem('ev-admin-language');
+            if (savedLanguage && ['en', 'ar', 'fa'].includes(savedLanguage)) {
+                currentLanguage = savedLanguage;
+                applyLanguage(currentLanguage);
+            }
+        }
+
+        // Apply language changes - THIS IS THE WORKING FUNCTION
+        function applyLanguage(language) {
+            console.log('=== APPLYING LANGUAGE ===', language);
+            currentLanguage = language;
+            
+            // Update document direction and language
+            document.documentElement.dir = ['ar', 'fa'].includes(language) ? 'rtl' : 'ltr';
+            document.documentElement.lang = language;
+            
+            // Get translations for current language
+            const langData = translations[language];
+            if (!langData) {
+                console.error('No translations found for language:', language);
+                return;
+            }
+            
+            console.log('Translation data loaded:', Object.keys(langData).length, 'keys');
+            
+            // Update ALL elements with data-i18n attributes
+            const elements = document.querySelectorAll('[data-i18n]');
+            console.log('Found', elements.length, 'elements to translate');
+            
+            elements.forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (langData[key]) {
+                    const oldText = element.textContent;
+                    element.textContent = langData[key];
+                    console.log('✓ Translated:', key, 'from "' + oldText + '" to "' + langData[key] + '"');
+                } else {
+                    console.warn('✗ No translation found for key:', key);
+                }
+            });
+            
+            // Update input placeholders
+            const placeholders = document.querySelectorAll('[data-i18n-placeholder]');
+            placeholders.forEach(element => {
+                const key = element.getAttribute('data-i18n-placeholder');
+                if (langData[key]) {
+                    element.placeholder = langData[key];
+                }
+            });
+            
+            // Update language switcher
+            const languageNames = { en: 'English', ar: 'العربية', fa: 'فارسی' };
+            const languageFlags = { en: '🇺🇸', ar: '🇸🇦', fa: '🇮🇷' };
+            
+            const nameElement = document.getElementById('current-language-name');
+            const flagElement = document.getElementById('current-language-flag');
+            
+            if (nameElement) {
+                nameElement.textContent = languageNames[language];
+            }
+            if (flagElement) {
+                flagElement.textContent = languageFlags[language];
+            }
+            
+            // Update checkmarks
+            document.querySelectorAll('.language-check').forEach(check => check.classList.add('hidden'));
+            const checkElement = document.getElementById(`check-${language}`);
+            if (checkElement) {
+                checkElement.classList.remove('hidden');
+            }
+            
+            // Save preference
+            localStorage.setItem('ev-admin-language', language);
+            
+            console.log('=== LANGUAGE APPLIED SUCCESSFULLY ===', language);
+        }
+
+        // Toggle language dropdown
+        function toggleLanguageDropdown() {
+            const dropdown = document.getElementById('language-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Change language
+        function changeLanguage(language) {
+            console.log('=== CHANGING LANGUAGE ===', language);
+            applyLanguage(language);
+            toggleLanguageDropdown();
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('language-dropdown');
+            const button = event.target.closest('.language-switcher button');
+            
+            if (!button && !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('=== DOM LOADED - INITIALIZING LANGUAGE SYSTEM ===');
+            loadLanguagePreference();
         });
     </script>
 </body>
