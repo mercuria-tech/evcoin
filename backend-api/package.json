@@ -1,0 +1,31 @@
+{
+  "name": "ev-charging-backend-api",
+  "version": "1.0.0",
+  "description": "Backend API for EV Charging Platform",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "nodemon src/index.ts",
+    "dev:worker": "wrangler dev",
+    "build": "tsc",
+    "build:worker": "tsc && wrangler deploy",
+    "deploy": "wrangler deploy",
+    "start": "node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ev",
+    "charging",
+    "api",
+    "backend"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20251004.0",
+    "wrangler": "^4.42.0"
+  },
+  "dependencies": {
+    "hono": "^4.9.10"
+  }
+}

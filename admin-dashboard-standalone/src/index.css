@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Base Colors - Dark theme like TweakCN dashboard */
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    
+    /* Card Colors - Dark cards */
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    
+    /* Popover Colors */
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    
+    /* Primary Colors - Orange accent like TweakCN */
+    --primary: 15 70% 60%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Secondary Colors - Dark gray */
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    
+    /* Muted Colors - Dark backgrounds */
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    
+    /* Accent Colors - Green for success */
+    --accent: 142.1 70.6% 45.3%;
+    --accent-foreground: 144.9 80.4% 10%;
+    
+    /* Destructive Colors - Red for errors */
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    
+    /* Border & Input Colors */
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 15 70% 60%;
+    
+    /* Chart Colors - TweakCN inspired palette */
+    --chart-1: 15 70% 60%;
+    --chart-2: 142.1 70.6% 45.3%;
+    --chart-3: 38.7 92% 50.2%;
+    --chart-4: 280.7 100% 70%;
+    --chart-5: 0 62.8% 30.6%;
+    
+    /* Sidebar Colors - Dark sidebar like TweakCN */
+    --sidebar-background: 222.2 84% 4.9%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 15 70% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 217.2 32.6% 17.5%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217.2 32.6% 17.5%;
+    --sidebar-ring: 15 70% 60%;
+    
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Dark theme - Professional and modern */
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    
+    /* Card Colors - Elevated dark cards */
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    
+    /* Popover Colors */
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    
+    /* Primary Colors - Claude Orange/Coral (brighter for dark) */
+    --primary: 15 70% 65%;
+    --primary-foreground: 30 5% 18%;
+    
+    /* Secondary Colors - Claude Dark Charcoal */
+    --secondary: 30 5% 15%;
+    --secondary-foreground: 60 20% 98%;
+    
+    /* Muted Colors - Claude Dark Backgrounds */
+    --muted: 30 5% 15%;
+    --muted-foreground: 30 5% 50%;
+    
+    /* Accent Colors - Claude Complementary Green (brighter for dark) */
+    --accent: 142.1 70.6% 45.3%;
+    --accent-foreground: 144.9 80.4% 10%;
+    
+    /* Destructive Colors - Darker red */
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    
+    /* Border & Input Colors */
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 15 70% 65%;
+    
+    /* Chart Colors - Claude palette for dark theme */
+    --chart-1: 15 70% 65%;
+    --chart-2: 142.1 70.6% 45.3%;
+    --chart-3: 38.7 92% 50.2%;
+    --chart-4: 280.7 100% 70%;
+    --chart-5: 0 62.8% 30.6%;
+    
+    /* Sidebar Colors - Claude dark theme */
+    --sidebar-background: 30 5% 12%;
+    --sidebar-foreground: 60 20% 98%;
+    --sidebar-primary: 15 70% 65%;
+    --sidebar-primary-foreground: 30 5% 18%;
+    --sidebar-accent: 30 5% 20%;
+    --sidebar-accent-foreground: 60 20% 98%;
+    --sidebar-border: 30 5% 20%;
+    --sidebar-ring: 15 70% 65%;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+}
+
+/* RTL Support - React-based approach */

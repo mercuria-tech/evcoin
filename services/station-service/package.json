@@ -1,9 +1,5 @@
 {
-**
-
-name
-
-**: "@ev-charging/station-service",
+  "name": "@ev-charging/station-service",
   "version": "1.0.0",
   "description": "Station discovery and management service for EV Charging Platform",
   "main": "dist/index.js",
